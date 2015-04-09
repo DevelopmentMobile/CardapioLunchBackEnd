@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cardapio Lanches</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_menu_cliente">menu_cliente</string>
+    <string name="title_activity_ofertas">ofertas</string>
+    <string name="title_activity_pedidos">pedidos</string>
+</resources>

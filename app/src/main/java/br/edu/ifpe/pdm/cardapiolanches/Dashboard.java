@@ -6,19 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class Ofertas extends ActionBarActivity {
+public class Dashboard extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ofertas);
+        setContentView(R.layout.dashboard);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.ofertas_list_menu, menu);
+        getMenuInflater().inflate(R.menu.dashboard_menu, menu);
         return true;
     }
 

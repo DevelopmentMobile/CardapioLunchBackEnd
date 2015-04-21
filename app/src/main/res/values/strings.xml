@@ -6,4 +6,23 @@
     <string name="title_activity_menu_cliente">menu_cliente</string>
     <string name="title_activity_ofertas">ofertas</string>
     <string name="title_activity_pedidos">pedidos</string>
+    <string name="title_activity_login">Login</string>
+    <string name="usuario">Usuário</string>
+    <string name="senha">Senha:</string>
+    <string name="manter_conectado">Manter Conectado</string>
+    <string name="entrar">Entrar</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="erro_autenticao">Falha na autenticação!</string>
+    <string name="avaliar_estabelecimento">Avaliar Estabelecimento</string>
+    <string name="perfil">Perfil</string>
+    <string name="fazer_pedido">Fazer Pedido</string>
+    <string name="acompanhar_pedido">Acompanhar Pedido</string>
+    <string name="desconto">Desconto</string>
+    <string name="ofertas">Ofertas</string>
+    <string name="title_activity_produtos_list">Lista de Produtos</string>
+    <string name="title_activity_pedidos_list">Lista de Pedidos</string>
+    <string name="title_activity_pedidos_confirmardos_list">Acompanhamento de Pedidos</string>
+    <string name="avancar">Avançar</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="title_activity_checkout_pedidos">Checkout Pedidos</string>
 </resources>

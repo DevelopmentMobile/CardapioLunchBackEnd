@@ -1,12 +1,13 @@
 package br.edu.ifpe.pdm.cardapiolanches;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class CheckoutPedidosActivity extends ActionBarActivity {
+public class CheckoutPedidosActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

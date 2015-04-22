@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,7 @@ public class ProdutosListActivity extends ListActivity implements AdapterView.On
 
 
     }
-    private List<Map<String, Object>> produtos;
+    public List<Map<String, Object>> produtos;
     private List<? extends Map<String, ?>> listarProdutos() {
 
         produtos = new ArrayList<Map<String, Object>>();
@@ -97,12 +98,17 @@ public class ProdutosListActivity extends ListActivity implements AdapterView.On
 
     private int produtoSelecionada;
 
+    private static final String MY_LOG = "CURRENT_LOG";
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         this.produtoSelecionada = position;
         Intent intent = new Intent(this, PedidosListActivity.class);
+        String info =  Integer.toString(position);
+        Log.v(MY_LOG, info);
 
-        intent.putExtra("produto", (java.io.Serializable) produtos.get(produtoSelecionada ));
+        Log.v(MY_LOG,  produtos.get(position).toString());
+        Map<String,Object> map = produtos.get(position);
+        intent.putExtra("produto", (java.io.Serializable) map );
         startActivity(intent);
     }
 

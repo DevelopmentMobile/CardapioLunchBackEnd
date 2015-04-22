@@ -26,35 +26,75 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
+
         </activity>
         <activity
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard" >
+            <intent-filter>
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.Dashboard" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".OfertasProdutosListActivity"
             android:label="@string/title_activity_ofertas" >
+            <intent-filter>
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.OfertasProdutosListActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ProdutosListActivity"
             android:label="@string/title_activity_produtos_list" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--  <intent-filter>
+               <action android:name="br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            -->
+
+            <intent-filter>
+
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".PedidosListActivity"
             android:label="@string/title_activity_pedidos_list" >
+            <intent-filter>
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.PedidosListActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".PedidosConfirmardosListActivity"
             android:label="@string/title_activity_pedidos_confirmardos_list" >
+            <intent-filter>
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.PedidosConfirmardosListActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+
         </activity>
         <activity
             android:name=".CheckoutPedidosActivity"
             android:label="@string/title_activity_checkout_pedidos" >
+
+            <intent-filter>
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.CheckoutPedidosActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

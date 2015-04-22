@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.SimpleAdapter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
     private Button buttonAdicionarProduto;
     private List<Map<String, Object>> produtos;
 
+    private static final String MY_LOG = "CURRENT_LOG";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,10 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
                 R.id.peso, R.id.preco};
 
         //Bundle extras = getIntent().getExtras();
-        Map<String, Object> mapProduto = (HashMap<String, Object>) getIntent().getSerializableExtra("produto");
+        Map<String, Object> mapProduto = (Map<String, Object>) getIntent().getSerializableExtra("produto");
         //Map<String, Object> mapProduto = (HashMap)extras.getSerializable("produto");
+        Log.v(MY_LOG, mapProduto.toString() );
+        produtos =  new ArrayList<Map<String, Object>>();
         produtos.add(mapProduto);
 
         SimpleAdapter adapter = new SimpleAdapter(this, produtos, R.layout.pedidos_list, de, para);
@@ -45,7 +51,8 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
         getListView().setOnItemClickListener(this);
 
 
-        buttonAdicionarProduto = (Button) findViewById(R.id.adicionar_pedidos_list);
+
+    /*    buttonAdicionarProduto = (Button) findViewById(R.id.adicionar_pedidos_list);
         buttonAdicionarProduto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 confirmarPedido();
@@ -57,17 +64,17 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
             public void onClick(View v) {
                 adicionarProduto();
 
-            } });
+            } });*/
 
 
     }
 
-    public void confirmarPedido(){
+    public void confirmarPedido(View view){
         Intent intent = new Intent(this, CheckoutPedidosActivity.class);
         startActivity(intent);
     }
 
-    public void adicionarProduto(){
+    public void adicionarProduto(View view){
 
         Intent intent = new Intent(this, ProdutosListActivity.class);
 

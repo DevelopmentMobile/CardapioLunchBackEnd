@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/linearlayout00">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -24,7 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/content"
+        >
 
         <TextView
             android:id="@+id/nome_produto"
@@ -40,39 +43,15 @@
             android:id="@+id/preco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-
-
-
-    </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true" >
-
-        <Button
-            android:layout_width="match_parent"
+        <NumberPicker
+            android:id="@+id/quantidade"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="confirmarPedido"
-            android:text="@string/avancar"
-            android:id="@+id/avancar_pedidos_list"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="adicionarProduto"
-            android:layout_weight="1"
-            android:text="@string/adicionar"
-            android:id="@+id/adicionar_pedidos_list"/>
+            android:orientation="horizontal"
+            />
 
     </LinearLayout>
-
-
-
-
-
+    </LinearLayout>
 
 
 </LinearLayout>

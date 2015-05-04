@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 
 import java.io.Serializable;
@@ -24,7 +26,7 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
 
     private Button buttonAvancarCheckout;
     private Button buttonAdicionarProduto;
-    private List<Map<String, Object>> produtos;
+    private static final List<Map<String, Object>> produtos =  new ArrayList<Map<String, Object>>();
 
     private static final String MY_LOG = "CURRENT_LOG";
 
@@ -32,7 +34,7 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.pedidos_list);
+
 
         String[] de = {"imagem_produto", "nome_produto", "peso","preco"};
         int[] para = {R.id.imagem_produto, R.id.nome_produto,
@@ -41,16 +43,18 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
         //Bundle extras = getIntent().getExtras();
         Map<String, Object> mapProduto = (Map<String, Object>) getIntent().getSerializableExtra("produto");
         //Map<String, Object> mapProduto = (HashMap)extras.getSerializable("produto");
-        Log.v(MY_LOG, mapProduto.toString() );
-        produtos =  new ArrayList<Map<String, Object>>();
+        Log.d(MY_LOG, mapProduto.toString() );
+
         produtos.add(mapProduto);
 
+
+
         SimpleAdapter adapter = new SimpleAdapter(this, produtos, R.layout.pedidos_list, de, para);
+
         adapter.setViewBinder(this);
+
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
-
-
 
     /*    buttonAdicionarProduto = (Button) findViewById(R.id.adicionar_pedidos_list);
         buttonAdicionarProduto.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +69,30 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
                 adicionarProduto();
 
             } });*/
+        addButtons();
+
+    }
+
+    public void addButtons(){
+
+
+//        setContentView(R.layout.pedidos_list);
+
+        LinearLayout layout00 = (LinearLayout) findViewById(R.id.linearlayout00);
+
+        Button btAdicionar =    new Button(this);
+        btAdicionar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1f));
+
+
+        btAdicionar.setText("Adicionar");
+        btAdicionar.setId(R.id.button_adicionar_pedidos_list);
+        btAdicionar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                adicionarProduto(v);
+            } });
+
+
+        layout00.addView(btAdicionar);
 
 
     }
@@ -113,4 +141,12 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
     public boolean setViewValue(View view, Object data, String textRepresentation) {
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }
+
+

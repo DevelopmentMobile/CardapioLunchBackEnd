@@ -26,7 +26,6 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
-
         </activity>
         <activity
             android:name=".Dashboard"
@@ -49,31 +48,22 @@
         <activity
             android:name=".ProdutosListActivity"
             android:label="@string/title_activity_produtos_list" >
-        <!--  <intent-filter>
-               <action android:name="br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            -->
-
             <intent-filter>
-
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+                <!--<action android:name="br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity" />
+               <category android:name="android.intent.category.DEFAULT" /> -->
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".PedidosListActivity"
             android:label="@string/title_activity_pedidos_list" >
             <intent-filter>
                 <action android:name="br.edu.ifpe.pdm.cardapiolanches.PedidosListActivity" />
-
+                <!--<action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" /> -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".PedidosConfirmardosListActivity"
@@ -83,13 +73,10 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-
         </activity>
         <activity
             android:name=".CheckoutPedidosActivity"
             android:label="@string/title_activity_checkout_pedidos" >
-
             <intent-filter>
                 <action android:name="br.edu.ifpe.pdm.cardapiolanches.CheckoutPedidosActivity" />
 

@@ -25,4 +25,6 @@
     <string name="avancar">Avançar</string>
     <string name="adicionar">Adicionar</string>
     <string name="title_activity_checkout_pedidos">Checkout Pedidos</string>
+    <string name="title_activity_list_view_android_example">ListViewAndroidExample</string>
+    <string name="confirmar">Confirmar</string>
 </resources>

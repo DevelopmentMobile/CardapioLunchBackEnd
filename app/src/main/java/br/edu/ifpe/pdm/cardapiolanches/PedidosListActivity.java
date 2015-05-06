@@ -1,5 +1,6 @@
 package br.edu.ifpe.pdm.cardapiolanches;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -10,9 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,87 +27,70 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class PedidosListActivity extends ListActivity implements AdapterView.OnItemClickListener,SimpleAdapter.ViewBinder {
+public class PedidosListActivity extends Activity implements AdapterView.OnItemClickListener, SimpleAdapter.ViewBinder {
 
     private Button buttonAvancarCheckout;
     private Button buttonAdicionarProduto;
-    private static final List<Map<String, Object>> produtos =  new ArrayList<Map<String, Object>>();
+    private static final List<Map<String, Object>> produtos = new ArrayList<Map<String, Object>>();
 
     private static final String MY_LOG = "CURRENT_LOG";
 
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.listview_pedidos_confirmados);
 
-
+/*
         String[] de = {"imagem_produto", "nome_produto", "peso","preco"};
+        //Bundle extras = getIntent().getExtras();
+      //  Map<String, Object> mapProduto = (Map<String, Object>) getIntent().getSerializableExtra("produto");
+        //Map<String, Object> mapProduto = (HashMap)extras.getSerializable("produto");
+        Map<String, Object> item = new HashMap<String, Object>();
+        SimpleAdapter adapter = new SimpleAdapter(this, produtos, R.layout.pedidos_list, de, para);
+        adapter.setViewBinder(this);
+     //  setListAdapter(adapter);
+      //  getListView().setOnItemClickListener(this);
+*/
+        Map<String, Object> mapProduto = (Map<String, Object>) getIntent().getSerializableExtra("produto");
+
+        if(produtos.contains(mapProduto)){
+           //incrementa numberpicker
+
+        }else{
+
+
+            produtos.add(mapProduto);
+
+
+
+        }
+
+        String[] de = {"imagem_produto", "nome_produto", "peso", "preco"};
+
         int[] para = {R.id.imagem_produto, R.id.nome_produto,
                 R.id.peso, R.id.preco};
 
-        //Bundle extras = getIntent().getExtras();
-        Map<String, Object> mapProduto = (Map<String, Object>) getIntent().getSerializableExtra("produto");
-        //Map<String, Object> mapProduto = (HashMap)extras.getSerializable("produto");
-        Log.d(MY_LOG, mapProduto.toString() );
 
-        produtos.add(mapProduto);
+        listView = (ListView) findViewById(R.id.lv_id);
 
-
-
-        SimpleAdapter adapter = new SimpleAdapter(this, produtos, R.layout.pedidos_list, de, para);
+        SimpleAdapter adapter = new SimpleAdapter(this, produtos, R.layout.listview_test, de, para);
 
         adapter.setViewBinder(this);
 
-        setListAdapter(adapter);
-        getListView().setOnItemClickListener(this);
 
-    /*    buttonAdicionarProduto = (Button) findViewById(R.id.adicionar_pedidos_list);
-        buttonAdicionarProduto.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                confirmarPedido();
-
-                                  } });
-
-        buttonAvancarCheckout= (Button) findViewById(R.id.avancar_pedidos_list);
-        buttonAvancarCheckout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                adicionarProduto();
-
-            } });*/
-        addButtons();
+        listView.setAdapter(adapter);
 
     }
 
-    public void addButtons(){
 
-
-//        setContentView(R.layout.pedidos_list);
-
-        LinearLayout layout00 = (LinearLayout) findViewById(R.id.linearlayout00);
-
-        Button btAdicionar =    new Button(this);
-        btAdicionar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1f));
-
-
-        btAdicionar.setText("Adicionar");
-        btAdicionar.setId(R.id.button_adicionar_pedidos_list);
-        btAdicionar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                adicionarProduto(v);
-            } });
-
-
-        layout00.addView(btAdicionar);
-
-
-    }
-
-    public void confirmarPedido(View view){
+    public void confirmarPedido(View view) {
         Intent intent = new Intent(this, CheckoutPedidosActivity.class);
         startActivity(intent);
     }
 
-    public void adicionarProduto(View view){
+    public void adicionarProduto(View view) {
 
         Intent intent = new Intent(this, ProdutosListActivity.class);
 
@@ -134,6 +122,17 @@ public class PedidosListActivity extends ListActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        int itemPosition = position - 1;
+
+        // ListView Clicked item value
+        String itemValue = (String) listView.getItemAtPosition(itemPosition);
+
+        // Show Alert
+        Toast.makeText(getApplicationContext(),
+                "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+                .show();
+
 
     }
 

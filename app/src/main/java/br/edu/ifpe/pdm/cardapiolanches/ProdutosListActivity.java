@@ -25,11 +25,23 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ProdutosListActivity extends ListActivity implements AdapterView.OnItemClickListener, SimpleAdapter.ViewBinder{
+public class ProdutosListActivity extends ListActivity implements  AdapterView.OnItemClickListener, SimpleAdapter.ViewBinder{
 
 
     private String tipoProduto = "";
     private Map<String,String> listCategoriesProducts = new HashMap<String,String>();
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, PedidosListActivity.class);
+        String info =  Integer.toString(position);
+        Log.v(MY_LOG, info);
+
+        Log.v(MY_LOG,  produtos.get(position).toString());
+        Map<String,Object> map = produtos.get(position);
+        intent.putExtra("produto", (java.io.Serializable) map );
+        startActivity(intent);
+    }
 
     private class ProductListViewBinder implements SimpleAdapter.ViewBinder{
 
@@ -103,7 +115,7 @@ public class ProdutosListActivity extends ListActivity implements AdapterView.On
     }
 
 
-        private SimpleAdapter adapter;
+    private SimpleAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,13 +126,42 @@ public class ProdutosListActivity extends ListActivity implements AdapterView.On
 
         adapter = new SimpleAdapter(this, listarProdutos(), R.layout.produtos_list, de, para);
         adapter.setViewBinder(this);
-        setListAdapter(adapter);
-        getListView().setOnItemClickListener(this);
+      //  ProdutosListActivityIntern produtosListActivityIntern = new ProdutosListActivityIntern(this);
+
+       setListAdapter(adapter);
+        //produtosListActivityIntern.setListAdapter(adapter);
+        //produtosListActivityIntern.getListView().setOnItemClickListener((AdapterView.OnItemClickListener) this);
+        getListView().setOnItemClickListener((AdapterView.OnItemClickListener) this);
 
         Log.v(MY_LOG, "onCreate()");
 
     }
     public List<Map<String, Object>> produtos;
+
+    private class ProdutosListActivityIntern extends ListActivity implements AdapterView.OnItemClickListener {
+
+        private Context context;
+
+
+        private ProdutosListActivityIntern(Context context) {
+            this.context = context;
+
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+            Intent intent = new Intent(this, PedidosListActivity.class);
+            String info =  Integer.toString(position);
+            Log.v(MY_LOG, info);
+
+            Log.v(MY_LOG,  produtos.get(position).toString());
+            Map<String,Object> map = produtos.get(position);
+            intent.putExtra("produto", (java.io.Serializable) map );
+            startActivity(intent);
+        }
+    }
 
 
     private List<? extends Map<String, ?>> listarProdutos() {
@@ -208,7 +249,7 @@ public class ProdutosListActivity extends ListActivity implements AdapterView.On
     private int produtoSelecionada;
 
     private static final String MY_LOG = "CURRENT_LOG";
-    @Override
+   /* @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         this.produtoSelecionada = position;
         Intent intent = new Intent(this, PedidosListActivity.class);
@@ -219,7 +260,7 @@ public class ProdutosListActivity extends ListActivity implements AdapterView.On
         Map<String,Object> map = produtos.get(position);
         intent.putExtra("produto", (java.io.Serializable) map );
         startActivity(intent);
-    }
+    }*/
 
 
 

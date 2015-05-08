@@ -26,7 +26,7 @@
             android:layout_marginTop="80dp"
             android:clickable="true"
             android:drawableTop="@drawable/fazer_pedido"
-            android:onClick="selecionarOpcao"
+
             android:text="@string/fazer_pedido"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_marginRight="50dp"
             android:clickable="true"
             android:drawableTop="@drawable/rastreio"
-            android:onClick="selecionarOpcao"
+
             android:text="@string/acompanhar_pedido"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
@@ -53,7 +53,7 @@
             android:layout_marginBottom="120dp"
             android:clickable="true"
             android:drawableTop="@drawable/avaliar"
-            android:onClick="selecionarOpcao"
+
             android:text="@string/avaliar_estabelecimento"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
@@ -66,7 +66,7 @@
             android:layout_alignRight="@id/acompanhar_pedido"
             android:clickable="true"
             android:drawableTop="@drawable/desconto"
-            android:onClick="selecionarOpcao"
+
             android:text="@string/ofertas"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />

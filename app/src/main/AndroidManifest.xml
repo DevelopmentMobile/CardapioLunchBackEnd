@@ -26,6 +26,16 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
+            <intent-filter>
+
+                <!--
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.Login" />
+                <category android:name="android.intent.category.DEFAULT" />
+                -->
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Dashboard"
@@ -49,10 +59,14 @@
             android:name=".ProdutosListActivity"
             android:label="@string/title_activity_produtos_list" >
             <intent-filter>
+
+                <!--
                 <action android:name="android.intent.action.MAIN" />
-                <!--<action android:name="br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity" />
-               <category android:name="android.intent.category.DEFAULT" /> -->
                 <category android:name="android.intent.category.LAUNCHER" />
+                -->
+                <action android:name="br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -60,9 +74,13 @@
             android:label="@string/title_activity_pedidos_list" >
             <intent-filter>
                 <action android:name="br.edu.ifpe.pdm.cardapiolanches.PedidosListActivity" />
-                <!--<action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" /> -->
+
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <!--
+                    <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                -->
             </intent-filter>
         </activity>
         <activity
@@ -82,6 +100,14 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity"
+            android:label="@string/title_activity_produtos_list" >
+        </activity>
+        <activity
+            android:name=".test.Dashboard"
+            android:label="@string/title_activity_dashboard" >
         </activity>
     </application>
 

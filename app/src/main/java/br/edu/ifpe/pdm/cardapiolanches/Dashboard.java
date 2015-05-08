@@ -1,17 +1,58 @@
 package br.edu.ifpe.pdm.cardapiolanches;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity;
 
-public class Dashboard extends ActionBarActivity {
+public class Dashboard extends Activity {
+
+    private TextView text1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
+
+        text1 = (TextView) findViewById(R.id.fazer_pedido);
+        text1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forwardProdutoList();
+            }
+        });
+
+
+}
+    public boolean forwardProdutoList() {
+
+        startActivity(new Intent(this, ProdutosListActivity.class));
+
+        return true;
+    }
+
+
+    public void selecionarOpcao(View view) {
+        TextView textView = (TextView) view;
+        String opcao = "Opção: " + textView.getText().toString();
+        //Toast.makeText(this, opcao, Toast.LENGTH_LONG).show();
+
+
+        switch (view.getId()) {
+            case R.id.fazer_pedido:
+                startActivity(new Intent(this, ProdutosListActivity.class));
+                break;
+
+
+        }
+
+
     }
 
 
@@ -31,9 +72,11 @@ public class Dashboard extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

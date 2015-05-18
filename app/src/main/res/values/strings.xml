@@ -27,4 +27,6 @@
     <string name="title_activity_checkout_pedidos">Checkout Pedidos</string>
     <string name="title_activity_list_view_android_example">ListViewAndroidExample</string>
     <string name="confirmar">Confirmar</string>
+    <string name="title_activity_welcome">Welcome_Activity</string>
+    <string name="title_activity_select">SelectActivity</string>
 </resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:id="@+id/rodape"
+    android:weightSum="1">
+
+    <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="RESTAURANTE BEM SERVIDO"
+       android:id="@+id/textView_restaurante"
+       android:layout_gravity="center"
+       android:textSize="25dp"
+       android:textStyle="bold|italic"
+       android:textColor="#ffffee01" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Av. Boa Viagem, N° 1200"
+        android:id="@+id/textView_endereco"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        android:textColor="#ffffee01" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telefone: (81) 8888-8888 / 7777-7777"
+        android:id="@+id/textView_fone"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        android:textColor="#ffffee01" />
+</LinearLayout>

@@ -4,9 +4,12 @@ package br.edu.ifpe.pdm.cardapiolanches;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Movie;
+import android.graphics.Point;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.io.InputStream;
 
@@ -43,6 +46,15 @@ public class GifView extends View {
         movieWidth = gifMovie.width();
         movieHeight = gifMovie.height();
         movieDuration = gifMovie.duration();
+
+        /*
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        */
     }
 
     @Override

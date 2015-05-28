@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/welcome"
+    android:background="@drawable/background"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Faça seu Pedido"
+            android:id="@+id/button_fazer_pedido"
+            android:background="#0000ff95"
+            android:textStyle="bold|italic"
+            android:textColor="#ffffffff"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#69006aff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OFERTAS DO DIA"
+            android:id="@+id/textView_ofertas_dia"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25dp"
+            android:textStyle="bold|italic"
+            android:textColor="#ffffee01" />
+
+        <ViewSwitcher
+            android:id="@+id/viewswitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PRATO 01"
+                        android:id="@+id/textView_nome_oferta"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="15dp"
+                        android:textStyle="bold|italic"
+                        android:textColor="#ffffee01" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R$ 10,00"
+                        android:id="@+id/textView_valor_oferta"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="15dp"
+                        android:textStyle="bold|italic"
+                        android:textColor="#ffffee01" />
+                    <Button
+                        android:layout_width="124dp"
+                        android:layout_height="wrap_content"
+                        android:text="Fazer Pedido"
+                        android:id="@+id/button_adicionar_oferta"
+                        android:background="#fffefdff"
+                        android:textStyle="bold|italic"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:singleLine="false"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.3">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageButton_oferta_01"
+                        android:layout_gravity="center"
+                        android:background="@drawable/prato01"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ViewSwitcher>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#69ffa900">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#6900ff52"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COMBOS MAIS PEDIDOS"
+                android:id="@+id/textView_combo"
+                android:layout_gravity="center_horizontal"
+                android:textSize="25dp"
+                android:textStyle="bold|italic"
+                android:textColor="#ffffee01" />
+
+            <ViewSwitcher
+                android:id="@+id/viewswitcher_combos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="COMBO 01"
+                            android:id="@+id/textView_nome_combo"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="15dp"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ffffee01" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$ 10,00"
+                            android:id="@+id/textView_valor_combo"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="15dp"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ffffee01" />
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fazer Pedido"
+                            android:id="@+id/button_adicionar_combo"
+                            android:background="#fffefdff"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ff000000"
+                            android:textSize="15dp"
+                            android:singleLine="false"
+                            android:layout_gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageButton_combo_01"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sanduiche04"
+                            android:cropToPadding="false" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ViewSwitcher>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PRATOS MAIS PEDIDOS"
+                android:id="@+id/textView_pratos_mais_pedidos"
+                android:layout_gravity="center_horizontal"
+                android:textSize="25dp"
+                android:textStyle="bold|italic"
+                android:textColor="#ffffee01" />
+
+            <ViewSwitcher
+                android:id="@+id/viewswitcher_pratos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PRATO 01"
+                            android:id="@+id/textView_nome_prato"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="15dp"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ffffee01" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$ 10,00"
+                            android:id="@+id/textView_valor_prato"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="15dp"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ffffee01" />
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fazer Pedido"
+                            android:id="@+id/button_adicionar_prato"
+                            android:background="#fffefdff"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ff000000"
+                            android:textSize="15dp"
+                            android:singleLine="false"
+                            android:longClickable="true"
+                            android:layout_gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageButton_prato_01"
+                            android:layout_gravity="center"
+                            android:background="@drawable/prato02"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </ViewSwitcher>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/activity_rodape"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

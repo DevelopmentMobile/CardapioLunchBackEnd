@@ -1,36 +1,24 @@
 package br.edu.ifpe.pdm.cardapiolanches;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import br.edu.ifpe.pdm.cardapiolanches.cliente.MainClienteActivity;
 
 
-public class SelectActivity extends ActionBarActivity {
+public class Rodape_Activity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select);
+        setContentView(R.layout.activity_rodape);
     }
 
-    public void AcessarMenuCliente(View v) {
-        startActivity(new Intent(this, MainClienteActivity.class));
-    }
 
-    public void AcessarMenuFuncionario(View v) {
-        startActivity(new Intent(this, Login.class));
-    }
-
-    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_select, menu);
+        getMenuInflater().inflate(R.menu.menu_rodape, menu);
         return true;
     }
 
@@ -48,5 +36,4 @@ public class SelectActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    */
 }

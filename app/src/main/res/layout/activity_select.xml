@@ -11,20 +11,21 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="clip_vertical"
-        android:layout_weight="0.5">
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:layout_gravity="center_vertical">
 
         <ImageButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/MenuFuncionarioButton"
-            android:layout_gravity="clip_vertical"
-            android:background="@drawable/item01"/>
+            android:layout_gravity="center"
+            android:background="@drawable/item01"
+            android:onClick="AcessarMenuFuncionario"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MENU FUNCIONÁRIO"
+            android:text="FUNCIONÁRIO"
             android:id="@+id/textMenuFuncionario"
             android:layout_gravity="center"
             android:textSize="20dp"
@@ -34,21 +35,22 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.5">
 
         <ImageButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/MenuClienteButton"
             android:layout_gravity="center"
-            android:background="@drawable/item03"/>
+            android:background="@drawable/item03"
+            android:onClick="AcessarMenuCliente"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MENU CLIENTE"
+            android:text="CLIENTE"
             android:id="@+id/textView5"
             android:layout_gravity="center"
             android:textSize="20dp"

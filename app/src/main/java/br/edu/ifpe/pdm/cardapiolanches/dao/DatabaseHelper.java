@@ -32,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " qt_solicitada TEXT, preco DOUBLE" +
                 " FOREIGN KEY(pedidos_id) REFERENCES pedidos(_id)," +
                 " FOREIGN KEY(produtos_id) REFERENCES produtos(_id));");
-
     }
 
     @Override

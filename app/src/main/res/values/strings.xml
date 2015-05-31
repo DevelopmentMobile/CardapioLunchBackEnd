@@ -31,4 +31,8 @@
     <string name="title_activity_select">SelectActivity</string>
     <string name="title_activity_main_cliente">MainClienteActivity</string>
     <string name="title_activity_rodape_">Rodape_Activity</string>
+    <string name="garcom">Garçom</string>
+    <string name="cozinheiro">Conzinheiro</string>
+    <string name="cadastrar">Cadastrar?</string>
+    <string name="messagemerrologin">Usuario e/ou Senha Incorreta(s)!</string>
 </resources>

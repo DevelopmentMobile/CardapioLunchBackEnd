@@ -3,6 +3,8 @@
 
     <item name="button_avancar_pedidos_list" type="id"/>
     <item name="button_adicionar_pedidos_list" type="id"/>
+    <item name="garcom" type="id">Garçom</item>
+    <item name="conzinheiro" type="id">Conzinheiro</item>
 
 
 </resources>

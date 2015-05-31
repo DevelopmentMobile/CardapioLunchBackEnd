@@ -38,9 +38,10 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
-            <meta-data
+           <!-- <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.edu.ifpe.pdm.cardapiolanches.SelectActivity" />
+                android:value="br.edu.ifpe.pdm.cardapiolanches.SelectActivity" />-->
+
         </activity>
         <activity
             android:name=".Dashboard"
@@ -97,6 +98,11 @@
         <activity
             android:name=".Rodape_Activity"
             android:label="@string/title_activity_rodape_" >
+        </activity>
+
+        <activity
+            android:name=".queryresult.QueryResultFuncionarios"
+            android:label="Test" >
         </activity>
     </application>
 

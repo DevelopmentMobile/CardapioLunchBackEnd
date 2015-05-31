@@ -1,99 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/scrollView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/background">
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical">
+    android:background="#000000"
+    android:gravity="center_vertical"
+
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/logo"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffee01"
-        android:text="FUNCIONÁRIO LOGIN"
-        android:layout_gravity="center_horizontal"
-        android:textStyle="normal|bold|italic"
-        android:textSize="30dp"
-        android:textIsSelectable="false" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/logo_new"
-            />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffee01"
-        android:text="@string/usuario"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:textColor="#FFFFFF"
+        android:text="@string/usuario" />
     <EditText
         android:id="@+id/usuario"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:inputType="text"
-        android:text="leitor"
-        android:textSize="30dp"
-        android:layout_gravity="center">
+        android:text="admin"
+       >
         <requestFocus />
     </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffee01"
-        android:text="@string/senha"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:textColor="#FFFFFF"
+        android:text="@string/senha" />
     <EditText
         android:id="@+id/senha"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:inputType="textPassword"
-        android:text="123"
-        android:textSize="30dp"
-        android:layout_gravity="center" />
-    <CheckBox
-        android:id="@+id/manterConectado"
+        android:text="admin"
+       />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/manter_conectado"
-        android:textColor="#ffffee01"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:id="@+id/tipoUsuario"
+        android:orientation="horizontal"
+        >
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="entrarOnClick"
-        android:text="@string/entrar"
-        android:textSize="30dp" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/garcom"
+            android:checked="true"
+            android:text="@string/garcom"
+            android:textColor="#FFFFFF"/>
 
-    <include
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_rodape"
-        android:layout_gravity="center_horizontal" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/conzinheiro"
+            android:layout_marginLeft="30dp"
+            android:text="@string/cozinheiro"
+            android:textColor="#FFFFFF"
+            />
+    </RadioGroup>
 </LinearLayout>
-</ScrollView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+
+    >
+    <!--    <CheckBox
+          android:id="@+id/manterConectado"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text=""
+           android:background="#FFFFFF"
+
+        />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="#FFFFFF"
+           android:text="@string/manter_conectado" />-->
+</LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/btAcessar"
+        android:text="@string/entrar"
+    />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/btCadastrar"
+        android:text="@string/cadastrar" />
+
+    <!--<Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:onClick="entrarOnClick"
+        android:text="@string/acessar_facebook" />-->
+
+
+
+</LinearLayout>

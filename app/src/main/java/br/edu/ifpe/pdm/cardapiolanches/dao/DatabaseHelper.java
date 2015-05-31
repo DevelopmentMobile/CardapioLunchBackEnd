@@ -3,84 +3,148 @@ package br.edu.ifpe.pdm.cardapiolanches.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Richardson on 03/05/2015.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String DBPATH = "/data/data/br.edu.ifpe.pdm.cardapiolanches/databases/";
+    private static final String BANCO_DADOS = "cardapioapp";
 
-    private static final String BANCO_DADOS = "CardapioLuncher";
     private static int VERSAO = 1;
     public DatabaseHelper(Context context) {
+
         super(context, BANCO_DADOS, null, VERSAO);
+
+
+
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE usuarios (_id INTEGER PRIMARY KEY," +
-                " login TEXT, senha TEXT, nome TEXT, fone TEXT );");
-        db.execSQL("CREATE TABLE pagamentos (_id INTEGER PRIMARY KEY," +
-                " num_verificador TEXT, quantidade DOUBLE" +
-                " FOREIGN KEY(usuario_id) REFERENCES usuario(_id));");
-        db.execSQL("CREATE TABLE pedidos (_id INTEGER PRIMARY KEY," +
-                " date_pedido DATE, data_entrega DATE, status_pedido TEXT" +
-                " FOREIGN KEY(usuario_id) REFERENCES usuario(_id));");
-        db.execSQL("CREATE TABLE produtos (_id INTEGER PRIMARY KEY," +
-                " nome_produto TEXT, preco DOUBLE, categoria TEXT," +
-                " medida TEXT);");
-        db.execSQL("CREATE TABLE detalhes_pedidos (_id INTEGER PRIMARY KEY," +
-                " qt_solicitada TEXT, preco DOUBLE" +
-                " FOREIGN KEY(pedidos_id) REFERENCES pedidos(_id)," +
-                " FOREIGN KEY(produtos_id) REFERENCES produtos(_id));");
+
+
+        //  db.execSQL(Insert_Data);
+        db.execSQL("CREATE TABLE funcionario (" +
+                "    _id integer NOT NULL PRIMARY KEY," +
+                "    login TEXT UNIQUE," +
+                "    senha TEXT NOT NULL," +
+                "    tipo_funcionario integer NOT NULL" +
+                ");");
+
+        db.execSQL("CREATE TABLE pacote (" +
+                "    _id integer NOT NULL  PRIMARY KEY," +
+                "    nome_pacote text NOT NULL, " +
+                "    tipo_pacote integer NOT NULL, " +
+                "    descricao_pacote text  " +
+                ");");
+
+        db.execSQL("CREATE TABLE pedido_item (" +
+                "    _id integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "    produto_id integer," +
+                "    pacote_id integer," +
+                "    pedido_id integer NOT NULL," +
+                "    status_pedido integer NOT NULL," +
+                "    FOREIGN KEY (pedido_id) REFERENCES pedido (_id)," +
+                "    FOREIGN KEY (produto_id) REFERENCES produto (_id)," +
+                "    FOREIGN KEY (pacote_id) REFERENCES pacote (_id)" +
+                ");");
+
+        db.execSQL("CREATE TABLE pedido (" +
+                "    _id integer NOT NULL  PRIMARY KEY AUTOINCREMENT," +
+                "    tempo_total_pedido integer NOT NULL," +
+                "    num_mesa integer NOT NULL," +
+                "    funcionario_id integer NOT NULL," +
+                "    FOREIGN KEY (funcionario_id) REFERENCES funcionario (_id) " +
+                ");");
+
+        db.execSQL("CREATE TABLE produto (" +
+                "    _id integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "    unidade_estoque integer NOT NULL," +
+                "    nome text UNIQUE," +
+                "    preco decimal(6,2) NOT NULL," +
+                "    descricao text," +
+                "    nome_imagem text," +
+                "    tempo_pronto_produto integer NOT NULL" +
+                ");");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // db.execSQL("ALTER TABLE gasto ADD COLUMN pessoa TEXT");
+
+        db.execSQL("DROP TABLE IF EXISTS " + Funcionario.TABELA);
+        onCreate(db);
+
+
+
+
     }
 
 
-    public static class Login {
-        public static final String TABELA = "usuarios";
+    public static class Funcionario {
+
+        public static final String TABELA = "funcionario";
         public static final String _ID = "_id";
         public static final String LOGIN = "login";
+        public static final String SENHA = "senha";
+        public static final String TIPO_FUNCIONARIO= "tipo_funcionario";
+        public static final String[] COLUNAS = new String[]{
+                _ID, LOGIN, SENHA,TIPO_FUNCIONARIO  };
+    }
+    public static class Pacote {
+
+        public static final String TABELA = "pacote";
+        public static final String _ID = "_id";
+        public static final String NOME_PACOTE = "nome_pacote";
+        public static final String TIPO_PACOTE = "tipo_pacote";
+        public static final String DESCRICAO_PACOTE = " descricao_pacote";
+        public static final String[] COLUNAS = new String[]{
+                _ID, NOME_PACOTE,TIPO_PACOTE, DESCRICAO_PACOTE};
+    }
+
+
+    public static class Pedido{
+        public static final String TABELA = "pedido";
+        public static final String _ID = "_id";
+        public static final String TEMPO_TOTAL_PEDIDO = "tempo_total_pedido";
+        public static final String NUM_MESA = "num_mesa";
+        public static final String FUNCIONARIO_ID = "funcionario_id";
+
+        public static final String[] COLUNAS = new String[]{
+                _ID,TEMPO_TOTAL_PEDIDO , NUM_MESA, FUNCIONARIO_ID,
+        };
+    }
+
+    public static class Produto{
+        public static final String TABELA = "produto";
+        public static final String _ID = "_id";
+        public static final String UNIDADE_ESTOQUE = "unidade_estoque";
         public static final String NOME = "nome";
-        public static final String FONE = "fone";
-        public static final String[] COLUNAS = new String[]{
-                _ID, LOGIN, NOME, FONE };
-    }
-
-    public static class Pedidos{
-        public static final String TABELA = "pedidos";
-        public static final String _ID = "_id";
-        public static final String DT_PEDIDO = "date_pedido";
-        public static final String DT_ENTREGA = "data_entrega";
-        public static final String STATUS_PEDIDO = "status_pedido";
+        public static final String PRECO = "preco";
         public static final String DESCRICAO = "descricao";
+        public static final String NOME_IMAGEM = "nome_imagem";
+        public static final String TEMPO_PRONTO_PRODUTO = "tempo_pronto_produto";
+
+
+
         public static final String[] COLUNAS = new String[]{
-                _ID, DT_PEDIDO, DT_ENTREGA, STATUS_PEDIDO, DESCRICAO
+                _ID, UNIDADE_ESTOQUE, NOME, PRECO, DESCRICAO,NOME_IMAGEM,TEMPO_PRONTO_PRODUTO,
         };
     }
 
-    public static class Produtos{
-        public static final String TABELA = "produtos";
+    public static class PedidoItem{
+        public static final String TABELA = "pedido_item";
         public static final String _ID = "_id";
-        public static final String NOME_PRODUTO = "nome_produto";
-        public static final String PRECO = "preco";
-        public static final String CATEGORIA = "categoria";
-        public static final String MEDIDA = "medida";
-        public static final String[] COLUNAS = new String[]{
-                _ID, NOME_PRODUTO, PRECO, CATEGORIA, MEDIDA
-        };
-    }
+        public static final String PEDIDO_ID = "pedido_id";
+        public static final String PRODUTO_ID = "produto_id";
+        public static final String PACOTE_ID = "pacote_id";
+        public static final String STATUS_PEDIDO = "status_pedido";
 
-    public static class DetalhesPedidos{
-        public static final String TABELA = "detalhes_pedidos";
-        public static final String _ID = "_id";
-        public static final String QT_SOLICITADA = "qt_solicitada";
-        public static final String PRECO = "preco";
         public static final String[] COLUNAS = new String[]{
-                _ID, QT_SOLICITADA, PRECO
+                _ID, PEDIDO_ID, PRODUTO_ID,PACOTE_ID,STATUS_PEDIDO
         };
     }
 

@@ -7,7 +7,7 @@ public class Pedido {
 
     private Integer _ID ;
     private Integer TEMPO_TOTAL_PEDIDO ;
-    private Integer NUM_MESA;
+    private Integer NUM_MESA =1;
     private Integer FUNCIONARIO_ID;
 
     public Integer get_ID() {

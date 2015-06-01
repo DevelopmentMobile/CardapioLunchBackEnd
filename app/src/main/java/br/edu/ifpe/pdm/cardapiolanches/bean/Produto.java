@@ -11,7 +11,17 @@ public class Produto {
    private Float  PRECO;
    private String DESCRICAO;
    private String NOME_IMAGEM;
+
    private Integer  TEMPO_PRONTO_PRODUTO;
+   private String CATEGORIA;
+
+    public String getCATEGORIA() {
+        return CATEGORIA;
+    }
+
+    public void setCATEGORIA(String CATEGORIA) {
+        this.CATEGORIA = CATEGORIA;
+    }
 
     public Integer get_ID() {
         return _ID;

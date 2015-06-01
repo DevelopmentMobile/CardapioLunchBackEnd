@@ -30,14 +30,6 @@ public class ProdutoDAO {
 
     }
 
-   /* private SQLiteDatabase getDb() {
-        if (db == null) {
-
-            db = helper.getWritableDatabase();
-        }
-        return db;
-    }*/
-
     public void open() throws SQLException {
 
 
@@ -74,10 +66,10 @@ public class ProdutoDAO {
 
 
 
-    public Produto consultarProdutoLogin(String login){
+    public Produto consultarProdutoNome(String nomeProduto){
         Log.v(MY_TAG, "consultarFuncinarioLogin ProdutoDAO");
         Cursor cursor = db.query(DatabaseHelper.Produto.TABELA, DatabaseHelper.Produto.COLUNAS
-                , DatabaseHelper.Produto._ID + " = " + login, null,
+                , DatabaseHelper.Produto._ID + " = " + nomeProduto, null,
                 null, null, null);
         cursor.moveToFirst();
         Produto newUser = cursorToProduto(cursor);
@@ -85,12 +77,17 @@ public class ProdutoDAO {
         return  newUser;
     }
 
-    public long criarProduto(Produto Produto) {
+    public long criarProduto(Produto produto) {
         Log.v(MY_TAG, "criarProduto ProdutoDAO");
 
         ContentValues values = new ContentValues();
-
-
+        values.put(DatabaseHelper.Produto.NOME, produto.getNOME() );
+        values.put(DatabaseHelper.Produto.CATEGORIA, produto.getCATEGORIA());
+        values.put(DatabaseHelper.Produto.DESCRICAO, produto.getDESCRICAO() );
+        values.put(DatabaseHelper.Produto.NOME_IMAGEM, produto.getNOME_IMAGEM());
+        values.put(DatabaseHelper.Produto.PRECO, produto.getPRECO() );
+        values.put(DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO, produto.getTEMPO_PRONTO_PRODUTO() );
+        values.put(DatabaseHelper.Produto.UNIDADE_ESTOQUE, produto.getUNIDADE_ESTOQUE() );
 
 
         long insertId = db.insert(DatabaseHelper.Produto.TABELA, null,
@@ -105,6 +102,13 @@ public class ProdutoDAO {
         Log.v(MY_TAG, "cursorToProduto ProdutoDAO");
         Produto Produto = new Produto();
         Produto.set_ID(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Produto._ID)));
+        Produto.setNOME_IMAGEM(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Produto.NOME_IMAGEM)));
+        Produto.setNOME(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Produto.NOME)));
+        Produto.setCATEGORIA(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Produto.CATEGORIA)));
+        Produto.setDESCRICAO(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Produto.DESCRICAO)));
+        Produto.setPRECO(cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.Produto.PRECO)));
+        Produto.setTEMPO_PRONTO_PRODUTO(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO)));
+        Produto.setUNIDADE_ESTOQUE(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Produto.UNIDADE_ESTOQUE)));
 
 
         return Produto;
@@ -116,7 +120,7 @@ public class ProdutoDAO {
     public List<Produto> consultarTodosProduto() {
         Log.v(MY_TAG,"consultarTodosProduto ");
         // Cursor cursor = db.query(DatabaseHelper.Produto.TABELA, DatabaseHelper.Produto.COLUNAS,null,null,null,null,null);
-        Cursor cursor = db.rawQuery("SELECT * FROM " +  DatabaseHelper.Produto.TABELA, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " +  DatabaseHelper.Produto.TABELA + " ORDER BY " + DatabaseHelper.Produto.CATEGORIA + " ASC , " +  DatabaseHelper.Produto.NOME + " DESC " , null);
 
         List<Produto> ProdutoList = new ArrayList<Produto>();
 

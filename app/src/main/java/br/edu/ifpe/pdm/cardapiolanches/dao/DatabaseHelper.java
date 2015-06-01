@@ -67,7 +67,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    preco decimal(6,2) NOT NULL," +
                 "    descricao text," +
                 "    nome_imagem text," +
-                "    tempo_pronto_produto integer NOT NULL" +
+                "    tempo_pronto_produto integer NOT NULL," +
+                "    categoria text NOT NULL" +
                 ");");
 
     }
@@ -127,11 +128,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String DESCRICAO = "descricao";
         public static final String NOME_IMAGEM = "nome_imagem";
         public static final String TEMPO_PRONTO_PRODUTO = "tempo_pronto_produto";
+        public static final String CATEGORIA = "categoria";
 
 
 
         public static final String[] COLUNAS = new String[]{
-                _ID, UNIDADE_ESTOQUE, NOME, PRECO, DESCRICAO,NOME_IMAGEM,TEMPO_PRONTO_PRODUTO,
+                _ID, UNIDADE_ESTOQUE, NOME, PRECO, DESCRICAO,NOME_IMAGEM,TEMPO_PRONTO_PRODUTO,CATEGORIA
         };
     }
 

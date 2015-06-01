@@ -35,4 +35,10 @@
     <string name="cozinheiro">Conzinheiro</string>
     <string name="cadastrar">Cadastrar?</string>
     <string name="messagemerrologin">Usuario e/ou Senha Incorreta(s)!</string>
+    <string name="inserir">Inserir</string>
+    <string name="atualizar">Atualizar</string>
+    <string name="apagar">Apagar</string>
+    <string name="consultar">Consultar</string>
+
+
 </resources>

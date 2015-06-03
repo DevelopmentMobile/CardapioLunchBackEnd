@@ -41,4 +41,9 @@ public class Funcionario {
     public void setTIPO_FUNCIONARIO(Integer TIPO_FUNCIONARIO) {
         this.TIPO_FUNCIONARIO = TIPO_FUNCIONARIO;
     }
+
+    public String toString()
+    {
+        return(getLOGIN() + " - " + getTIPO_FUNCIONARIO() );
+    }
 }

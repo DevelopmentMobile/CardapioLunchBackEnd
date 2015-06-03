@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.ProdutoActivityCRUD">
+    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.PacoteActivityCRUD">
 
-<!--Nome Produto-->
+    <!--Nome-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,41 +15,19 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Nome do Produto: " />
+            android:text="Nome do Pacote: " />
 
         />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/nome"
+            android:id="@+id/nome_pacote"
             android:inputType="text"
             />
     </LinearLayout>
 
-<!--Preço-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:text="Preço: " />
-
-        />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/preco"
-            android:inputType="numberDecimal"
-
-            />
-    </LinearLayout>
-    <!--Descrição-->
+    <!--Descricao-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,35 +44,13 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/descricao"
-            android:inputType="text"
-
-            />
-    </LinearLayout>
-<!--Imagem Produto-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:text="Imagem do produto: " />
-
-        />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/nome_imagem"
+            android:id="@+id/descricao_pacote"
             android:inputType="text"
 
             />
     </LinearLayout>
 
-
+    <!--Preco-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,19 +60,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Tempo de Entrega: " />
+            android:text="Preço: " />
 
         />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tempo_pronto_produto"
-            android:inputType="number"
-
+            android:id="@+id/preco_pacote"
+            android:inputType="numberDecimal"
+            android:numeric="decimal"
             />
     </LinearLayout>
-    <!--Categoria-->
+
+    <!--Tipo Pacote-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -126,40 +83,56 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Categoria: " />
+            android:text="Tipo de Pacote: " />
 
         />
 
-        <EditText
+        <Spinner
+            android:id="@+id/tipo_pacote"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/categoria"
-            android:inputType="text"
-
-            />
+            android:layout_height="wrap_content"
+         > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+        </Spinner>
     </LinearLayout>
-<!--Unidade em Estoque-->
+
+
+    <!--Tipo Pacote-->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Unidade em Estoque: " />
+            android:text="Produto: " />
 
         />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/unidade_estoque"
-            android:inputType="number"
+        <Spinner
+            android:id="@+id/produto_pacote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+        </Spinner>
 
+        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inserir Produto"
+            android:onClick="buttonAddProduto"
             />
+
+
     </LinearLayout>
+
 
 
 
@@ -173,7 +146,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-          android:text="@string/inserir"
+            android:text="@string/inserir"
             android:layout_weight="1"
             android:onClick="buttonInsertClick"
             />

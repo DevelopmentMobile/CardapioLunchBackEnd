@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
 
-        //  db.execSQL(Insert_Data);
         db.execSQL("CREATE TABLE funcionario (" +
                 "    _id integer NOT NULL PRIMARY KEY," +
                 "    login TEXT UNIQUE," +
@@ -35,29 +34,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ");");
 
         db.execSQL("CREATE TABLE pacote (" +
-                "    _id integer NOT NULL  PRIMARY KEY," +
+                "    _id integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "    nome_pacote text NOT NULL, " +
                 "    tipo_pacote integer NOT NULL, " +
-                "    descricao_pacote text  " +
+                "    descricao_pacote text, " +
+                "    preco decimal(6,2) NOT NULL " +
                 ");");
 
-        db.execSQL("CREATE TABLE pedido_item (" +
-                "    _id integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                "    produto_id integer," +
-                "    pacote_id integer," +
-                "    pedido_id integer NOT NULL," +
-                "    status_pedido integer NOT NULL," +
-                "    FOREIGN KEY (pedido_id) REFERENCES pedido (_id)," +
-                "    FOREIGN KEY (produto_id) REFERENCES produto (_id)," +
-                "    FOREIGN KEY (pacote_id) REFERENCES pacote (_id)" +
+        db.execSQL("CREATE TABLE pacote_produto (" +
+                "    _id integer NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                "   pacote_id integer NOT NULL, " +
+                "   produto_id integer NOT NULL, " +
+                "   FOREIGN KEY (produto_id) REFERENCES produto (_id), " +
+                "   FOREIGN KEY (pacote_id) REFERENCES pacote (_id) " +
                 ");");
 
         db.execSQL("CREATE TABLE pedido (" +
-                "    _id integer NOT NULL  PRIMARY KEY AUTOINCREMENT," +
-                "    tempo_total_pedido integer NOT NULL," +
+                "   _id integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
+               "    produto_id integer," +
+               "    pacote_id integer," +
+                "    tempo_total_pedido integer," +
                 "    num_mesa integer NOT NULL," +
-                "    funcionario_id integer NOT NULL," +
-                "    FOREIGN KEY (funcionario_id) REFERENCES funcionario (_id) " +
+                "    funcionario_id integer," +
+                "    status_pedido integer," +
+                "    quantidade integer NOT NULL," +
+                "   FOREIGN KEY (produto_id) REFERENCES produto (_id)," +
+               "    FOREIGN KEY (pacote_id) REFERENCES pacote (_id)," +
+                "   FOREIGN KEY (funcionario_id) REFERENCES funcionario (_id) " +
                 ");");
 
         db.execSQL("CREATE TABLE produto (" +
@@ -101,21 +104,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String _ID = "_id";
         public static final String NOME_PACOTE = "nome_pacote";
         public static final String TIPO_PACOTE = "tipo_pacote";
-        public static final String DESCRICAO_PACOTE = " descricao_pacote";
+        public static final String DESCRICAO_PACOTE = "descricao_pacote";
+        public static final String PRECO = "preco";
         public static final String[] COLUNAS = new String[]{
-                _ID, NOME_PACOTE,TIPO_PACOTE, DESCRICAO_PACOTE};
+                _ID, NOME_PACOTE,TIPO_PACOTE, DESCRICAO_PACOTE,PRECO};
     }
+
+
+    public static class PacoteProduto {
+
+        public static final String TABELA = "pacote_produto";
+        public static final String _ID = "_id";
+        public static final String PACOTE_ID = "pacote_id";
+        public static final String PRODUTO_ID = "produto_id";
+
+        public static final String[] COLUNAS = new String[]{
+                _ID, PACOTE_ID,PRODUTO_ID};
+    }
+
 
 
     public static class Pedido{
         public static final String TABELA = "pedido";
         public static final String _ID = "_id";
         public static final String TEMPO_TOTAL_PEDIDO = "tempo_total_pedido";
+        public static final String QUANTIDADE = "quantidade";
         public static final String NUM_MESA = "num_mesa";
         public static final String FUNCIONARIO_ID = "funcionario_id";
+        public static final String PRODUTO_ID = "funcionario_id";
+        public static final String PACOTE_ID = "funcionario_id";
+        public static final String STATUS_PEDIDO = "status_pedido";
+
 
         public static final String[] COLUNAS = new String[]{
-                _ID,TEMPO_TOTAL_PEDIDO , NUM_MESA, FUNCIONARIO_ID,
+                _ID,TEMPO_TOTAL_PEDIDO , NUM_MESA, FUNCIONARIO_ID,QUANTIDADE,PRODUTO_ID,PACOTE_ID,STATUS_PEDIDO
         };
     }
 
@@ -137,17 +159,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         };
     }
 
-    public static class PedidoItem{
-        public static final String TABELA = "pedido_item";
-        public static final String _ID = "_id";
-        public static final String PEDIDO_ID = "pedido_id";
-        public static final String PRODUTO_ID = "produto_id";
-        public static final String PACOTE_ID = "pacote_id";
-        public static final String STATUS_PEDIDO = "status_pedido";
 
-        public static final String[] COLUNAS = new String[]{
-                _ID, PEDIDO_ID, PRODUTO_ID,PACOTE_ID,STATUS_PEDIDO
-        };
-    }
 
 }

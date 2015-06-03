@@ -1,7 +1,6 @@
 package br.edu.ifpe.pdm.cardapiolanches;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 
 import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
 import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioDAO;
-import br.edu.ifpe.pdm.cardapiolanches.queryresult.QueryResultFuncionarios;
+import br.edu.ifpe.pdm.cardapiolanches.view.admin.QueryResultFuncionarios;
 import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
 
 
@@ -71,19 +70,19 @@ public class Login extends ActionBarActivity {
                 Funcionario.setLOGIN("admin");*/
 
 
-        int tipo = rgTipoUsuario.getCheckedRadioButtonId();
-
-        if (tipo == R.id.garcom) {
-            Funcionario.setTIPO_FUNCIONARIO(Constantes.GARCOM);
-        } else if (tipo == R.id.conzinheiro) {
-            Funcionario.setTIPO_FUNCIONARIO(Constantes.CONZINHEIRO);
-        }
       //  Funcionario.setTIPO_FUNCIONARIO(99);
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                int tipo = rgTipoUsuario.getCheckedRadioButtonId();
+
+                if (tipo == R.id.garcom) {
+                    Funcionario.setTIPO_FUNCIONARIO(Constantes.GARCOM);
+                } else if (tipo == R.id.conzinheiro) {
+                    Funcionario.setTIPO_FUNCIONARIO(Constantes.CONZINHEIRO);
+                }
 
                 Funcionario.setSENHA(senha.getText().toString());
                 Funcionario.setLOGIN(usuario.getText().toString());

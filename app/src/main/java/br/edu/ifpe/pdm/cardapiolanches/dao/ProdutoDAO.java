@@ -139,4 +139,97 @@ public class ProdutoDAO {
     }
 
 
+
+
+
+
+    public List<Produto> consultarTodosProdutosOrdenadoCategoriaMenorPreco() {
+        Log.v(MY_TAG,"consultarTodosProdutosOrdenadoCategoriaMenorPreco ");
+        // Cursor cursor = db.query(DatabaseHelper.Produto.TABELA, DatabaseHelper.Produto.COLUNAS,null,null,null,null,null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " +  DatabaseHelper.Produto.TABELA + " ORDER BY " + DatabaseHelper.Produto.CATEGORIA + " ASC , " + DatabaseHelper.Produto.PRECO + " ASC , "  + DatabaseHelper.Produto.NOME + " ASC " , null);
+
+        List<Produto> ProdutoList = new ArrayList<Produto>();
+
+        if (cursor.getCount() > 0) {
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Produto newUser = cursorToProduto(cursor);
+                ProdutoList.add(newUser);
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+        }
+        return ProdutoList;
+    }
+
+
+    public List<Produto> consultarTodosProdutosOrdenadoCategoriaMaiorPreco() {
+        Log.v(MY_TAG,"consultarTodosProdutosOrdenadoCategoriaMaiorPreco ");
+        // Cursor cursor = db.query(DatabaseHelper.Produto.TABELA, DatabaseHelper.Produto.COLUNAS,null,null,null,null,null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " +  DatabaseHelper.Produto.TABELA + " ORDER BY " + DatabaseHelper.Produto.CATEGORIA + " DESC , " + DatabaseHelper.Produto.PRECO + " ASC , "  + DatabaseHelper.Produto.NOME + " ASC " , null);
+
+        List<Produto> ProdutoList = new ArrayList<Produto>();
+
+        if (cursor.getCount() > 0)  {
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Produto newUser = cursorToProduto(cursor);
+                ProdutoList.add(newUser);
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+        }
+        return ProdutoList;
+    }
+
+    public List<Produto> consultarProdutoPorPacote(String idPacote){
+    String[] whereArgs = new String[]{idPacote};
+    Cursor cursor = db.rawQuery("SELECT * FROM " +  DatabaseHelper.Produto.TABELA + " INNER JOIN " +
+            DatabaseHelper.PacoteProduto.TABELA + " ON "+    DatabaseHelper.Produto.TABELA + "." + DatabaseHelper.Produto._ID +
+            "="+DatabaseHelper.PacoteProduto._ID + " WHERE " + DatabaseHelper.PacoteProduto.TABELA + "." + DatabaseHelper.PacoteProduto._ID , whereArgs);
+
+    List<Produto> ProdutoList = new ArrayList<Produto>();
+
+    if (cursor.getCount() >0 && cursor != null) {
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Produto newUser = cursorToProduto(cursor);
+            ProdutoList.add(newUser);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+    }
+    return ProdutoList;
+}
+
+    public List<Produto> consultarProdutoPorPedido(String idPedido){
+        String[] whereArgs = new String[]{idPedido};
+        Cursor cursor = db.rawQuery("SELECT * FROM " +  DatabaseHelper.Produto.TABELA + " INNER JOIN " +
+                DatabaseHelper.Pedido.TABELA + " ON "+    DatabaseHelper.Produto.TABELA + "." + DatabaseHelper.Produto._ID +
+                "="+DatabaseHelper.Pedido._ID + " WHERE " + DatabaseHelper.Pedido.TABELA + "." + DatabaseHelper.Pedido._ID , whereArgs);
+
+        List<Produto> ProdutoList = new ArrayList<Produto>();
+
+        if (cursor.getCount() >0 && cursor != null) {
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Produto newUser = cursorToProduto(cursor);
+                ProdutoList.add(newUser);
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+        }
+        return ProdutoList;
+    }
+
+
+
 }

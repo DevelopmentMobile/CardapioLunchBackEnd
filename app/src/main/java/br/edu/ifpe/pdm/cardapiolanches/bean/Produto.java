@@ -78,4 +78,9 @@ public class Produto {
     public void setTEMPO_PRONTO_PRODUTO(Integer TEMPO_PRONTO_PRODUTO) {
         this.TEMPO_PRONTO_PRODUTO = TEMPO_PRONTO_PRODUTO;
     }
+
+    public String toString()
+    {
+        return( getNOME() + " - " + getPRECO() + " - " + getCATEGORIA()  + " - "  + getUNIDADE_ESTOQUE());
+    }
 }

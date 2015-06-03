@@ -118,6 +118,8 @@ public class FuncionarioDAO {
         return  newUser;
     }
 
+
+
     public List<Funcionario> consultarTodosFuncionario() {
         Log.v(MY_TAG,"consultarTodosFuncionario ");
         // Cursor cursor = db.query(DatabaseHelper.Funcionario.TABELA, DatabaseHelper.Funcionario.COLUNAS,null,null,null,null,null);

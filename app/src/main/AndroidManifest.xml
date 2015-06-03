@@ -35,14 +35,7 @@
             android:name=".Pedidos"
             android:label="@string/title_activity_pedidos" >
         </activity>
-        <activity
-            android:name=".Login"
-            android:label="@string/title_activity_login" >
-           <!-- <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.edu.ifpe.pdm.cardapiolanches.SelectActivity" />-->
 
-        </activity>
         <activity
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard" >
@@ -100,12 +93,34 @@
             android:label="@string/title_activity_rodape_" >
         </activity>
 
+    <!-- ************************************* FUNCIONARIO *************************************-->
+
         <activity
-            android:name=".queryresult.QueryResultFuncionarios"
+            android:name=".Login"
+            android:label="@string/title_activity_login" >
+            <!-- <meta-data
+                 android:name="android.support.PARENT_ACTIVITY"
+                 android:value="br.edu.ifpe.pdm.cardapiolanches.SelectActivity" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+     <!-- ************************************* FIM ********************************************-->
+
+
+        <!--CRUD ADMINISTRADOR BANCOD DE DADOS-->
+        <activity
+            android:name=".view.admin.QueryResultFuncionarios"
             android:label="Test" >
         </activity>
+
+
+
         <activity
-            android:name="br.edu.ifpe.pdm.cardapiolanches.view.admin.crud.ProdutoActivityCRUD"
+            android:name=".view.admin.ProdutoActivityCRUD"
             android:label="WelcomeProductActivityCRUD" >
          <!--   <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -115,7 +130,7 @@
         </activity>
 
         <activity
-            android:name="br.edu.ifpe.pdm.cardapiolanches.view.admin.crud.QueryResultActivity"
+            android:name=".view.admin.QueryResultActivity"
             android:label="WelcomeProductActivityCRUD" >
             <intent-filter>
                 <action android:name="br.edu.ifpe.pdm.cardapiolanches.view.admin.crud.QueryResultActivity" />
@@ -125,13 +140,45 @@
         </activity>
 
         <activity
-            android:name="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasListExpadableActivity"
-            android:label="WelcomeProductActivityCRUD" >
-            <intent-filter>
+            android:name=".view.admin.PacoteActivityCRUD"
+            android:label="PacoteActivityCRUD" >
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+
+        <activity
+            android:name=".view.admin.PedidoActivityCRUD"
+            android:label="PedidoActivityCRUD" >
+            <!-- <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".view.admin.DashboardAdmin"
+            android:label="CLDashBoardAdmin" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+
+        <!-- </FINAL CRUD ADMINISTRADOR BANCOD DE DADOS>-->
+
+        <activity
+            android:name="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasListExpadableActivity"
+            android:label="WelcomeProductActivityCRUD" >
+   <!--         <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
 
 

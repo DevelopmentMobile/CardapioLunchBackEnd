@@ -10,6 +10,15 @@ public class Pacote {
     private String NOME_PACOTE;
     private Integer TIPO_PACOTE;
     private String DESCRICAO_PACOTE;
+    private Float PRECO;
+
+    public Float getPRECO() {
+        return PRECO;
+    }
+
+    public void setPRECO(Float PRECO) {
+        this.PRECO = PRECO;
+    }
 
     public Integer get_ID() {
         return _ID;
@@ -41,5 +50,11 @@ public class Pacote {
 
     public void setDESCRICAO_PACOTE(String DESCRICAO_PACOTE) {
         this.DESCRICAO_PACOTE = DESCRICAO_PACOTE;
+    }
+
+
+    public String toString()
+    {
+        return( NOME_PACOTE );
     }
 }

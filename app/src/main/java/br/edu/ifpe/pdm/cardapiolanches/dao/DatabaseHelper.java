@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 /**
  * Created by Richardson on 03/05/2015.
  */
@@ -14,17 +13,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static int VERSAO = 1;
     public DatabaseHelper(Context context) {
-
         super(context, BANCO_DADOS, null, VERSAO);
-
-
-
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
 
         db.execSQL("CREATE TABLE funcionario (" +
                 "    _id integer NOT NULL PRIMARY KEY," +
@@ -73,7 +66,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    tempo_pronto_produto integer NOT NULL," +
                 "    categoria text NOT NULL" +
                 ");");
-
     }
 
     @Override
@@ -81,15 +73,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS " + Funcionario.TABELA);
         onCreate(db);
-
-
-
-
     }
 
-
     public static class Funcionario {
-
         public static final String TABELA = "funcionario";
         public static final String _ID = "_id";
         public static final String LOGIN = "login";
@@ -98,8 +84,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String[] COLUNAS = new String[]{
                 _ID, LOGIN, SENHA,TIPO_FUNCIONARIO  };
     }
-    public static class Pacote {
 
+    public static class Pacote {
         public static final String TABELA = "pacote";
         public static final String _ID = "_id";
         public static final String NOME_PACOTE = "nome_pacote";
@@ -110,19 +96,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 _ID, NOME_PACOTE,TIPO_PACOTE, DESCRICAO_PACOTE,PRECO};
     }
 
-
     public static class PacoteProduto {
-
         public static final String TABELA = "pacote_produto";
         public static final String _ID = "_id";
         public static final String PACOTE_ID = "pacote_id";
         public static final String PRODUTO_ID = "produto_id";
-
         public static final String[] COLUNAS = new String[]{
                 _ID, PACOTE_ID,PRODUTO_ID};
     }
-
-
 
     public static class Pedido{
         public static final String TABELA = "pedido";
@@ -134,7 +115,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String PRODUTO_ID = "funcionario_id";
         public static final String PACOTE_ID = "funcionario_id";
         public static final String STATUS_PEDIDO = "status_pedido";
-
 
         public static final String[] COLUNAS = new String[]{
                 _ID,TEMPO_TOTAL_PEDIDO , NUM_MESA, FUNCIONARIO_ID,QUANTIDADE,PRODUTO_ID,PACOTE_ID,STATUS_PEDIDO
@@ -152,13 +132,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String TEMPO_PRONTO_PRODUTO = "tempo_pronto_produto";
         public static final String CATEGORIA = "categoria";
 
-
-
         public static final String[] COLUNAS = new String[]{
                 _ID, UNIDADE_ESTOQUE, NOME, PRECO, DESCRICAO,NOME_IMAGEM,TEMPO_PRONTO_PRODUTO,CATEGORIA
         };
     }
-
-
-
 }

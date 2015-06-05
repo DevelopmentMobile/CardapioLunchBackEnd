@@ -14,35 +14,34 @@
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#015488">
 
         <TextView
             android:id="@+id/fazer_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="80dp"
             android:clickable="true"
             android:drawableTop="@drawable/fazer_pedido"
 
             android:text="@string/fazer_pedido"
             android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="top|left" />
         <TextView
             android:id="@+id/acompanhar_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@id/fazer_pedido"
-            android:layout_marginRight="50dp"
             android:clickable="true"
             android:drawableTop="@drawable/rastreio"
 
             android:text="@string/acompanhar_pedido"
             android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="top|right" />
 
         <TextView
             android:id="@+id/avaliar_estabelecimento"
@@ -50,13 +49,13 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/fazer_pedido"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="120dp"
             android:clickable="true"
             android:drawableTop="@drawable/avaliar"
 
             android:text="@string/avaliar_estabelecimento"
             android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="left|bottom" />
 
         <TextView
             android:id="@+id/desconto"
@@ -69,7 +68,8 @@
 
             android:text="@string/ofertas"
             android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="bottom|right" />
 
 
 

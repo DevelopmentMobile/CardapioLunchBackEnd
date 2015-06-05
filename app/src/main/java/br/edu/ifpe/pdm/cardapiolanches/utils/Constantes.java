@@ -13,9 +13,4 @@ public class Constantes {
 
     public static final Integer PACOTE_PROMOCIONAL = 1;
     public static final Integer PACOTE_PADRAO = 2;
-
-
-
-
-
 }

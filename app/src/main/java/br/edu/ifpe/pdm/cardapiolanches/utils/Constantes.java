@@ -10,7 +10,10 @@ public class Constantes {
     public static final Integer PEDIDO_REALIZADO = 1;
     public static final Integer PEDIDO_ATENDIDO = 2;
     public static final Integer PEDIDO_PRONTO = 3;
+    public static final Integer PEDIDO_CONFIRMACAO_PAGAMENTO = 4;
+    public static final Integer PEDIDO_REALIZACAO_PAGAMENTO = 5;
 
     public static final Integer PACOTE_PROMOCIONAL = 1;
     public static final Integer PACOTE_PADRAO = 2;
+    public static final Integer NUM_MESA = 5;
 }

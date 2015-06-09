@@ -7,7 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasListExpadableActivity" >
+    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasProdutosListActivity"
+    >
+    <!--tools:context="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasListExpadableActivity" > -->
 
     <ExpandableListView
         android:id="@+id/listView"

@@ -51,6 +51,20 @@
         <item>Pronto</item>
     </string-array>
 
-<string name="spinner_header">Teste</string>
+    <string name="spinner_header">Teste</string>
+    <string name="total_pedidos_menu_lista_produtos">Total Pedidos: %1$s</string>
+    <string name="valor_total_pedido_pago">Valor Total: %1$s</string>
+    <string name="tempo_total_pronto_pedido_pago">Tempo Total: %1$s</string>
+    <string name="pedido_produto_cliente">Pedido Produto Cliente</string>
+
+
+
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Acompanhamento Pedidos</item>
+        <item >Histórico de Pedidos</item>
+        <item >Configurações</item>
+        <item >Contato</item>
+    </string-array>
 
 </resources>

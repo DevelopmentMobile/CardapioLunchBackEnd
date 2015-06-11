@@ -81,6 +81,6 @@ public class Produto {
 
     public String toString()
     {
-        return( getNOME() + " - " + getPRECO() + " - " + getCATEGORIA()  + " - "  + getUNIDADE_ESTOQUE());
+        return( "Nome: "+ getNOME() + " | Preço: " + getPRECO() + " | Cat: " + getCATEGORIA()  + "| Tempo: "+ getTEMPO_PRONTO_PRODUTO() + " | Unid: " + getUNIDADE_ESTOQUE() );
     }
 }

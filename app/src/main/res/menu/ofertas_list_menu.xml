@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasProdutosListActivity">
 
+    <item android:id="@+id/fazer_pedido" android:title="Fazer Pedido"
+        android:orderInCategory="100" app:showAsAction="always" />
+
         <item android:id="@+id/filtro_categoria" android:title="Filtrar Categoria"
             android:orderInCategory="100" app:showAsAction="always" />
 

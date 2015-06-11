@@ -6,7 +6,7 @@
     tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.PedidoActivityCRUD">
 
 
-    <!--Numero_Mesa-->
+    <!--Id do Pedido-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +24,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/id_pedido"
+            android:inputType="number"
+            android:numeric="integer"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:text="Numero do pedido: " />
+
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/id_num_pedido"
             android:inputType="number"
             android:numeric="integer"
             />
@@ -73,7 +95,7 @@
             android:layout_height="match_parent"
             android:id="@+id/quantidade_pedido"
             android:inputType="number"
-            android:numeric="integer"
+            android:text="1"
 
             />
     </LinearLayout>
@@ -97,7 +119,8 @@
             android:layout_height="match_parent"
             android:id="@+id/total_pedido"
             android:inputType="number"
-            android:numeric="integer"
+
+            android:text="1"
 
             />
     </LinearLayout>

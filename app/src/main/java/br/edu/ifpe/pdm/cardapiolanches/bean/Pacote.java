@@ -1,5 +1,7 @@
 package br.edu.ifpe.pdm.cardapiolanches.bean;
 
+import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
+
 /**
  * Created by Richardson on 28/05/2015.
  */
@@ -55,6 +57,21 @@ public class Pacote {
 
     public String toString()
     {
-        return( NOME_PACOTE );
+        return(" Nome: " + getNOME_PACOTE()  + " | Tipo: " + tipPacote(getTIPO_PACOTE()) );
     }
+
+    public String tipPacote(Integer tipo){
+        String tipoTexto= "";
+
+            if (Constantes.PACOTE_PADRAO == tipo){
+                tipoTexto = "PADRÃO";
+            }else  if (Constantes.PACOTE_PROMOCIONAL == tipo){
+                tipoTexto = "PROMOCIONAL";
+            }
+
+        return tipoTexto;
+    }
+
 }
+
+

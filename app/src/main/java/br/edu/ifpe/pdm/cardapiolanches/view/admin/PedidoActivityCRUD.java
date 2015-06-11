@@ -58,17 +58,18 @@ public class PedidoActivityCRUD extends Activity {
         sFuncionario = (Spinner) findViewById(R.id.funcionario_pedido);
         sFuncionario.setAdapter(arrayAdapterfuncionario);
 
-/*
 
+/*
        DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS pedido" );
       //  db.execSQL("DROP TABLE IF EXISTS pedido_item" );
         db.execSQL("CREATE TABLE pedido (" +
                 "   _id integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "    num_pedido TEXT," +
                 "    produto_id integer," +
                 "    pacote_id integer," +
-                "    tempo_total_pedido integer," +
+                "  tempo_total_pedido integer," +
                 "    num_mesa integer NOT NULL," +
                 "    funcionario_id integer," +
                 "    status_pedido integer," +
@@ -118,41 +119,60 @@ public class PedidoActivityCRUD extends Activity {
         Toast toast = Toast.makeText(this,
                 "Registro adicionado. ID = " + newId, Toast.LENGTH_SHORT);
         toast.show();
+        String[] selectionArgs =  {Long.toString(newId)};
+        db.execSQL("UPDATE pedido SET num_pedido = CAST(num_mesa AS TEXT) || CAST(_id AS TEXT) WHERE _id = ?",selectionArgs);
+
+
     }
 
     public void buttonUpdateClick(View view) {
 
         int id_pedido = Integer.parseInt(
                 ((EditText) findViewById(R.id.id_pedido)).getText().toString());
-        int quantidade_pedido = Integer.parseInt(
+        int status =    ((Spinner)findViewById(R.id.status_pedido)).getSelectedItemPosition() +1;
+        int num_pedido = Integer.parseInt(
+                ((EditText) findViewById(R.id.id_num_pedido)).getText().toString());
+
+
+       /* int quantidade_pedido = Integer.parseInt(
                 ((EditText) findViewById(R.id.quantidade_pedido)).getText().toString());
 
         int tempo_pronto_Pedido =    Integer.parseInt(((EditText) findViewById(R.id.total_pedido)).getText().toString());
         int numero_mesa =    Integer.parseInt(((EditText) findViewById(R.id.numero_mesa)).getText().toString());
         int funcionario =   ((Funcionario) ((Spinner)findViewById(R.id.funcionario_pedido)).getSelectedItem()).get_ID();
-        int produto=   ((Produto)  ((Spinner)findViewById(R.id.produto_pedido)).getSelectedItem()).get_ID();
         int pacote =     ((Pacote)((Spinner)findViewById(R.id.pacote_pedido)).getSelectedItem()).get_ID();
         int status =    ((Spinner)findViewById(R.id.status_pedido)).getSelectedItemPosition() +1;
+        */
+
+
+         int produto=   ((Produto)  ((Spinner)findViewById(R.id.produto_pedido)).getSelectedItem()).get_ID();
+
+
 
 
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         ContentValues values = new ContentValues();
+        /*
         values.put(DatabaseHelper.Pedido.QUANTIDADE, quantidade_pedido);
         values.put(DatabaseHelper.Pedido.TEMPO_TOTAL_PEDIDO, tempo_pronto_Pedido);
         values.put(DatabaseHelper.Pedido.NUM_MESA,numero_mesa );
-        values.put(DatabaseHelper.Pedido.FUNCIONARIO_ID,funcionario );
-        values.put(DatabaseHelper.Pedido.PRODUTO_ID,produto );
-        values.put(DatabaseHelper.Pedido.PACOTE_ID,pacote);
+
+         values.put(DatabaseHelper.Pedido.FUNCIONARIO_ID,funcionario );
+            values.put(DatabaseHelper.Pedido.PACOTE_ID,pacote);
+        */
         values.put(DatabaseHelper.Pedido.STATUS_PEDIDO,status );
+        values.put(DatabaseHelper.Pedido.NUM_PEDIDO,num_pedido );
+        if(produto > 0){
+        values.put(DatabaseHelper.Pedido.PRODUTO_ID,produto );
+            }
 
         String selection = DatabaseHelper.Pedido._ID + " LIKE ?";
         String[] selectionArgs = {id_pedido+ "" };
         int count = db.update(DatabaseHelper.Pedido.TABELA, values, selection, selectionArgs);
-        Toast toast = Toast.makeText(this,
-                "Registros atualizados: " + count, Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this,"Registros atualizados: " + count, Toast.LENGTH_SHORT).show();
+
     }
 
     public void buttonDeleteClick(View view) {
@@ -178,6 +198,7 @@ public class PedidoActivityCRUD extends Activity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] projection = { DatabaseHelper.Pedido._ID,
+                DatabaseHelper.Pedido.NUM_PEDIDO,
                 DatabaseHelper.Pedido.NUM_MESA,
                         DatabaseHelper.Pedido.STATUS_PEDIDO,
                         DatabaseHelper.Pedido.QUANTIDADE,
@@ -198,6 +219,7 @@ public class PedidoActivityCRUD extends Activity {
         ArrayList<CharSequence> data = new ArrayList<CharSequence>();
         c.moveToFirst();
         String entry = " | " +  DatabaseHelper.Pedido._ID + " | " +
+                DatabaseHelper.Pedido.NUM_PEDIDO+ " | " +
                 DatabaseHelper.Pedido.NUM_MESA+ " | " +
                 DatabaseHelper.Pedido.STATUS_PEDIDO+ " | " +
                 DatabaseHelper.Pedido.QUANTIDADE+ " | " +
@@ -212,6 +234,7 @@ public class PedidoActivityCRUD extends Activity {
         while (!c.isAfterLast()) {
              entry += "\n | " + c.getInt(c.getColumnIndex( DatabaseHelper.Pedido._ID)) + " | ";
 
+            entry += c.getInt(                    c.getColumnIndex( DatabaseHelper.Pedido.NUM_PEDIDO))  + " | ";
             entry += c.getInt(                    c.getColumnIndex( DatabaseHelper.Pedido.NUM_MESA))  + " | ";
             entry += c.getInt(                    c.getColumnIndex( DatabaseHelper.Pedido.STATUS_PEDIDO))  + " | ";
             entry += c.getInt(                    c.getColumnIndex( DatabaseHelper.Pedido.QUANTIDADE))  + " | ";

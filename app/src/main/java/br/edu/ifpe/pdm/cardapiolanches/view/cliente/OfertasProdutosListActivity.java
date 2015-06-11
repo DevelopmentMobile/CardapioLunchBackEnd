@@ -2,15 +2,19 @@ package br.edu.ifpe.pdm.cardapiolanches.view.cliente;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -29,11 +34,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import br.edu.ifpe.pdm.cardapiolanches.R;
+import br.edu.ifpe.pdm.cardapiolanches.*;
 import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
 import br.edu.ifpe.pdm.cardapiolanches.dao.DatabaseHelper;
+import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
 import br.edu.ifpe.pdm.cardapiolanches.utils.NavDrawerItem;
 import br.edu.ifpe.pdm.cardapiolanches.utils.NavDrawerListAdapter;
 import br.edu.ifpe.pdm.cardapiolanches.view.admin.DashboardAdmin;
@@ -48,8 +55,8 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
     public  Menu menuActivity;
     private Map<String,Produto>  listCategoriesProducts = new HashMap<String,Produto>();
     private int produtoSelecionada;
-   private final  String[] de = {"nome", "preco", "descricao", "tempo_pronto_produto", "categoria"};
-   private final int[] para = {R.id.nome_produto, R.id.preco_produto, R.id.descricao_produto, R.id.tempo_pronto_produto, R.id.categoria_produto};
+   private final  String[] de = {"nome", "preco", "descricao", "tempo_pronto_produto", "categoria", "nome_imagem"};
+   private final int[] para = {R.id.nome_produto, R.id.preco_produto, R.id.descricao_produto, R.id.tempo_pronto_produto, R.id.categoria_produto, R.id.imagem_produto};
 
     private String[] navMenuTitles;
     private ArrayList<NavDrawerItem> navDrawerItems;
@@ -78,8 +85,7 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
        simpleCursorAdapter = new ViewBinderProdutos (this, R.layout.produtos_list, listProdutos(),
                 de, para );
 
-        simpleCursorAdapter.setViewBinder( new ViewBinderProdutos(this, R.layout.produtos_list, listProdutos(),
-                de, para));
+
                 listView.setAdapter(simpleCursorAdapter);
 
 
@@ -163,7 +169,7 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
 
                     simpleCursorAdapter = new ViewBinderProdutos (OfertasProdutosListActivity.this, R.layout.produtos_list,  atualizaListaProdutosPorCategoria(categoria),de, para );
 
-                    simpleCursorAdapter.setViewBinder( new ViewBinderProdutos(OfertasProdutosListActivity.this, R.layout.produtos_list,  atualizaListaProdutosPorCategoria(categoria),de, para));
+             //       simpleCursorAdapter.setViewBinder( new ViewBinderProdutos(OfertasProdutosListActivity.this, R.layout.produtos_list,  atualizaListaProdutosPorCategoria(categoria),de, para));
 
                     listView.setAdapter(simpleCursorAdapter);
 
@@ -201,7 +207,7 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
 
 
 
-    private class ViewBinderProdutos  extends SimpleCursorAdapter implements SimpleCursorAdapter.ViewBinder {
+    private class ViewBinderProdutos  extends SimpleCursorAdapter  {
 
 
 
@@ -215,7 +221,8 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
         private final int mImagem;
         private final int mDescricaoIndex;
         private final int mIdIndex;
-
+        private final List<Produto> listProduto = new ArrayList<Produto>();
+        private final List<Integer> listQuantidade = new ArrayList<Integer>();
         private final LayoutInflater mLayoutInflater;
         private ArrayList<String> list = new ArrayList<String>();
         private ArrayList<Boolean> itemChecked = new ArrayList<Boolean>();
@@ -233,10 +240,9 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
             this.mIdIndex = c.getColumnIndex(DatabaseHelper.Produto._ID);
             this.mTempoPronto = c.getColumnIndex(DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO);
             this.mImagem = c.getColumnIndex(DatabaseHelper.Produto.NOME_IMAGEM);
-            /*
             for (int i = 0; i < this.getCount(); i++) {
                 itemChecked.add(i, false); // initializes all items value with false
-            }*/
+            }
         }
 
 
@@ -246,6 +252,7 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
             protected TextView nome;
             protected TextView descricao;
             protected TextView categoria;
+            protected EditText quantidade;
             protected TextView tempo_produto_entrega;
             protected ImageView image;
             protected TableRow trInfoExpandable;
@@ -256,29 +263,6 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
             protected CheckBox checkbox;
         }
 
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater= mLayoutInflater;
-            final ViewHolder viewHolder = new ViewHolder();
-            View row=inflater.inflate(R.layout.produtos_list, null);
-            viewHolder.categoria = (TextView) row.findViewById(R.id.categoria_produto);
-            viewHolder.nome = (TextView) row.findViewById(R.id.nome_produto);
-            viewHolder.descricao = (TextView) row.findViewById(R.id.descricao_produto);
-
-
-            viewHolder.preco = (TextView) row.findViewById(R.id.preco_produto);
-            viewHolder.image = (ImageView) row.findViewById(R.id.imagem_produto);
-            viewHolder.checkbox = (CheckBox) row.findViewById(R.id.check);
-            row.setTag(viewHolder);
-            return(row);
-        }
-
-/*
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-
-        }
-*/
 
 
         @Override
@@ -304,8 +288,31 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
 
 
                     Produto data = cursorToProduto(this.c);
+                    listProduto.add(pos, data);
 
                     viewHolder.categoria = (TextView) view.findViewById(R.id.categoria_produto);
+                    viewHolder.quantidade = (EditText) view.findViewById(R.id.quantidade_produto_pedido);
+                    viewHolder.quantidade.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if(s.toString()!=null && !s.toString().isEmpty()){
+                                listQuantidade.add(pos, Integer.parseInt(s.toString()));
+                            }
+                        }
+                    });
+
+
+
                     viewHolder.nome = (TextView) view.findViewById(R.id.nome_produto);
                     viewHolder.tempo_produto_entrega = (TextView) view.findViewById(R.id.tempo_pronto_produto);
                     viewHolder.descricao = (TextView) view.findViewById(R.id.descricao_produto);
@@ -323,7 +330,7 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
                     viewHolder.preco = (TextView) view.findViewById(R.id.preco_produto);
 
                     viewHolder.checkbox = (CheckBox) view.findViewById(R.id.check);
-                                 viewHolder.image = (ImageView) view.findViewById(R.id.imagem_produto);
+                            viewHolder.image = (ImageView) view.findViewById(R.id.imagem_produto);
                             viewHolder.descricao = (TextView) view.findViewById(R.id.descricao_produto);
                             viewHolder.tempo_produto_entrega = (TextView) view.findViewById(R.id.tempo_pronto_produto);
                             viewHolder.trLabelExpandable = (TableRow) view.findViewById(R.id.row_label_expandable);
@@ -339,6 +346,8 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
                 });
                 */
 
+
+
                     viewHolder.checkbox
                             .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -349,10 +358,10 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
                                     if (isChecked) {
                                         Toast.makeText(context, "Produto Adicionado", Toast.LENGTH_SHORT).show();
 
-                                     //   incrementarTotalPedidosMenu(menuActivity);
-
+                                        itemChecked.set(pos, viewHolder.checkbox.isChecked());
                                     } else if (!isChecked) {
                                          Toast.makeText(context, "Produto Retirado", Toast.LENGTH_SHORT).show();
+                                        itemChecked.set(pos,  viewHolder.checkbox.isChecked());
                                     }
                                 }
                             });
@@ -396,6 +405,11 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
                 String name=c.getString(mNameIndex);
                 //String id = c.getString(mIdIndex);
                 String preco = c.getString(mPrecoIndex);
+            String nameImage = c.getString(mImagem);
+     String uri = "@drawable/"+ nameImage.replaceAll(".png", "");
+     int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+     Drawable res = getResources().getDrawable(imageResource);
+     viewHolder.image.setImageDrawable(res);
 
                 viewHolder.nome.setText(name);
                 viewHolder.preco.setText(preco);
@@ -422,91 +436,6 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
 
             return inView;
 
-        }
-        @Override
-        public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-
-
-            View inView = null;
-            if (view == null) {
-/*                LayoutInflater inflator = context.getLayoutInflater();
-                inView = inflator.inflate(R.layout.produtos_list, null);*/
-                final ViewHolder viewHolder = new ViewHolder();
-
-                viewHolder.categoria = (TextView) inView.findViewById(R.id.categoria_produto);
-                viewHolder.nome = (TextView) inView.findViewById(R.id.nome_produto);
-                viewHolder.descricao = (TextView) inView.findViewById(R.id.descricao_produto);
-                viewHolder.preco = (TextView) inView.findViewById(R.id.preco_produto);
-                viewHolder.image = (ImageView) inView.findViewById(R.id.imagem_produto);
-                viewHolder.checkbox = (CheckBox) inView.findViewById(R.id.check);
-                viewHolder.checkbox
-                        .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView,
-                                                         boolean isChecked) {
-
-                                if (isChecked) {
-                                    Toast.makeText(context, "Checked", Toast.LENGTH_LONG);
-                                    incrementarTotalPedidosMenu(menuActivity);
-                                    // do some operations here
-                                } else if (!isChecked) {
-                                    decrementarTotalPedidosMenu(menuActivity);
-                                    Toast.makeText(context, "Unchecked", Toast.LENGTH_LONG);
-                                    // do some operations here
-                                }
-
-
-                            }
-                        });
-                /*
-                viewHolder.checkbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                            Toast.makeText(context, "Checked", Toast.LENGTH_SHORT);                            //Case 1
-                            // do some operations here
-                    }
-                });
-                */
-
-
-                inView.setTag(viewHolder);
-                //viewHolder.checkbox.setTag(list.get(position));
-            } else {
-
-                //((ViewHolder) view.getTag()).checkbox.setTag(list.get(position));
-            }
-
-
-
-            Produto data  = cursorToProduto(cursor);
-
-            cursorToProduto(cursor);
-
-
-
-            if(view.getId() ==  R.id.categoria_produto){
-                //if(!tipoProduto.equals(data)){
-
-
-                if(!listCategoriesProducts.containsKey(data.getCATEGORIA())){
-                    TextView textView = (TextView) view;
-                    textView.setText(data.getCATEGORIA());
-                    //tipoProduto = textRepresentation;
-                    listCategoriesProducts.put(data.getCATEGORIA(),data );
-                    view.setVisibility(View.VISIBLE);
-                } else {
-                    view.setVisibility(View.GONE);
-                }
-                return true;
-            }
-
-            if(view.getId() == R.id.categoria_produto){
-                view.setBackgroundColor(getResources().getColor( cursor.getPosition()));
-                return true;
-            }
-
-            return false;
         }
 
 
@@ -558,11 +487,23 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
 
             startActivity(new Intent(this, DashboardAdmin.class));
             return true;
+        }else if (id == R.id.fazer_pedido) {
+
+            for(int i=0;i< simpleCursorAdapter.itemChecked.size() ; i++) {
+                if (simpleCursorAdapter.itemChecked.get(i)) {
+                    Produto produto = simpleCursorAdapter.listProduto.get(i);
+                    int quantidade = simpleCursorAdapter.listQuantidade.get(i);
+                    //Settar id do funcionario? -qual importancia???
+                    fazerPedido(produto, quantidade);
+
+                }
+                startActivity(new Intent(this, PedidoProdutoClienteActivity.class));
+                   return true;
+            }
+
+
+            return true;
         }
-
-
-
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -641,7 +582,29 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
     }
 
 
+public void fazerPedido(Produto produto, int quantidade){
+    DatabaseHelper dbHelper = new DatabaseHelper(this);
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    ContentValues values = new ContentValues();
+    values.put(DatabaseHelper.Pedido.QUANTIDADE,quantidade);
+    values.put(DatabaseHelper.Pedido.TEMPO_TOTAL_PEDIDO, produto.getTEMPO_PRONTO_PRODUTO() * quantidade);
+    values.put(DatabaseHelper.Pedido.NUM_MESA, Constantes.NUM_MESA);
+    values.put(DatabaseHelper.Pedido.STATUS_PEDIDO,Constantes.PEDIDO_REALIZADO );
+    values.put(DatabaseHelper.Pedido.PRODUTO_ID, produto.get_ID());
 
+
+
+    long newId = db.insert(DatabaseHelper.Pedido.TABELA, null, values);
+    Toast toast = Toast.makeText(this,
+            "Registro adicionado. ID = " + newId, Toast.LENGTH_SHORT);
+    toast.show();
+    String[] selectionArgs =  {Long.toString(newId)};
+    db.execSQL("UPDATE pedido SET num_pedido = CAST(num_mesa AS TEXT) || CAST(_id AS TEXT) WHERE _id = ?",selectionArgs);
+
+
+
+
+}
 
 
 

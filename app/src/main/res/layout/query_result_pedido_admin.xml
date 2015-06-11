@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#015488"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:textAppearance=
+        "?android:attr/textAppearanceLarge"
+    android:textStyle="bold"
+    >
+
+    <TextView
+        android:id="@+id/group_pedido_admin"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:text="Mesa"
+        android:textColor="@android:color/white"
+        android:background="#333333"
+        />
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        >
+        <!-- LABELS -->
+        <TableRow >
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_num_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Número Pedido:"
+                   android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <!-- Funcionario Label ID-->
+
+
+            <!--Tempo Total de Entrega -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_tempo_total"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tempo total:"
+                    android:textColor="@android:color/white"/>
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_quantidade_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLength="6"
+                    android:text="Quantidade: "
+
+                    android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+        </TableRow>
+        <!-- INFO -->
+        <TableRow >
+
+
+            <!-- LINEARLAYOUT num PRODUTO -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1" >
+                <TextView
+                    android:id="@+id/num_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+            <!-- END LINEARLAYOUT NOME PRODUTO -->
+            <!-- Valor = quantidade * valor unitario  -->
+
+
+            <!--Tempo Total Pronto Edicao -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/tempo_total_pedido_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="6"
+
+                    android:numeric="integer"
+                    android:inputType="number"
+                    android:digits="6"
+                    android:textColor="@android:color/white"
+                    />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:text=" min"
+                    />
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/quantidade_pedido_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="6"
+                    android:numeric="integer"
+                    android:inputType="number"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+
+
+        </TableRow>
+
+    <TableRow>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:id="@+id/label_status_pedido_admin"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="Status:"
+
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rg_pedido_admin"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/atendido_pedido_admin"
+                    android:checked="false"
+                    android:text="Atendido"
+                    android:clickable="false"
+                    android:textColor="#FFFFFF"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/realizado_pedido_admin"
+                    android:checked="false"
+                    android:text="Realizado"
+                    android:clickable="false"
+                    android:textColor="#FFFFFF"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pronto_pedido_admin"
+                    android:checked="false"
+                    android:text="Pronto"
+                    android:clickable="false"
+                    android:textColor="#FFFFFF"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/entregue_pedido_admin"
+                    android:text="Entregue"
+                    android:checked="false"
+                    android:clickable="false"
+                    android:textColor="#FFFFFF"/> -->
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pagamento_pedido_admin"
+                    android:checked="false"
+                    android:text="Pago"
+                    android:textColor="#FFFFFF"/>-->
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+    </TableRow>
+
+
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_edicao_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Edicao: "
+
+                    android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rg_edicao_pedido_admin"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editar_pedido_admin"
+                    android:checked="false"
+                    android:text="Editar"
+                    android:textColor="#FFFFFF"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/deletar_pedido_admin"
+                    android:checked="false"
+                    android:text="Deletar"
+                    android:textColor="#FFFFFF"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_pacote_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pacote: "
+
+                    android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <Spinner
+                    android:id="@+id/pacote_pedido_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/spinner_header"
+                    > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+                </Spinner>
+
+
+            </LinearLayout>
+
+
+        </TableRow>
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_func_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Funcionário: "
+
+                    android:textColor="@android:color/white"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <Spinner
+                    android:id="@+id/funcioario_pedido_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/spinner_header"
+                    > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+                </Spinner>
+
+
+            </LinearLayout>
+
+
+        </TableRow>
+        <TableRow>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/label_produto_pedido_admin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Produto: "
+
+                    android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <Spinner
+                    android:id="@+id/produto_pedido_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/spinner_header"
+                    > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+                </Spinner>
+
+
+            </LinearLayout>
+
+
+        </TableRow>
+
+
+
+
+    </TableLayout>
+
+
+
+
+
+</LinearLayout>
+
+
+
+
+
+

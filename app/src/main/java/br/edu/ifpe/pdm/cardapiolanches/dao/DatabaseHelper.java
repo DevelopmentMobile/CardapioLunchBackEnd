@@ -107,16 +107,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static class Pedido{
         public static final String TABELA = "pedido";
         public static final String _ID = "_id";
+        public static final String NUM_PEDIDO = "num_pedido";
         public static final String TEMPO_TOTAL_PEDIDO = "tempo_total_pedido";
         public static final String QUANTIDADE = "quantidade";
         public static final String NUM_MESA = "num_mesa";
         public static final String FUNCIONARIO_ID = "funcionario_id";
-        public static final String PRODUTO_ID = "funcionario_id";
-        public static final String PACOTE_ID = "funcionario_id";
+        public static final String PRODUTO_ID = "produto_id";
+        public static final String PACOTE_ID = "pacote_id";
         public static final String STATUS_PEDIDO = "status_pedido";
 
         public static final String[] COLUNAS = new String[]{
-                _ID,TEMPO_TOTAL_PEDIDO , NUM_MESA, FUNCIONARIO_ID,QUANTIDADE,PRODUTO_ID,PACOTE_ID,STATUS_PEDIDO
+                _ID,TEMPO_TOTAL_PEDIDO , NUM_MESA, FUNCIONARIO_ID,QUANTIDADE,PRODUTO_ID,PACOTE_ID,STATUS_PEDIDO,
+                NUM_PEDIDO
         };
     }
 

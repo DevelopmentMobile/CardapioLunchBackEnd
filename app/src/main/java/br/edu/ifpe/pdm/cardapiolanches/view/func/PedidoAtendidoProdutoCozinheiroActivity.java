@@ -1,4 +1,4 @@
-package br.edu.ifpe.pdm.cardapiolanches.view.cliente;
+package br.edu.ifpe.pdm.cardapiolanches.view.func;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,9 +26,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.edu.ifpe.pdm.cardapiolanches.R;
+import br.edu.ifpe.pdm.cardapiolanches.bean.Pedido;
 import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
 import br.edu.ifpe.pdm.cardapiolanches.dao.DatabaseHelper;
 import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
@@ -38,15 +41,18 @@ import br.edu.ifpe.pdm.cardapiolanches.view.admin.DashboardAdmin;
 /**
  * Created by Richardson on 01/06/2015.
  */
-public class PedidoProdutoClienteActivity extends Activity implements AdapterView.OnItemClickListener{
+public class PedidoAtendidoProdutoCozinheiroActivity extends Activity implements AdapterView.OnItemClickListener{
 
 
     private ViewBinderProdutos simpleCursorAdapter;
     private ListView listView;
     public  int sumTotalPedidios = 0;
     public Menu menuActivity;
-    private Map<String,Produto> listCategoriesProducts = new HashMap<String,Produto>();
+    private Map<String,Produto> hashMapMesa = new HashMap<String,Produto>();
     private int produtoSelecionada;
+    private final String[] de = {"nome", "preco","categoria",  "tempo_pronto_produto", "status_pedido", "num_pedido"};
+    private final int[] para = {R.id.nome_pedido_func, R.id.valor_pedido_func, R.id.mesa_pedido_func, R.id.tempo_total_pedido_func, R.id.num_pedido_func
+    };
 
     private String[] navMenuTitles;
     private ArrayList<NavDrawerItem> navDrawerItems;
@@ -61,25 +67,24 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.pedidos_cliente_listview);
-        String[] de = {"nome", "preco","categoria",  "tempo_pronto_produto", "status_pedido"};
-        int[] para = {R.id.nome_pedido_produto, R.id.valor_pedido_produto, R.id.categoria_pedido_produto, R.id.tempo_total_pedido_produto
-        };
+        setContentView(R.layout.pedidos_func_listview);
 
-        listView= (ListView) findViewById(R.id.pedidos_cliente_listview);
-        simpleCursorAdapter = new ViewBinderProdutos (this, R.layout.pedidos_cliente, listPedidoPorProdutos(),
+
+        listView= (ListView) findViewById(R.id.pedidos_func_listview);
+        simpleCursorAdapter = new ViewBinderProdutos (this, R.layout.pedidos_func, listPedidoPorProdutos(),
                 de, para );
 
 
         listView.setAdapter(simpleCursorAdapter);
 
-        final TextView total_tempo = (TextView) findViewById(R.id.sum_tempo_total_pronto_pedido_pago);
+
+
+     /*   final TextView total_tempo = (TextView) findViewById(R.id.sum_tempo_total_pronto_pedido_pago);
         final TextView total_valor = (TextView) findViewById(R.id.sum_valor_total_pedido_pago);
 
         total_tempo.setText(getString(R.string.tempo_total_pronto_pedido_pago, Integer.toString(        simpleCursorAdapter.sum_tempo_total_pronto_pedido_pago)));
         total_valor.setText(getString(R.string.valor_total_pedido_pago, Float.toString(        simpleCursorAdapter.sum_valor_total_pedido_pago)));
-        System.out.println(simpleCursorAdapter.sum_tempo_total_pronto_pedido_pago);
-
+        System.out.println(simpleCursorAdapter.sum_tempo_total_pronto_pedido_pago);*/
         mTitle = mDrawerTitle = getTitle();
 
         // load slide menu items
@@ -125,9 +130,7 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            //displayView(0);
         }
-
 
     }
 
@@ -137,37 +140,32 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-       // ContentValues values = new ContentValues();
-        String[] whereArgs = new String[]{Integer.toString(Constantes.NUM_MESA)};
-       String query = "SELECT * FROM pedido pe INNER JOIN produto pr ON pe.produto_id = pr._id";
-       //String query = "SELECT * FROM pedido pe INNER JOIN produto pr ON pe._id = pr._id INNER JOIN pacote pr ON pe._id = pa._id WHERE pe.num_mesa = ?";
+        // ContentValues values = new ContentValues();
+        String[] whereArgs = new String[]{Integer.toString(Constantes.PEDIDO_ATENDIDO)};
+        String query = "SELECT * FROM pedido pe INNER JOIN produto pr ON pe.produto_id = pr._id WHERE pe.status_pedido = ? ";
 
-        //return db.rawQuery(query, null);
-        return db.rawQuery(query, null);
-     /*   return db.rawQuery("SELECT * FROM " +  DatabaseHelper.Pedido.TABELA + " INNER JOIN " +
-                DatabaseHelper.Produto.TABELA + " ON " + DatabaseHelper.Pedido._ID +
-                " = " + DatabaseHelper.Produto._ID + " WHERE " +   DatabaseHelper.Pedido.NUM_MESA + " = 5 " + " ORDER BY " + DatabaseHelper.Produto.CATEGORIA + " ASC , " + DatabaseHelper.Produto.NOME + " DESC ", null);
-                */
+        return db.rawQuery(query, whereArgs);
+
     }
 
 
 
     public int atualizaStatusPedidoPeloCliente(int id, int status){
-    DatabaseHelper dbHelper = new DatabaseHelper(this);
-    SQLiteDatabase db = dbHelper.getReadableDatabase();
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-    ContentValues values = new ContentValues();
-    values.put(DatabaseHelper.Pedido.STATUS_PEDIDO,status );
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.Pedido.STATUS_PEDIDO,status );
 
-    String selection = DatabaseHelper.Pedido._ID + " LIKE ?";
-    String[] selectionArgs = {id+ "" };
-    int count = db.update(DatabaseHelper.Pedido.TABELA, values, selection, selectionArgs);
-    Toast toast = Toast.makeText(this,
-            "Registros atualizados: " + count, Toast.LENGTH_SHORT);
-    toast.show();
+        String selection = DatabaseHelper.Pedido._ID + " LIKE ?";
+        String[] selectionArgs = {id+ "" };
+        int count = db.update(DatabaseHelper.Pedido.TABELA, values, selection, selectionArgs);
+        Toast toast = Toast.makeText(this,
+                "Registros atualizados: " + count, Toast.LENGTH_SHORT);
+        toast.show();
 
         return count;
-}
+    }
 
 
 
@@ -182,7 +180,8 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         private final int mNameIndex;
         private final int mPrecoIndex;
         private final int mTempoPronto;
-        private final int mCategoria;
+        private final int mNumMesa;
+        private final int mNumPedido;
         private final int mQuantidade;
         private final int mStatusPedido;
         private final int mIdIndex;
@@ -190,6 +189,9 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         private final LayoutInflater mLayoutInflater;
         public  int sum_tempo_total_pronto_pedido_pago;
         public float sum_valor_total_pedido_pago;
+        private final List<Pedido> listPedidos = new ArrayList<Pedido>();
+        private ArrayList<Boolean> itemChecked = new ArrayList<Boolean>();
+
 
 
 
@@ -203,12 +205,18 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
             this.mPrecoIndex = c.getColumnIndex(DatabaseHelper.Produto.PRECO);
             this.mIdIndex = c.getColumnIndex(DatabaseHelper.Pedido._ID);
             this.mTempoPronto = c.getColumnIndex(DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO);
-            this.mCategoria = c.getColumnIndex(DatabaseHelper.Produto.CATEGORIA);
+            this.mNumMesa = c.getColumnIndex(DatabaseHelper.Produto.CATEGORIA);
+            this.mNumPedido = c.getColumnIndex(DatabaseHelper.Pedido.NUM_PEDIDO);
             this.mStatusPedido = c.getColumnIndex(DatabaseHelper.Pedido.STATUS_PEDIDO);
             this.mQuantidade = c.getColumnIndex(DatabaseHelper.Pedido.QUANTIDADE);
             this.sum_tempo_total_pronto_pedido_pago = 0;
             this.sum_valor_total_pedido_pago = 0;
 
+
+
+            for (int i = 0; i < this.getCount(); i++) {
+                itemChecked.add(i, false); // initializes all items value with false
+            }
         }
 
 
@@ -216,16 +224,19 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
 
             protected TextView preco;
             protected TextView nome;
-            protected TextView categoria;
+            protected TextView numMesa;
+            protected TextView numPedido;
             protected TextView tempo_produto_entrega;
-          /*  protected TextView total_valor;
-            protected TextView total_tempo;
-*/
+            /*  protected TextView total_valor;
+              protected TextView total_tempo;
+  */
             protected RadioGroup rgStatusPedido;
             protected RadioButton statusAtendido;
             protected RadioButton statusRealizado;
             protected RadioButton statusPronto;
-            protected RadioButton statusRealizarPagamento;
+            protected RadioButton statusEntregue;
+            protected RadioButton statusPago;
+            protected CheckBox pedidoSelecionado;
         }
 
 
@@ -241,28 +252,39 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
                 final ViewHolder viewHolder;
                 if (inView == null) {
                     LayoutInflater inflator = mLayoutInflater;
-                    view = inflator.inflate(R.layout.pedidos_cliente, null);
+                    view = inflator.inflate(R.layout.pedidos_func, null);
                     viewHolder = new ViewHolder();
-                    Produto data = cursorToProduto(this.c);
-                    viewHolder.categoria = (TextView) view.findViewById(R.id.categoria_pedido_produto);
-                    viewHolder.nome = (TextView) view.findViewById(R.id.nome_pedido_produto);
-                    viewHolder.tempo_produto_entrega = (TextView) view.findViewById(R.id.tempo_total_pedido_produto);
-                    if (!listCategoriesProducts.containsKey(data.getCATEGORIA())) {
-                        viewHolder.categoria.setText(data.getCATEGORIA());
-                        listCategoriesProducts.put(data.getCATEGORIA(), data);
-                        viewHolder.categoria.setVisibility(View.VISIBLE);
+                    final Produto data = cursorToProduto(this.c);
+                    final Pedido pedido = cursorToPedido(this.c);
+
+                    listPedidos.add(pedido);
+                    viewHolder.numMesa = (TextView) view.findViewById(R.id.mesa_pedido_func);
+                    viewHolder.numPedido = (TextView) view.findViewById(R.id.num_pedido_func);
+                    viewHolder.nome = (TextView) view.findViewById(R.id.nome_pedido_func);
+                    viewHolder.tempo_produto_entrega = (TextView) view.findViewById(R.id.tempo_total_pedido_func);
+                    if (!hashMapMesa.containsKey(Integer.toString(c.getInt(mNumPedido)))) {
+                        viewHolder.numPedido.setText(Integer.toString(c.getInt(mNumPedido)));
+                        hashMapMesa.put(Integer.toString(c.getInt(mNumPedido)), data);
+                        viewHolder.numPedido.setVisibility(View.VISIBLE);
                     } else {
-                        viewHolder.categoria.setVisibility(View.GONE);
+                        viewHolder.numPedido.setVisibility(View.GONE);
                     }
-                    viewHolder.preco = (TextView) view.findViewById(R.id.valor_pedido_produto);
-                    viewHolder.rgStatusPedido = (RadioGroup) view.findViewById((R.id.rg_pedido_produto));
-                    viewHolder.statusAtendido = (RadioButton) view.findViewById((R.id.atendido_pedido_produto));
-                    viewHolder.statusPronto = (RadioButton) view.findViewById((R.id.pronto_pedido_produto));
-                    viewHolder.statusRealizado = (RadioButton) view.findViewById((R.id.realizado_pedido_produto));
-                    //viewHolder.statusRealizarPagamento = (RadioButton) view.findViewById((R.id.realizar_pagamento_pedido_produto));
-             /*       viewHolder.total_tempo = (TextView) view.findViewById(R.id.sum_tempo_total_pronto_pedido_pago);
-                    viewHolder.total_valor = (TextView) view.findViewById(R.id.sum_valor_total_pedido_pago);
-*/
+                    viewHolder.preco = (TextView) view.findViewById(R.id.valor_pedido_func);
+                    viewHolder.rgStatusPedido = (RadioGroup) view.findViewById((R.id.rg_pedido_func));
+                    viewHolder.statusAtendido = (RadioButton) view.findViewById((R.id.atendido_pedido_func));
+                    viewHolder.statusPronto = (RadioButton) view.findViewById((R.id.pronto_pedido_func));
+                    viewHolder.statusPago = (RadioButton) view.findViewById((R.id.pagamento_pedido_func));
+                    viewHolder.statusEntregue = (RadioButton) view.findViewById((R.id.entregue_pedido_func));
+
+                    viewHolder.statusRealizado = (RadioButton) view.findViewById((R.id.realizado_pedido_func));
+                    viewHolder.pedidoSelecionado = (CheckBox) view.findViewById((R.id.check_func));
+                    viewHolder.pedidoSelecionado.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            itemChecked.set(pos, ((CheckBox) v.findViewById((R.id.check_func))).isChecked());
+                        }
+                    });
+
 
                     view.setTag(viewHolder);
                 } else {
@@ -270,25 +292,21 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
                     viewHolder =  (ViewHolder) view.getTag();
                 }
                 ((RadioButton) viewHolder.rgStatusPedido.getChildAt(c.getInt(mStatusPedido) -1)).setChecked(true);
-                int pronto = c.getInt(mStatusPedido) -1;
-              /*  if(pronto == 2){
-                    ((RadioButton) viewHolder.rgStatusPedido.getChildAt(c.getInt(mStatusPedido) -1)).setClickable(true);
-                    ((RadioButton) viewHolder.rgStatusPedido.getChildAt(c.getInt(mStatusPedido))).setClickable(true);
-                }*/
+
                 viewHolder.nome.setText(c.getString(mNameIndex));
                 viewHolder.preco.setText(Float.toString(c.getFloat(mPrecoIndex) * c.getInt(mQuantidade)));
 
 
-                viewHolder.categoria.setText(c.getString(mCategoria));
+                viewHolder.numMesa.setText(c.getString(mNumMesa));
 
 
                 viewHolder.tempo_produto_entrega.setText(Integer.toString(c.getInt(mTempoPronto) * c.getInt(mQuantidade)));
 
-                this.sum_valor_total_pedido_pago = sum_valor_total_pedido_pago + c.getFloat(mPrecoIndex) * c.getInt(mQuantidade) ;
-                System.out.println(  this.sum_valor_total_pedido_pago);
-               // viewHolder.total_valor.setText(Float.toString(sum_valor_total_pedido_pago));
-                this.sum_tempo_total_pronto_pedido_pago = sum_tempo_total_pronto_pedido_pago + c.getInt(mTempoPronto) * c.getInt(mQuantidade) ;
-               // viewHolder.total_tempo.setText(Integer.toString(sum_tempo_total_pronto_pedido_pago));
+                sum_valor_total_pedido_pago = sum_valor_total_pedido_pago + c.getFloat(mPrecoIndex) * c.getInt(mQuantidade) ;
+                // System.out.println(  this.sum_valor_total_pedido_pago);
+                // viewHolder.total_valor.setText(Float.toString(sum_valor_total_pedido_pago));
+                sum_tempo_total_pronto_pedido_pago = sum_tempo_total_pronto_pedido_pago + c.getInt(mTempoPronto) * c.getInt(mQuantidade) ;
+                // viewHolder.total_tempo.setText(Integer.toString(sum_tempo_total_pronto_pedido_pago));
 
                 return view;
             }
@@ -296,7 +314,6 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
             return inView;
 
         }
-
 
 
 
@@ -315,9 +332,9 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
 
         //super.onCreateOptionsMenu(menu);
 
-        getMenuInflater().inflate(R.menu.pedido_produto_cliente, menu);
+        getMenuInflater().inflate(R.menu.pedido_produto_func, menu);
 
-        this.menuActivity = menu;
+        // this.menuActivity = menu;
 
         return true;
     }
@@ -339,6 +356,27 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         }else*/
         if (id == R.id.dashboard_admin) {
             startActivity(new Intent(this, DashboardAdmin.class));
+            return true;
+        }else if (id == R.id.atualizar_pedido_func) {
+            for(int i=0;i< simpleCursorAdapter.itemChecked.size() ; i++){
+                if(simpleCursorAdapter.itemChecked.get(i)){
+                    Pedido pedido = simpleCursorAdapter.listPedidos.get(i);
+                    //Settar id do funcionario? -qual importancia???
+                    atualizaStatusPedidoPeloCliente(pedido.get_ID(),Constantes.PEDIDO_PRONTO);
+
+                }
+
+            }
+
+
+            listView= (ListView) findViewById(R.id.pedidos_func_listview);
+            simpleCursorAdapter = new ViewBinderProdutos (this, R.layout.pedidos_func, listPedidoPorProdutos(),
+                    de, para );
+
+
+            listView.setAdapter(simpleCursorAdapter);
+
+
             return true;
         }
 
@@ -376,12 +414,28 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         return Produto;
     }
 
+    private Pedido cursorToPedido(Cursor cursor) {
+
+        Pedido Produto = new Pedido();
+        Produto.set_ID(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido._ID)));
+        Produto.setTEMPO_TOTAL_PEDIDO(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.TEMPO_TOTAL_PEDIDO)));
+        Produto.setSTATUS_PEDIDO(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.STATUS_PEDIDO)));
+        Produto.setQUANTIDADE(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.QUANTIDADE)));
+        Produto.setPRODUTO_ID(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.PRODUTO_ID)));
+        Produto.setPACOTE_ID(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.PACOTE_ID)));
+        Produto.setFUNCIONARIO_ID(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.FUNCIONARIO_ID)));
+        Produto.setNUM_MESA(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.Pedido.NUM_MESA)));
+
+
+        return Produto;
+    }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.pedir_conta).setVisible(!drawerOpen);
+        menu.findItem(R.id.filtro_categoria).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -405,5 +459,6 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
 
 }

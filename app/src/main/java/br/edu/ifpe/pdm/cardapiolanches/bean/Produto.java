@@ -5,8 +5,11 @@ package br.edu.ifpe.pdm.cardapiolanches.bean;
  */
 public class Produto {
 
+    public Produto(){
+
+    }
     private Integer  _ID;
-   private Integer  UNIDADE_ESTOQUE ;
+   private Integer  UNIDADE_ESTOQUE;
    private String NOME;
    private Float  PRECO;
    private String DESCRICAO;
@@ -14,6 +17,37 @@ public class Produto {
 
    private Integer  TEMPO_PRONTO_PRODUTO;
    private String CATEGORIA;
+   private String ACAO ;
+
+    public String getACAO() {
+        return ACAO;
+    }
+
+    public void setACAO(String ACAO) {
+        this.ACAO = ACAO;
+    }
+
+    public Produto(Integer _ID, Integer UNIDADE_ESTOQUE, String NOME, Float PRECO, String DESCRICAO, String NOME_IMAGEM, Integer TEMPO_PRONTO_PRODUTO, String CATEGORIA) {
+        this._ID = _ID;
+        this.UNIDADE_ESTOQUE = UNIDADE_ESTOQUE;
+        this.NOME = NOME;
+        this.PRECO = PRECO;
+        this.DESCRICAO = DESCRICAO;
+        this.NOME_IMAGEM = NOME_IMAGEM;
+        this.TEMPO_PRONTO_PRODUTO = TEMPO_PRONTO_PRODUTO;
+        this.CATEGORIA = CATEGORIA;
+    }
+
+    public Produto( Integer UNIDADE_ESTOQUE, String NOME, Float PRECO, String DESCRICAO, String NOME_IMAGEM, Integer TEMPO_PRONTO_PRODUTO, String CATEGORIA) {
+
+        this.UNIDADE_ESTOQUE = UNIDADE_ESTOQUE;
+        this.NOME = NOME;
+        this.PRECO = PRECO;
+        this.DESCRICAO = DESCRICAO;
+        this.NOME_IMAGEM = NOME_IMAGEM;
+        this.TEMPO_PRONTO_PRODUTO = TEMPO_PRONTO_PRODUTO;
+        this.CATEGORIA = CATEGORIA;
+    }
 
     public String getCATEGORIA() {
         return CATEGORIA;

@@ -497,6 +497,7 @@ public class OfertasProdutosListActivity extends Activity implements AdapterView
                     fazerPedido(produto, quantidade);
 
                 }
+
                 startActivity(new Intent(this, PedidoProdutoClienteActivity.class));
                    return true;
             }

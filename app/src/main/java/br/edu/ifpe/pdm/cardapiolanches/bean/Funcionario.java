@@ -10,6 +10,15 @@ public class Funcionario {
     private String SENHA ;
     private Integer TIPO_FUNCIONARIO ;
 
+    public Funcionario() {
+    }
+
+    public Funcionario(String LOGIN, String SENHA, Integer TIPO_FUNCIONARIO) {
+        this.LOGIN = LOGIN;
+        this.SENHA = SENHA;
+        this.TIPO_FUNCIONARIO = TIPO_FUNCIONARIO;
+    }
+
     public Integer get_ID() {
         return _ID;
     }
@@ -45,5 +54,15 @@ public class Funcionario {
     public String toString()
     {
         return(getLOGIN() + " - " + getTIPO_FUNCIONARIO() );
+    }
+
+    private String ACAO ;
+
+    public String getACAO() {
+        return ACAO;
+    }
+
+    public void setACAO(String ACAO) {
+        this.ACAO = ACAO;
     }
 }

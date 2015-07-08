@@ -1,25 +1,20 @@
 package br.edu.ifpe.pdm.cardapiolanches.view.admin;
 
 import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-
 import br.edu.ifpe.pdm.cardapiolanches.R;
-import br.edu.ifpe.pdm.cardapiolanches.dao.DatabaseHelper;
+import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
+import br.edu.ifpe.pdm.cardapiolanches.dao.ProdutoListener;
+import br.edu.ifpe.pdm.cardapiolanches.dao.ProdutoTask;
 
 /**
  * Created by Richardson on 31/05/2015.
  */
-public class ProdutoActivityCRUD extends Activity {
+public class ProdutoActivityCRUD extends Activity implements ProdutoListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +40,7 @@ public class ProdutoActivityCRUD extends Activity {
 
 
     public void buttonInsertClick(View view) {
+
         int unidade_estoque = Integer.parseInt(
                 ((EditText) findViewById(R.id.unidade_estoque)).getText().toString());
         float preco =   Float.parseFloat(((EditText) findViewById(R.id.preco)).getText().toString());
@@ -54,21 +50,34 @@ public class ProdutoActivityCRUD extends Activity {
         String nome_produto =    ((EditText)findViewById(R.id.nome)).getText().toString();
         String descricao =    ((EditText)findViewById(R.id.descricao)).getText().toString();
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.Produto.NOME, nome_produto);
-        values.put(DatabaseHelper.Produto.CATEGORIA, categoria);
-        values.put(DatabaseHelper.Produto.DESCRICAO,descricao );
-        values.put(DatabaseHelper.Produto.NOME_IMAGEM,nome_imagem );
-        values.put(DatabaseHelper.Produto.PRECO,preco );
-        values.put(DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO,tempo_pronto_produto );
-        values.put(DatabaseHelper.Produto.UNIDADE_ESTOQUE,unidade_estoque );
+        final Produto[] arrayProduto =  new Produto[1];
+   final      Produto produto =  new Produto(
+                unidade_estoque,
+                nome_produto ,
+                preco,
+                descricao,
+               nome_imagem,
+                tempo_pronto_produto,
+               categoria);
 
-        long newId = db.insert(DatabaseHelper.Produto.TABELA, null, values);
-        Toast toast = Toast.makeText(this,
-                "Registro adicionado. ID = " + newId, Toast.LENGTH_SHORT);
-        toast.show();
+        produto.setACAO("inserir");
+/*
+        final Produto produto =  new Produto(
+                1,
+                "1" ,
+                (float) 1.5,
+                "1",
+                "1",
+                1,
+                "1");
+*/
+
+
+
+        arrayProduto[0] = produto;
+        new ProdutoTask(this).execute(arrayProduto);
+
+
     }
 
     public void buttonUpdateClick(View view) {
@@ -76,7 +85,6 @@ public class ProdutoActivityCRUD extends Activity {
 
         int unidade_estoque = Integer.parseInt(
                 ((EditText) findViewById(R.id.unidade_estoque)).getText().toString());
-        String nome =    ((EditText)findViewById(R.id.nome)).getText().toString();
         float preco =   Float.parseFloat(((EditText) findViewById(R.id.preco)).getText().toString());
         int tempo_pronto_produto =    Integer.parseInt(((EditText) findViewById(R.id.tempo_pronto_produto)).getText().toString());
         String categoria =    ((EditText)findViewById(R.id.categoria)).getText().toString();
@@ -84,96 +92,120 @@ public class ProdutoActivityCRUD extends Activity {
         String nome_produto =    ((EditText)findViewById(R.id.nome)).getText().toString();
         String descricao =    ((EditText)findViewById(R.id.descricao)).getText().toString();
 
+        final Produto[] arrayProduto =  new Produto[1];
+        final      Produto produto =  new Produto(
+                unidade_estoque,
+                nome_produto ,
+                preco,
+                descricao,
+                nome_imagem,
+                tempo_pronto_produto,
+                categoria);
+
+        produto.setACAO("atualizar");
+/*
+        final Produto produto =  new Produto(
+                1,
+                "1" ,
+                (float) 1.5,
+                "1",
+                "1",
+                1,
+                "1");
+*/
 
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.Produto.NOME, nome_produto);
-        values.put(DatabaseHelper.Produto.CATEGORIA, categoria);
-        values.put(DatabaseHelper.Produto.DESCRICAO,descricao );
-        values.put(DatabaseHelper.Produto.NOME_IMAGEM,nome_imagem );
-        values.put(DatabaseHelper.Produto.PRECO,preco );
-        values.put(DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO,tempo_pronto_produto );
-        values.put(DatabaseHelper.Produto.UNIDADE_ESTOQUE,unidade_estoque );
 
-        String selection = DatabaseHelper.Produto.NOME + " LIKE ?";
-        String[] selectionArgs = {nome_produto + "" };
-        int count = db.update(DatabaseHelper.Produto.TABELA, values, selection, selectionArgs);
-        Toast toast = Toast.makeText(this,
-                "Registros atualizados: " + count, Toast.LENGTH_SHORT);
-        toast.show();
+        arrayProduto[0] = produto;
+        new ProdutoTask(this).execute(arrayProduto);
     }
 
     public void buttonDeleteClick(View view) {
 
+        int unidade_estoque = Integer.parseInt(
+                ((EditText) findViewById(R.id.unidade_estoque)).getText().toString());
+        float preco =   Float.parseFloat(((EditText) findViewById(R.id.preco)).getText().toString());
+        int tempo_pronto_produto =    Integer.parseInt(((EditText) findViewById(R.id.tempo_pronto_produto)).getText().toString());
+        String categoria =    ((EditText)findViewById(R.id.categoria)).getText().toString();
+        String nome_imagem =    ((EditText)findViewById(R.id.nome_imagem)).getText().toString();
         String nome_produto =    ((EditText)findViewById(R.id.nome)).getText().toString();
+        String descricao =    ((EditText)findViewById(R.id.descricao)).getText().toString();
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selection = DatabaseHelper.Produto.NOME + " LIKE ?";
-        String[] selectionArgs = { nome_produto + "" };
-        int count = db.delete(DatabaseHelper.Produto.TABELA, selection, selectionArgs);
-        Toast toast = Toast.makeText(this,
-                "Registros deletados: " + count, Toast.LENGTH_SHORT);
-        toast.show();
+        final Produto[] arrayProduto =  new Produto[1];
+        final      Produto produto =  new Produto(
+                unidade_estoque,
+                nome_produto ,
+                preco,
+                descricao,
+                nome_imagem,
+                tempo_pronto_produto,
+                categoria);
+
+        produto.setACAO("deletar");
+/*
+        final Produto produto =  new Produto(
+                1,
+                "1" ,
+                (float) 1.5,
+                "1",
+                "1",
+                1,
+                "1");
+*/
+
+
+
+        arrayProduto[0] = produto;
+        new ProdutoTask(this).execute(arrayProduto);
     }
 
 
     public void buttonQueryClick(View view) {
 
+        int unidade_estoque = Integer.parseInt(
+                ((EditText) findViewById(R.id.unidade_estoque)).getText().toString());
+        float preco =   Float.parseFloat(((EditText) findViewById(R.id.preco)).getText().toString());
+        int tempo_pronto_produto =    Integer.parseInt(((EditText) findViewById(R.id.tempo_pronto_produto)).getText().toString());
+        String categoria =    ((EditText)findViewById(R.id.categoria)).getText().toString();
+        String nome_imagem =    ((EditText)findViewById(R.id.nome_imagem)).getText().toString();
         String nome_produto =    ((EditText)findViewById(R.id.nome)).getText().toString();
+        String descricao =    ((EditText)findViewById(R.id.descricao)).getText().toString();
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] projection = { DatabaseHelper.Produto._ID,
-                DatabaseHelper.Produto.CATEGORIA,
-                DatabaseHelper.Produto.DESCRICAO,
-                DatabaseHelper.Produto.NOME,
-                DatabaseHelper.Produto.NOME_IMAGEM,
-                DatabaseHelper.Produto.PRECO,
-                DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO,
-                DatabaseHelper.Produto.UNIDADE_ESTOQUE,
-                };
-        String selection = DatabaseHelper.Produto.NOME + " LIKE ? ";
-        String[] selectionArgs = {nome_produto + "%"};
-        String sortOrder = DatabaseHelper.Produto.NOME + " DESC";
-        Cursor c = db.query(DatabaseHelper.Produto.TABELA,
-                projection,
-                selection,
-                selectionArgs,
-                null, null,
-                sortOrder);
-        ArrayList<CharSequence> data = new ArrayList<CharSequence>();
-        c.moveToFirst();
-        String entry = " | " +  DatabaseHelper.Produto._ID + " | " +
-                DatabaseHelper.Produto.CATEGORIA+ " | " +
-                DatabaseHelper.Produto.DESCRICAO+ " | " +
-                DatabaseHelper.Produto.NOME+ " | " +
-                DatabaseHelper.Produto.NOME_IMAGEM+ " | " +
-                DatabaseHelper.Produto.PRECO+ " | " +
-                DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO+ " | " +
-                DatabaseHelper.Produto.UNIDADE_ESTOQUE + " | ";
+        final Produto[] arrayProduto =  new Produto[1];
+        final      Produto produto =  new Produto(
+                unidade_estoque,
+                nome_produto ,
+                preco,
+                descricao,
+                nome_imagem,
+                tempo_pronto_produto,
+                categoria);
 
-        while (!c.isAfterLast()) {
-             entry += "\n | " + c.getInt(c.getColumnIndex( DatabaseHelper.Produto._ID)) + " | ";
-            entry += c.getString(c.getColumnIndex( DatabaseHelper.Produto.CATEGORIA) )  + " | ";
-            entry += c.getString(c.getColumnIndex( DatabaseHelper.Produto.DESCRICAO))  + " | ";
-            entry += c.getString(c.getColumnIndex( DatabaseHelper.Produto.NOME)) + " | ";
-            entry += c.getString(c.getColumnIndex( DatabaseHelper.Produto.NOME_IMAGEM))  + " | ";
-            entry += c.getFloat(                    c.getColumnIndex( DatabaseHelper.Produto.PRECO)) + " | ";
-            entry += c.getInt(                    c.getColumnIndex( DatabaseHelper.Produto.TEMPO_PRONTO_PRODUTO))  + " | ";
-            entry += c.getInt(                    c.getColumnIndex( DatabaseHelper.Produto.UNIDADE_ESTOQUE))  + " | ";
+        produto.setACAO("consultarnome");
+/*
+        final Produto produto =  new Produto(
+                1,
+                "1" ,
+                (float) 1.5,
+                "1",
+                "1",
+                1,
+                "1");
+*/
 
 
-            data.add(entry);
-            c.moveToNext();
-        }
-        Intent intent = new Intent(this, QueryResultActivity.class);
-        intent.putCharSequenceArrayListExtra("data", data);
-        startActivity(intent);
+
+        arrayProduto[0] = produto;
+        new ProdutoTask(this).execute(arrayProduto);
     }
 
 
-
+    @Override
+    public void showProduto(Produto produto) {
+        if(produto != null) {
+            Toast.makeText(this, produto.toString(), Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "Produto Não Cadastrado!!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -13,6 +13,41 @@ public class Pacote {
     private Integer TIPO_PACOTE;
     private String DESCRICAO_PACOTE;
     private Float PRECO;
+    private Integer UNIDADE;
+    private Integer NOME_IMAGE;
+
+    private String ACAO ;
+
+    public String getACAO() {
+        return ACAO;
+    }
+
+    public void setACAO(String ACAO) {
+        this.ACAO = ACAO;
+    }
+
+
+    public Pacote(Integer _ID, String NOME_PACOTE, Integer TIPO_PACOTE, String DESCRICAO_PACOTE, Float PRECO, Integer UNIDADE, Integer NOME_IMAGE) {
+        this._ID = _ID;
+        this.NOME_PACOTE = NOME_PACOTE;
+        this.TIPO_PACOTE = TIPO_PACOTE;
+        this.DESCRICAO_PACOTE = DESCRICAO_PACOTE;
+        this.PRECO = PRECO;
+        this.UNIDADE = UNIDADE;
+        this.NOME_IMAGE = NOME_IMAGE;
+    }
+
+    public Pacote(String NOME_PACOTE, Integer TIPO_PACOTE, String DESCRICAO_PACOTE, Float PRECO, Integer UNIDADE, Integer NOME_IMAGE) {
+        this.NOME_PACOTE = NOME_PACOTE;
+        this.TIPO_PACOTE = TIPO_PACOTE;
+        this.DESCRICAO_PACOTE = DESCRICAO_PACOTE;
+        this.PRECO = PRECO;
+        this.UNIDADE = UNIDADE;
+        this.NOME_IMAGE = NOME_IMAGE;
+    }
+
+    public Pacote() {
+    }
 
     public Float getPRECO() {
         return PRECO;
@@ -53,6 +88,9 @@ public class Pacote {
     public void setDESCRICAO_PACOTE(String DESCRICAO_PACOTE) {
         this.DESCRICAO_PACOTE = DESCRICAO_PACOTE;
     }
+
+
+
 
 
     public String toString()

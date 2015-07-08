@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -84,53 +83,10 @@ public class PedidoRealizadoProdutoGarcomActivity extends Activity implements Ad
 
         total_tempo.setText(getString(R.string.tempo_total_pronto_pedido_pago, Integer.toString(        simpleCursorAdapter.sum_tempo_total_pronto_pedido_pago)));
         total_valor.setText(getString(R.string.valor_total_pedido_pago, Float.toString(        simpleCursorAdapter.sum_valor_total_pedido_pago)));
+
         System.out.println(simpleCursorAdapter.sum_tempo_total_pronto_pedido_pago);*/
-        mTitle = mDrawerTitle = getTitle();
-
-        // load slide menu items
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-
-        // nav drawer icons from resources
-        //  navMenuIcons = activity.getResources().obtainTypedArray(R.array.nav_drawer_icons);
-
-        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0]));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1]));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2]));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3]));
-        adapter = new NavDrawerListAdapter(getApplicationContext(),navDrawerItems);
-        mDrawerList.setAdapter(adapter);
 
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, //nav menu toggle icon
-                R.string.app_name, // nav drawer open - description for accessibility
-                R.string.app_name // nav drawer close - description for accessibility
-        ){
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
-                // calling onPrepareOptionsMenu() to show action bar icons
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to hide action bar icons
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        if (savedInstanceState == null) {
-            // on first time display view for first nav item
-            }
 
     }
 
@@ -430,35 +386,6 @@ public class PedidoRealizadoProdutoGarcomActivity extends Activity implements Ad
         return Produto;
     }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.filtro_categoria).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
-    }
-
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
 
 
 }

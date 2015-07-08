@@ -15,6 +15,16 @@ public class Pedido {
    private Integer PACOTE_ID ;
    private Integer STATUS_PEDIDO;
 
+    private String ACAO ;
+
+    public String getACAO() {
+        return ACAO;
+    }
+
+    public void setACAO(String ACAO) {
+        this.ACAO = ACAO;
+    }
+
 
     public Integer get_ID() {
         return _ID;

@@ -5,7 +5,8 @@
     <uses-sdk
         android:minSdkVersion="13"
         android:targetSdkVersion="19" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <android:uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
@@ -13,6 +14,8 @@
     <android:uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
+
+
 
     <application
         android:allowBackup="true"
@@ -35,12 +38,10 @@
             android:name=".Pedidos"
             android:label="@string/title_activity_pedidos" >
         </activity>
-
         <activity
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard" >
         </activity>
-
         <activity
             android:name=".ProdutosListActivity"
             android:label="@string/title_activity_produtos_list" >
@@ -58,16 +59,19 @@
             android:label="@string/title_activity_checkout_pedidos" >
         </activity>
 
-        <!--Novos Activity-->
+        <!-- Novos Activity -->
         <activity
             android:name=".Welcome_Activity"
             android:hardwareAccelerated="false"
             android:label="@string/title_activity_welcome" >
-        <!--    <intent-filter>
+
+            <!--
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".SelectActivity"
@@ -90,117 +94,114 @@
             android:label="@string/title_activity_rodape_" >
         </activity>
 
-        <!-- ************************************* CLIENTE  *************************************-->
+        <!-- ************************************* CLIENTE  ************************************* -->
 
         <activity
+            android:name=".view.cliente.OfertasProdutosListActivity"
             android:label="OfertasProdutos"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            android:name="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasProdutosListActivity">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" >
 
+        </activity>
+        <activity
+            android:name=".view.cliente.PedidoProdutoClienteActivity"
+            android:label="@string/pedido_produto_cliente"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name=".view.cliente.PedidoProdutoClienteActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            android:label="@string/pedido_produto_cliente"
-
-            android:name=".view.cliente.PedidoProdutoClienteActivity">
-            <!--     <intent-filter>
-                     <action android:name="android.intent.action.MAIN" />
-                     <category android:name="android.intent.category.LAUNCHER" />
-                 </intent-filter>-->
-        </activity>
-
-
-        <activity
-            android:name="br.edu.ifpe.pdm.cardapiolanches..view.cliente.PedidosListActivity"
+            android:name="..view.cliente.PedidosListActivity"
             android:label="@string/title_activity_pedidos_list" >
-   <!--         <intent-filter>
+
+            <!--
+                <intent-filter>
                 <action android:name="br.edu.ifpe.pdm.cardapiolanches.view.cliente.PedidosListActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
-
         <activity
-            android:name="br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasListExpadableActivity"
+            android:name=".view.cliente.OfertasListExpadableActivity"
             android:label="OfertasListExpadableActivity"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            >
-
-
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" >
         </activity>
 
-
-
-
-        <!-- ************************************* FUNCIONARIO *************************************-->
+        <!-- ************************************* FUNCIONARIO ************************************* -->
 
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
-            <!-- <meta-data
+
+            <!--
+                 <meta-data
                  android:name="android.support.PARENT_ACTIVITY"
-                 android:value="br.edu.ifpe.pdm.cardapiolanches.SelectActivity" />-->
+                 android:value="br.edu.ifpe.pdm.cardapiolanches.SelectActivity" />
+            -->
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
--->
-        </activity> <activity
+            -->
+        </activity>
+        <activity
             android:name=".view.func.PedidoRealizadoProdutoGarcomActivity"
             android:label="Pedidos de Produtos Realizados"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" >
 
         </activity>
         <activity
             android:name=".view.func.PedidoAtendidoProdutoCozinheiroActivity"
             android:label="@string/title_activity_login" >
 
-  <!--          <intent-filter>
+            <!--
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
 -->
         </activity>
-
         <activity
             android:name=".view.func.PedidoProntoProdutoGarcomActivity"
             android:label="@string/title_activity_login" >
 
-  <!--          <intent-filter>
+            <!--
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
 -->
         </activity>
 
-     <!-- ************************************* FIM ********************************************-->
+        <!-- ************************************* FIM ******************************************** -->
 
 
-        <!--CRUD ADMINISTRADOR BANCOD DE DADOS-->
+        <!-- CRUD ADMINISTRADOR BANCOD DE DADOS -->
         <activity
             android:name=".view.admin.QueryResultFuncionarios"
             android:label="Test" >
         </activity>
-
-
-
         <activity
             android:name=".view.admin.ProdutoActivityCRUD"
             android:label="WelcomeProductActivityCRUD" >
-         <!--   <intent-filter>
+
+
+        </activity>
+        <activity
+            android:name=".view.admin.FuncionarioActivityCRUD"
+            android:label="WelcomeFuncionarioActivityCRUD" >
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
+            </intent-filter>
         </activity>
-
         <activity
             android:name=".view.admin.QueryResultActivity"
             android:label="WelcomeProductActivityCRUD" >
@@ -210,49 +211,35 @@
                 <category android:name="android.intent.category.default" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.admin.PacoteActivityCRUD"
             android:label="PacoteActivityCRUD" >
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
-
-
         <activity
             android:name=".view.admin.PedidoActivityCRUD"
             android:label="PedidoActivityCRUD"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            >
-
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" >
         </activity>
-
         <activity
             android:name=".view.admin.DashboardAdmin"
             android:label="DashBoardAdmin" >
-
         </activity>
-
         <activity
             android:name=".view.admin.QueryResultPedido"
             android:label="Lista Pedidos"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" >
 
         </activity>
 
-
-        <!-- </FINAL CRUD ADMINISTRADOR BANCOD DE DADOS>-->
-
-
-
+        <!-- </FINAL CRUD ADMINISTRADOR BANCOD DE DADOS> -->
 
     </application>
 

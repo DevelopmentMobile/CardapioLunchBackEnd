@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.PacoteActivityCRUD">
+    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.PacoteActivityCRUD"
+    android:background="@drawable/background">
 
     <!--Nome-->
     <LinearLayout
@@ -15,7 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Nome do Pacote: " />
+            android:text="Nome do Pacote: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
 
         />
 
@@ -24,7 +27,8 @@
             android:layout_height="match_parent"
             android:id="@+id/nome_pacote"
             android:inputType="text"
-            />
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
     <!--Descricao-->
@@ -37,8 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Descrição: " />
-
+            android:text="Descrição: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
         />
 
         <EditText
@@ -46,8 +51,8 @@
             android:layout_height="match_parent"
             android:id="@+id/descricao_pacote"
             android:inputType="text"
-
-            />
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
     <!--Preco-->
@@ -60,7 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Preço: " />
+            android:text="Preço: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
 
         />
 
@@ -70,7 +77,61 @@
             android:id="@+id/preco_pacote"
             android:inputType="numberDecimal"
             android:numeric="decimal"
-            />
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
+    </LinearLayout>
+
+
+    <!--Preco-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:text="Unidade: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
+
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/unidade"
+            android:inputType="number"
+            android:numeric="decimal"
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
+    </LinearLayout>
+
+    <!--Preco-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:text="URL da Imagem: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
+
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nome_imagem_pacote"
+            android:inputType="numberDecimal"
+            android:numeric="decimal"
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
     <!--Tipo Pacote-->
@@ -83,7 +144,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Tipo de Pacote: " />
+            android:text="Tipo de Pacote: "
+            android:textStyle="normal|bold"
+            android:textColor="#ffffee01" />
 
         />
 
@@ -91,7 +154,7 @@
             android:id="@+id/tipo_pacote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-         > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
         </Spinner>
     </LinearLayout>
 
@@ -101,28 +164,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:text="Produto: " />
-
-        />
-
-        <Spinner
-            android:id="@+id/produto_pacote"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
-        </Spinner>
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:text="Produto: "
+                android:textStyle="normal|bold"
+                android:textColor="#ffffee01" />
+
+            />
+
+            <Spinner
+                android:id="@+id/produto_pacote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+            </Spinner>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,16 +201,27 @@
             />
 
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deletar Produto"
+            android:onClick="buttonDeleteProduto"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/contadorProdutos"
+            android:inputType="number"
+            android:text="0"
+            />
+        </LinearLayout>
     </LinearLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         >
 
         <Button
@@ -149,7 +230,7 @@
             android:text="@string/inserir"
             android:layout_weight="1"
             android:onClick="buttonInsertClick"
-            />
+            android:textStyle="normal|bold" />
 
 
         <Button
@@ -159,7 +240,7 @@
             android:layout_weight="1"
             android:onClick="buttonUpdateClick"
 
-            />
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -173,7 +254,7 @@
             android:text="@string/consultar"
             android:layout_weight="1"
             android:onClick="buttonQueryClick"
-            />
+            android:textStyle="normal|bold" />
 
 
         <Button
@@ -182,7 +263,7 @@
             android:text="@string/apagar"
             android:layout_weight="1"
             android:onClick="buttonDeleteClick"
-            />
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
 

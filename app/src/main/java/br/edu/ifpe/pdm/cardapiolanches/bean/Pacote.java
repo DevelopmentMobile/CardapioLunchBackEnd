@@ -1,5 +1,7 @@
 package br.edu.ifpe.pdm.cardapiolanches.bean;
 
+import java.util.List;
+
 import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
 
 /**
@@ -14,9 +16,43 @@ public class Pacote {
     private String DESCRICAO_PACOTE;
     private Float PRECO;
     private Integer UNIDADE;
-    private Integer NOME_IMAGE;
+    private String NOME_IMAGE;
+    private Integer PRODUTO_ID;
+    private List<Produto> listProduto;
+
+    public List<Produto> getListProduto() {
+        return listProduto;
+    }
+
+    public void setListProduto(List<Produto> listProduto) {
+        this.listProduto = listProduto;
+    }
+
+    public Integer getPRODUTO_ID() {
+        return PRODUTO_ID;
+    }
+
+    public void setPRODUTO_ID(Integer PRODUTO_ID) {
+        this.PRODUTO_ID = PRODUTO_ID;
+    }
 
     private String ACAO ;
+
+    public Integer getUNIDADE() {
+        return UNIDADE;
+    }
+
+    public void setUNIDADE(Integer UNIDADE) {
+        this.UNIDADE = UNIDADE;
+    }
+
+    public String getNOME_IMAGE() {
+        return NOME_IMAGE;
+    }
+
+    public void setNOME_IMAGE(String NOME_IMAGE) {
+        this.NOME_IMAGE = NOME_IMAGE;
+    }
 
     public String getACAO() {
         return ACAO;
@@ -27,7 +63,7 @@ public class Pacote {
     }
 
 
-    public Pacote(Integer _ID, String NOME_PACOTE, Integer TIPO_PACOTE, String DESCRICAO_PACOTE, Float PRECO, Integer UNIDADE, Integer NOME_IMAGE) {
+    public Pacote(Integer _ID, String NOME_PACOTE, Integer TIPO_PACOTE, String DESCRICAO_PACOTE, Float PRECO, Integer UNIDADE, String NOME_IMAGE) {
         this._ID = _ID;
         this.NOME_PACOTE = NOME_PACOTE;
         this.TIPO_PACOTE = TIPO_PACOTE;
@@ -37,7 +73,7 @@ public class Pacote {
         this.NOME_IMAGE = NOME_IMAGE;
     }
 
-    public Pacote(String NOME_PACOTE, Integer TIPO_PACOTE, String DESCRICAO_PACOTE, Float PRECO, Integer UNIDADE, Integer NOME_IMAGE) {
+    public Pacote(String NOME_PACOTE, Integer TIPO_PACOTE, String DESCRICAO_PACOTE, Float PRECO, Integer UNIDADE, String NOME_IMAGE) {
         this.NOME_PACOTE = NOME_PACOTE;
         this.TIPO_PACOTE = TIPO_PACOTE;
         this.DESCRICAO_PACOTE = DESCRICAO_PACOTE;

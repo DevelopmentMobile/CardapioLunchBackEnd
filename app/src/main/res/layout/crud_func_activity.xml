@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.ProdutoActivityCRUD">
+    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.ProdutoActivityCRUD"
+    android:background="@drawable/background">
 
-<!--Nome Produto-->
+    <!--Nome Produto-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Login: " />
+            android:text="Login: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
 
         />
 
@@ -25,10 +28,11 @@
             android:id="@+id/login"
             android:inputType="text"
             android:text="garcom1"
-            />
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
-<!--SENHA-->
+    <!--SENHA-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Senha: " />
+            android:text="Senha: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
 
         />
 
@@ -49,7 +55,8 @@
             android:inputType="numberDecimal"
             android:text="12345"
 
-            />
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
     </LinearLayout>
     <!--Tipo-->
     <LinearLayout
@@ -61,7 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Tipo de Funcionario: " />
+            android:text="Tipo de Funcionario: "
+            android:textColor="#ffffee01"
+            android:textStyle="normal|bold" />
 
         />
 
@@ -72,7 +81,8 @@
             android:inputType="text"
             android:text="1"
 
-            />
+            android:textColor="#ffffffff"
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
 
@@ -89,10 +99,10 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-          android:text="@string/inserir"
+            android:text="@string/inserir"
             android:layout_weight="1"
             android:onClick="buttonInsertClick"
-            />
+            android:textStyle="normal|bold" />
 
 
         <Button
@@ -102,7 +112,7 @@
             android:layout_weight="1"
             android:onClick="buttonUpdateClick"
 
-            />
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -116,7 +126,7 @@
             android:text="@string/consultar"
             android:layout_weight="1"
             android:onClick="buttonQueryClick"
-            />
+            android:textStyle="normal|bold" />
 
 
         <Button
@@ -125,7 +135,7 @@
             android:text="@string/apagar"
             android:layout_weight="1"
             android:onClick="buttonDeleteClick"
-            />
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
 

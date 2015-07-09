@@ -189,14 +189,9 @@ public class ProdutoDAO {
             ps = conn.prepareStatement("SELECT * FROM produto");
 
 
-            ps.executeUpdate();
             rs= ps.executeQuery();
             List<Produto> list = new ArrayList<Produto>();
             while (rs.next()) {
-                String isbn = rs.getString(1);
-                String titulo = rs.getString(2);
-                int edicao = rs.getInt("edicao_num");
-                String publicacao = rs.getString("ano_publicacao");
 
                 list.add(new Produto(rs.getInt("_id"),
                         rs.getInt("unidade"),

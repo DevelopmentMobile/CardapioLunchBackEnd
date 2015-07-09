@@ -103,9 +103,6 @@ public class FuncionarioDAO {
         }
         try {
             for (Funcionario funcionarioTemp : funcionario) {
-
-
-
                 String SQL = "UPDATE funcionario SET nome=?," + "descricao=?," + "preco=?,"+ "categoria=?,"
                         + "tempo_pronto=?,"+ "unidade=?,"+ "nome_imagem=?,"   + "WHERE nome=?";
                 conn = this.conn;
@@ -123,9 +120,6 @@ public class FuncionarioDAO {
                 ConnectionCardapioLunch.closeConnection(conn, ps);
             }*/
     }
-
-
-
 
     public List listarTodosFuncionarioTipo(String tipo) throws Exception {
         PreparedStatement ps = null;
@@ -148,7 +142,7 @@ public class FuncionarioDAO {
                         rs.getString("senha"),
                         rs.getInt("tipo_funcionario")
 
-                        ));
+                ));
             }
             return list;
 
@@ -206,9 +200,9 @@ public class FuncionarioDAO {
 
 
                 funcionario  =  new Funcionario(rs.getInt("_id"),
-                                rs.getString("login"),
-                                rs.getString("senha"),
-                                rs.getInt("tipo_funcionario"));
+                        rs.getString("login"),
+                        rs.getString("senha"),
+                        rs.getInt("tipo_funcionario"));
 
 
             }
@@ -223,5 +217,40 @@ public class FuncionarioDAO {
 
 
     }
+
+    public Funcionario consultarFuncionarioNomeSenha(String nome, String senha) throws Exception {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        Funcionario funcionario = null;
+        try {
+            conn = this.conn;
+            ps = conn.prepareStatement("SELECT * FROM funcionario WHERE login =? AND senha=?");
+            ps.setString(1,nome);
+            ps.setString(2,senha);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+
+
+                funcionario  =  new Funcionario(rs.getInt("_id"),
+                        rs.getString("login"),
+                        rs.getString("senha"),
+                        rs.getInt("tipo_funcionario"));
+
+
+            }
+
+            return funcionario;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            ConnectionCardapioLunch.closeConnection(conn, ps, rs);
+        }
+
+
+
+    }
+
+
 
 }

@@ -1,5 +1,7 @@
 package br.edu.ifpe.pdm.cardapiolanches.dao;
 
+import java.util.List;
+
 import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
 
 /**
@@ -7,5 +9,5 @@ import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
  */
 public interface FuncionarioListener {
 
-    public void showFuncionario(Funcionario Funcionario);
+    public void showFuncionario(List< Funcionario> funcionarios);
 }

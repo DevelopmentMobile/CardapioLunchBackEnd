@@ -14,28 +14,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
+import br.edu.ifpe.pdm.cardapiolanches.bean.Pacote;
 
 
 /**
  * Created by Richardson on 14/05/2015.
  */
-public class PacoteTask extends AsyncTask<Produto, Void, Produto> {
+public class PacoteTask extends AsyncTask<Pacote, Void, Pacote> {
     private final String LOG_TAG = PacoteTask.class.getSimpleName();
     private String[] forecast = null;
-    private  Produto produto = null;
+    private  Pacote Pacote = null;
 
 //    private List<Map<String,String>> listDetailsEnergyBill =null;
 
 
-    private ProdutoListener listener = null;
+    private PacoteListener listener = null;
 
-    public PacoteTask(ProdutoListener listener) {
+    public PacoteTask(PacoteListener listener) {
         this.listener = listener;
     }
 
     @Override
-    protected Produto doInBackground(Produto... params) {
+    protected Pacote doInBackground(Pacote... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -48,17 +48,24 @@ public class PacoteTask extends AsyncTask<Produto, Void, Produto> {
             //builder.scheme("http");
           //  builder.authority("10.1.1.44");
 
-            builder.appendPath("produto");
+            builder.appendPath("pacote");
 
             builder.appendQueryParameter("acao", params[0].getACAO());
-            //  builder.appendQueryParameter("_id", produto.get_ID().toString());
-           builder.appendQueryParameter("unidade", params[0].getUNIDADE_ESTOQUE().toString());
-            builder.appendQueryParameter("nome", params[0].getNOME());
+            //  builder.appendQueryParameter("_id", Pacote.get_ID().toString());
+           builder.appendQueryParameter("unidade", params[0].getUNIDADE().toString());
+            builder.appendQueryParameter("nome", params[0].getNOME_PACOTE());
             builder.appendQueryParameter("preco", params[0].getPRECO().toString());
-            builder.appendQueryParameter("descricao", params[0].getDESCRICAO());
-            builder.appendQueryParameter("nome_imagem", params[0].getNOME_IMAGEM());
-            builder.appendQueryParameter("tempo_pronto", params[0].getTEMPO_PRONTO_PRODUTO().toString());
-            builder.appendQueryParameter("categoria", params[0].getCATEGORIA());
+            builder.appendQueryParameter("descricao", params[0].getDESCRICAO_PACOTE());
+            builder.appendQueryParameter("nome_imagem", params[0].getNOME_IMAGE());
+            builder.appendQueryParameter("tipo_pacote", params[0].getTIPO_PACOTE().toString());
+            builder.appendQueryParameter("produto_id", params[0].getPRODUTO_ID().toString());
+
+            for(int i = 0 ; i <  params[0].getListProduto().size() ; i++){
+
+                builder.appendQueryParameter("ids", params[0].getListProduto().get(i).get_ID().toString());
+
+            }
+
 
 
             URL url = new URL(builder.build().toString());
@@ -86,7 +93,7 @@ public class PacoteTask extends AsyncTask<Produto, Void, Produto> {
                 forecastJson = buffer.toString();
             }
             //     listEnergyBill = EnergyBillParser.printValuesCellTable(forecastJson);
-            produto = getProdutoFromJson(forecastJson);
+            Pacote = getPacoteFromJson(forecastJson);
 
 
         } catch (IOException e) {
@@ -101,39 +108,38 @@ public class PacoteTask extends AsyncTask<Produto, Void, Produto> {
                 }
             }
         }
-        return produto;
+        return Pacote;
     }
 
 
     @Override
-    protected void onPostExecute(Produto produto) {
+    protected void onPostExecute(Pacote Pacote) {
        /* for (Object s : resultStrs) {
             Log.v(LOG_TAG, "Forecast entry: " + s);
         }*/
-        listener.showProduto(produto);
+        listener.showPacote(Pacote);
 
     }
 
 
-    public static Produto getProdutoFromJson(String forecastJsonStr){
+    public static Pacote getPacoteFromJson(String forecastJsonStr){
 
-    Produto produto = null;
+    Pacote Pacote = null;
     try
 
     {
 
         if(forecastJsonStr != null) {
-            produto = new Produto();
+            Pacote = new Pacote();
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            produto.set_ID(forecastJson.getInt("_id"));
-            produto.setUNIDADE_ESTOQUE(forecastJson.getInt("unidade"));
-            produto.setNOME(forecastJson.getString("nome"));
-            produto.setPRECO(Float.parseFloat(forecastJson.getString("preco")));
-            produto.setDESCRICAO(forecastJson.getString("descricao"));
-            produto.setNOME_IMAGEM(forecastJson.getString("nome_imagem"));
-            produto.setTEMPO_PRONTO_PRODUTO(forecastJson.getInt("tempo_pronto"));
-            produto.setCATEGORIA(forecastJson.getString("categoria"));
+            Pacote.set_ID(forecastJson.getInt("_id"));
+            Pacote.setUNIDADE(forecastJson.getInt("unidade"));
+            Pacote.setNOME_PACOTE(forecastJson.getString("nome"));
+            Pacote.setPRECO(Float.parseFloat(forecastJson.getString("preco")));
+            Pacote.setDESCRICAO_PACOTE(forecastJson.getString("descricao"));
+            Pacote.setNOME_IMAGE(forecastJson.getString("nome_imagem"));
+            Pacote.setTIPO_PACOTE(forecastJson.getInt("tipo_pacote"));
 
         }
     }
@@ -146,7 +152,7 @@ public class PacoteTask extends AsyncTask<Produto, Void, Produto> {
         e.printStackTrace();
     }
 
-    return produto;
+    return Pacote;
 }
 
 }

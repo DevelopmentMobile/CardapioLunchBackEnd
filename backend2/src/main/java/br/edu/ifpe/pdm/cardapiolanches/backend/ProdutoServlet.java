@@ -6,10 +6,13 @@
 
 package br.edu.ifpe.pdm.cardapiolanches.backend;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +30,7 @@ public class ProdutoServlet extends HttpServlet {
        String acao = req.getParameter("acao");
        String nome =  req.getParameter("nome");
         ProdutoDAO produtoDAO = null;
+        List<Produto> produtos = null;
         try {
 
     Produto produto =  new Produto(
@@ -43,22 +47,32 @@ public class ProdutoServlet extends HttpServlet {
     if(acao.equals("inserir") )
     {
         produtoDAO.salvar(produto);
+        resp.getWriter().write(generateJson(produto));
+
     }else if(acao.equals("consultarnome")){
       produto =  produtoDAO.procurarProdutoNome(nome);
+        resp.getWriter().write(generateJson(produto));
+
 
     }else if(acao.equals("atualizar")){
     produtoDAO.atualizar(produto);
         produtoDAO = new ProdutoDAO();
         produto=  produtoDAO.procurarProdutoNome(nome);
+        resp.getWriter().write(generateJson(produto));
+
     }else if(acao.equals("atualizartodos")){
+        resp.getWriter().write(generateJson(produto));
 
     }else if(acao.equals("deletar")){
     produtoDAO.excluir(nome);
+        resp.getWriter().write(generateJson(produto));
+
+    }else if(acao.equals("consultar")){
+        produtos =  new ArrayList<Produto>();
+        produtos = produtoDAO.todosProduto();
+        resp.getWriter().write(generateArrayJson(produtos));
     }
 
-            //System.out.println(produto );
-
-    resp.getWriter().write(generateJson(produto));
 
 }catch (Exception e){
     e.printStackTrace();
@@ -80,11 +94,33 @@ public class ProdutoServlet extends HttpServlet {
         resp.getWriter().println("Hello " + name);
     }
 
-    private String  generateJson(Produto produto){
-
+    private String  generateArrayJson(List<Produto> produtos){
         JSONObject jo = new JSONObject();
+        JSONArray ja = new JSONArray();
+        try{
+
+            for(Produto produto : produtos) {
+                JSONObject aux = new JSONObject();
+                aux.put("_id", produto.get_ID());
+                aux.put("unidade", produto.getUNIDADE_ESTOQUE());
+                aux.put("nome", produto.getNOME());
+                aux.put("preco", produto.getPRECO());
+                aux.put("descricao", produto.getDESCRICAO());
+                aux.put("nome_imagem", produto.getNOME_IMAGEM());
+                aux.put("tempo_pronto", produto.getTEMPO_PRONTO_PRODUTO());
+                aux.put("categoria", produto.getCATEGORIA());
+                ja.put(aux);
+            }
+            jo.put("produtos", ja);
+
+        }
+        catch(JSONException e){ e.printStackTrace(); }
+        return(jo.toString());
+    }
 
 
+    private String  generateJson(Produto produto){
+        JSONObject jo = new JSONObject();
         try{
             jo.put("_id",produto.get_ID());
             jo.put("unidade",produto.getUNIDADE_ESTOQUE());
@@ -94,13 +130,8 @@ public class ProdutoServlet extends HttpServlet {
             jo.put("nome_imagem",produto.getNOME_IMAGEM());
             jo.put("tempo_pronto",produto.getTEMPO_PRONTO_PRODUTO());
             jo.put("categoria",produto.getCATEGORIA());
-
-
         }
         catch(JSONException e){ e.printStackTrace(); }
-
         return(jo.toString());
-
-
     }
 }

@@ -9,6 +9,7 @@ public class Constantes {
 
     public static final Integer GARCOM = 1;
     public static final Integer CONZINHEIRO = 2;
+    public static final Integer ADMIN = 99;
     public static final Integer PEDIDO_REALIZADO = 1;
     public static final Integer PEDIDO_ATENDIDO = 2;
     public static final Integer PEDIDO_PRONTO = 3;

@@ -1,9 +1,8 @@
 package br.edu.ifpe.pdm.cardapiolanches;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,14 +12,17 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.List;
+
 import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
 import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioDAO;
-import br.edu.ifpe.pdm.cardapiolanches.view.admin.QueryResultFuncionarios;
+import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioListener;
+import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioTask;
 import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
+import br.edu.ifpe.pdm.cardapiolanches.view.func.PedidoAtendidoProdutoCozinheiroActivity;
 
 
-
-public class Login extends ActionBarActivity {
+public class Login extends Activity implements FuncionarioListener {
     private static final String MANTER_CONECTADO = "manter_conectado";
     private static final String NOME = "nome_conectado";
     private static final String FONE = "fone_conectado";
@@ -39,120 +41,77 @@ public class Login extends ActionBarActivity {
 
     private FuncionarioDAO FuncionarioDAO ;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
         usuario = (EditText) findViewById(R.id.usuario);
         senha = (EditText) findViewById(R.id.senha);
-        // manterConectado = (CheckBox) findViewById(R.id.manterConectado);
         btAcessar = (Button) findViewById(R.id.btAcessar);
         btCadastrar = (Button) findViewById(R.id.btCadastrar);
         rgTipoUsuario = (RadioGroup) findViewById(R.id.tipoUsuario);
-
-        FuncionarioDAO =  new FuncionarioDAO(this);
-        FuncionarioDAO.open();
-/*
-        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
-        boolean conectado =
-                preferencias.getBoolean(MANTER_CONECTADO,false);
-        if(conectado){
-            startActivity(new Intent(this, Dashboard.class));
-        }
-*/
-
-
-        Funcionario = new Funcionario();
-        //   Funcionario.setSENHA("admin");
-
-                /*Funcionario.setNOME("admin");
-                Funcionario.setFONE("900000000");
-                Funcionario.setLOGIN("admin");*/
-
-
-      //  Funcionario.setTIPO_FUNCIONARIO(99);
-
-        btCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int tipo = rgTipoUsuario.getCheckedRadioButtonId();
-
-                if (tipo == R.id.garcom) {
-                    Funcionario.setTIPO_FUNCIONARIO(Constantes.GARCOM);
-                } else if (tipo == R.id.conzinheiro) {
-                    Funcionario.setTIPO_FUNCIONARIO(Constantes.CONZINHEIRO);
-                }
-
-                Funcionario.setSENHA(senha.getText().toString());
-                Funcionario.setLOGIN(usuario.getText().toString());
-
-              Long resultado =   FuncionarioDAO.criarUsuario(Funcionario);
-              //  FuncionarioDAO.close();
-                if (resultado > 0) {
-
-                    startActivity(new Intent(Login.this, QueryResultFuncionarios.class));
-                } else {
-                    Toast.makeText(Login.this, "Erro ao cadastrar", Toast.LENGTH_SHORT).show();
-                }
-
-                //startActivity(new Intent(Login.this, QueryResultFuncionarios.class));
-
-
-
-            }
-        });
-
-        btAcessar.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-
-                                             Log.i(MY_TAG, "Usuario:" + usuario.getText().toString() + "Senha:" + senha.getText().toString() );
-
-                                     ///   FuncionarioDAO = new FuncionarioDAO(Login.this);
-                                             FuncionarioDAO.read();
-                                             Funcionario =   FuncionarioDAO.consultarFuncionarioPorLoginSenha(usuario.getText().toString(), senha.getText().toString());
-                                            // FuncionarioDAO.close();
-                                             if (Funcionario != null) {
-
-                                               /*  SharedPreferences preferencias =
-                                                         getPreferences(MODE_PRIVATE);
-                                                 SharedPreferences.Editor editor = preferencias.edit();
-                                                 editor.putBoolean(MANTER_CONECTADO,
-                                                         manterConectado.isChecked());
-                                                 editor.putString(NOME, Funcionario.getNOME());
-                                                 editor.putString(FONE, Funcionario.getFONE());
-                                                 editor.putString(LOGIN, Funcionario.getLOGIN());
-
-                                                 editor.commit();*/
-                                                 Log.v(MY_TAG, "Usuario encontrado!");
-
-                                                 startActivity(new Intent(Login.this, Dashboard.class));
-
-                                             } else {
-                                                 Log.v(MY_TAG, "Usuario nao encontrado!");
-
-                                                 Toast toast = Toast.makeText(Login.this, R.string.messagemerrologin,
-                                                         Toast.LENGTH_SHORT);
-                                                 toast.show();
-                                             }
-
-
-
-                                         }
-                                     }
-        );
-
-
-
-
-
-
-
-        Log.v(MY_TAG, "Oncreate sucess");
     }
 
 
+
+    public void buttonInsertClick(View view) {
+//        int tipoFuncionario =    Integer.parseInt(((EditText) findViewById(R.id.tipo_funcionario)).getText().toString());
+
+        int tipo = rgTipoUsuario.getCheckedRadioButtonId();
+
+
+        String login =    ((EditText)findViewById(R.id.usuario)).getText().toString();
+        String senha =    ((EditText)findViewById(R.id.senha)).getText().toString();
+
+        final Funcionario[] arrayFuncionario =  new Funcionario[1];
+        Integer tipoFuncionario = -1;
+        if (tipo == R.id.garcom) {
+            tipoFuncionario = Constantes.GARCOM;
+        } else if (tipo == R.id.conzinheiro) {
+            tipoFuncionario = Constantes.CONZINHEIRO;
+
+        }else if (tipo == R.id.empresario) {
+            tipoFuncionario = Constantes.ADMIN;
+        }
+
+        final      Funcionario Funcionario =  new Funcionario(login,senha ,tipoFuncionario);
+
+
+        Funcionario.setACAO("inserir");
+
+        arrayFuncionario[0] = Funcionario;
+        new FuncionarioTask(this).execute(arrayFuncionario);
+
+
+    }
+
+
+    public void buttonConsultarClick(View view) {
+
+        int tipo = rgTipoUsuario.getCheckedRadioButtonId();
+
+
+        String login =    ((EditText)findViewById(R.id.usuario)).getText().toString();
+        String senha =    ((EditText)findViewById(R.id.senha)).getText().toString();
+
+        final Funcionario[] arrayFuncionario =  new Funcionario[1];
+        Integer tipoFuncionario = -1;
+        if (tipo == R.id.garcom) {
+            tipoFuncionario = Constantes.GARCOM;
+        } else if (tipo == R.id.conzinheiro) {
+            tipoFuncionario = Constantes.CONZINHEIRO;
+
+        }else if (tipo == R.id.empresario) {
+            tipoFuncionario = Constantes.ADMIN;
+        }
+
+        final      Funcionario Funcionario =  new Funcionario(login,senha ,tipoFuncionario);
+
+        Funcionario.setACAO("consultarnomesenha");
+
+        arrayFuncionario[0] = Funcionario;
+        new FuncionarioTask(this).execute(arrayFuncionario);
+    }
 
 
 
@@ -179,5 +138,37 @@ public class Login extends ActionBarActivity {
     }
 
 
+    @Override
+    public void showFuncionario(List<Funcionario> funcionarios) {
+
+        for (Funcionario funcionario : funcionarios) {
+            if (funcionario.getACAO().equals("inserir")) {
+
+                if (funcionario.get_ID() != null) {
+                    Toast.makeText(this, "Usuario Cadastrado com Sucesso !!!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Usuario Nao encotrado !!!", Toast.LENGTH_LONG).show();
+                }
+
+
+            } else if (funcionario.getACAO().equals("consultarnomesenha")) {
+                if (funcionario.get_ID() != null) {
+                    if (funcionario.getTIPO_FUNCIONARIO() == Constantes.CONZINHEIRO) {
+                        startActivity(new Intent(this, PedidoAtendidoProdutoCozinheiroActivity.class));
+
+                    } else if (funcionario.getTIPO_FUNCIONARIO() == Constantes.GARCOM) {
+                        startActivity(new Intent(this, PedidoAtendidoProdutoCozinheiroActivity.class));
+                    } else if (funcionario.getTIPO_FUNCIONARIO() == Constantes.ADMIN) {
+
+                        startActivity(new Intent(this, Dashboard.class));
+                    }
+
+
+                } else {
+                    Toast.makeText(this, "Usuario nao encotrado", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
 
 }

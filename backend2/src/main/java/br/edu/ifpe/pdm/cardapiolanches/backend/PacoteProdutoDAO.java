@@ -26,13 +26,13 @@ public class PacoteProdutoDAO {
             throw new Exception("O valor passado não pode ser nulo");
         }
         try {
-            String SQL = "INSERT INTO pacote_produto(pacote_id,produto_id)"
+            String SQL = "INSERT INTO pacote_produto (pacote_id, produto_id)"
                     + "values(?,?)";
             conn = this.conn;
 
             ps = conn.prepareStatement(SQL);
-            ps.setInt(2, pacoteProduto.getPACOTE_ID());
-            ps.setInt(3, pacoteProduto.getPRODUTO_ID());
+            ps.setInt(1, pacoteProduto.getPACOTE_ID());
+            ps.setInt(2, pacoteProduto.getPRODUTO_ID());
 
 
             ps.executeUpdate();

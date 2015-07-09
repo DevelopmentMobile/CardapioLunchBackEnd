@@ -8,6 +8,16 @@ public class Funcionario {
     private Integer _ID ;
     private String LOGIN ;
     private String SENHA ;
+    private String ACAO;
+
+
+    public String getACAO() {
+        return ACAO;
+    }
+
+    public void setACAO(String ACAO) {
+        this.ACAO = ACAO;
+    }
 
     public Funcionario(String LOGIN, Integer TIPO_FUNCIONARIO, String SENHA) {
         this.LOGIN = LOGIN;

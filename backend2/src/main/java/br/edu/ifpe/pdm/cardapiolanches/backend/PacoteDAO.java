@@ -22,12 +22,13 @@ public class PacoteDAO {
         }
     }
 
-    public void salvar(Pacote Pacote) throws Exception {
+    public int salvar(Pacote Pacote) throws Exception {
         PreparedStatement ps = null;
         Connection conn = null;
         if (Pacote == null) {
             throw new Exception("O valor passado não pode ser nulo");
         }
+        int saida = -1;
         try {
             String SQL = "INSERT INTO pacote(nome,descricao,preco,tipo_pacote,unidade, nome_imagem)"
                     + "values(?,?,?,?,?,?)";
@@ -42,12 +43,14 @@ public class PacoteDAO {
             ps.setString(6, Pacote.getNOME_IMAGE());
 
 
-            ps.executeUpdate();
+             saida = ps.executeUpdate();
         } catch (SQLException sqle) {
             throw new Exception("Erro ao inserir dados" + sqle);
         } finally {
             ConnectionCardapioLunch.closeConnection(conn, ps);
         }
+
+        return saida;
     }
 
 
@@ -205,6 +208,37 @@ public class PacoteDAO {
         }finally {
             ConnectionCardapioLunch.closeConnection(conn, ps, rs);
         }
+    }
+
+    public int consultaUltimoPacote() throws Exception {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        int pacoteId = -1;
+        try {
+            conn = this.conn;
+            ps = conn.prepareStatement("SELECT * FROM pacote");
+
+
+            //ps.executeUpdate();
+            rs= ps.executeQuery();
+            List<Pacote> list = new ArrayList<Pacote>();
+
+            while (rs.next()) {
+
+              if(rs.last()) {
+                    pacoteId = rs.getInt("_id");
+                }
+            }
+
+
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        }finally {
+            ConnectionCardapioLunch.closeConnection(conn, ps, rs);
+        }
+
+        return pacoteId;
     }
 
 

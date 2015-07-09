@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +14,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
 
@@ -20,10 +23,10 @@ import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
 /**
  * Created by Richardson on 14/05/2015.
  */
-public class FuncionarioTask extends AsyncTask<Funcionario, Void, Funcionario> {
+public class FuncionarioTask extends AsyncTask<Funcionario, Void, List<Funcionario>> {
     private final String LOG_TAG = FuncionarioTask.class.getSimpleName();
     private String[] forecast = null;
-    private  Funcionario Funcionario = null;
+    private  List<Funcionario> funcionarios = null;
 
 //    private List<Map<String,String>> listDetailsEnergyBill =null;
 
@@ -35,29 +38,26 @@ public class FuncionarioTask extends AsyncTask<Funcionario, Void, Funcionario> {
     }
 
     @Override
-    protected Funcionario doInBackground(Funcionario... params) {
+    protected List<Funcionario> doInBackground(Funcionario... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         String forecastJson = null;
 
         try {
-           //Uri.Builder builder = new Uri.Builder();
+            //Uri.Builder builder = new Uri.Builder();
 
-           Uri.Builder builder = Uri.parse("http://10.1.1.44:8080").buildUpon();
+            Uri.Builder builder = Uri.parse("http://10.1.1.44:8080").buildUpon();
             //builder.scheme("http");
-          //  builder.authority("10.1.1.44");
+            //builder.authority("10.1.1.44");
 
             builder.appendPath("funcionario");
 
             builder.appendQueryParameter("acao", params[0].getACAO());
             //  builder.appendQueryParameter("_id", Funcionario.get_ID().toString());
-           builder.appendQueryParameter("login", params[0].getLOGIN().toString());
+            builder.appendQueryParameter("login", params[0].getLOGIN().toString());
             builder.appendQueryParameter("senha", params[0].getSENHA());
             builder.appendQueryParameter("tipo_funcionario", params[0].getTIPO_FUNCIONARIO().toString());
-
-
-
 
             URL url = new URL(builder.build().toString());
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -84,9 +84,7 @@ public class FuncionarioTask extends AsyncTask<Funcionario, Void, Funcionario> {
                 forecastJson = buffer.toString();
             }
             //     listEnergyBill = EnergyBillParser.printValuesCellTable(forecastJson);
-            Funcionario = getFuncionarioFromJson(forecastJson);
-
-
+            funcionarios = getFuncionarioFromJson(forecastJson);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
         } finally {
@@ -99,49 +97,56 @@ public class FuncionarioTask extends AsyncTask<Funcionario, Void, Funcionario> {
                 }
             }
         }
-        return Funcionario;
+        return funcionarios;
     }
 
 
     @Override
-    protected void onPostExecute(Funcionario Funcionario) {
+    protected void onPostExecute(List<Funcionario> funcionarios) {
        /* for (Object s : resultStrs) {
             Log.v(LOG_TAG, "Forecast entry: " + s);
         }*/
-        listener.showFuncionario(Funcionario);
-
+        listener.showFuncionario(funcionarios);
     }
 
 
-    public static Funcionario getFuncionarioFromJson(String forecastJsonStr){
+    public List<Funcionario> getFuncionarioFromJson(String forecastJsonStr){
 
-    Funcionario Funcionario = null;
-    try
-
-    {
-
-        if(forecastJsonStr != null) {
-            Funcionario = new Funcionario();
-
-            JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            Funcionario.set_ID(forecastJson.getInt("_id"));
-            Funcionario.setLOGIN(forecastJson.getString("login"));
-            Funcionario.setSENHA(forecastJson.getString("senha"));
-            Funcionario.setTIPO_FUNCIONARIO(forecastJson.getInt("tipo_funcionario"));
+        List<Funcionario> funcionarios = null;
 
 
+
+        try
+        {
+            if(forecastJsonStr != null) {
+
+        JSONObject forecastJson= new JSONObject(forecastJsonStr);
+                JSONArray ja = new JSONArray();
+                ja = forecastJson.getJSONArray("funcionarios");
+
+           funcionarios = new ArrayList<Funcionario>();
+        for (int i = 0; i < ja.length(); i++){
+
+
+       Funcionario funcionario=new Funcionario();
+
+        funcionario.set_ID(ja.getJSONObject(i).getInt("_id"));
+        funcionario.setLOGIN(ja.getJSONObject(i).getString("login"));
+        funcionario.setSENHA(ja.getJSONObject(i).getString("senha"));
+        funcionario.setTIPO_FUNCIONARIO(ja.getJSONObject(i).getInt("tipo_funcionario"));
+        funcionario.setACAO(ja.getJSONObject(i).getString("acao"));
+        funcionarios.add(funcionario);
+             }
+            }
+        }catch(
+                JSONException e
+                )
+
+        {
+            e.printStackTrace();
         }
+
+        return funcionarios;
     }
-
-    catch(
-    JSONException e
-    )
-
-    {
-        e.printStackTrace();
-    }
-
-    return Funcionario;
-}
 
 }

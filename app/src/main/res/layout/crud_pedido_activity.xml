@@ -1,12 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="br.edu.ifpe.pdm.cardapiolanches.view.admin.PedidoActivityCRUD">
+    android:background="@drawable/background">
 
 
-    <!--Id do Pedido-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +14,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Id do pedido: " />
+            android:text="Id do pedido: "
+            android:textColor="#fff5ff35"
+           />
 
         />
 
@@ -38,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Numero do pedido: " />
+            android:text="Numero do pedido: "
+            android:textColor="#fff5ff35" />
 
         />
 
@@ -62,7 +63,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Numero da Mesa: " />
+            android:text="Numero da Mesa: "
+            android:textColor="#fff5ff35"
+         />
 
         />
 
@@ -86,7 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Quantidade: " />
+            android:text="Quantidade: "
+            android:textColor="#fff5ff35" />
 
         />
 
@@ -110,7 +114,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Total Pedido: " />
+            android:text="Total Pedido: "
+
+            android:textColor="#fff5ff35" />
 
         />
 
@@ -135,15 +141,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Status do Pedido: " />
+            android:text="Status do Pedido: "
+
+            android:textColor="#fff5ff35" />
         />
 
         <Spinner
             android:id="@+id/status_pedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/spinner_header"
-        > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+
+            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
         </Spinner>
     </LinearLayout>
 
@@ -157,7 +165,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Produto: " />
+            android:text="Produto: "
+
+            android:textColor="#fff5ff35" />
 
         />
 
@@ -165,8 +175,8 @@
             android:id="@+id/produto_pedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/spinner_header"
-          > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+
+            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
         </Spinner>
     </LinearLayout>
 
@@ -181,7 +191,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Pacote: " />
+            android:text="Pacote: "
+
+            android:textColor="#fff5ff35" />
 
         />
 
@@ -190,7 +202,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/spinner_header"
-           > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
         </Spinner>
     </LinearLayout>
 
@@ -205,7 +217,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Funcionario: " />
+            android:text="Funcionario: "
+
+            android:textColor="#fff5ff35" />
 
         />
 
@@ -214,7 +228,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/spinner_header"
-          > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
         </Spinner>
 
 
@@ -275,26 +289,26 @@
 
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Nome Funcionario"
-        android:layout_weight="1"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Nome Funcionario"
+            android:layout_weight="1"
+            android:textColor="#fff5ff35" />
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Buscar"
-        android:layout_weight="1"
-        android:onClick="buscarFuncionario"
-        />
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Buscar"
+            android:layout_weight="1"
+            android:onClick="buscarFuncionario"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

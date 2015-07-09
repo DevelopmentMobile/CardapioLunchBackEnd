@@ -65,13 +65,7 @@
             android:hardwareAccelerated="false"
             android:label="@string/title_activity_welcome" >
 
-            <!--
-                <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".SelectActivity"
@@ -134,6 +128,11 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <!--
                  <meta-data
@@ -196,11 +195,7 @@
             android:name=".view.admin.FuncionarioActivityCRUD"
             android:label="WelcomeFuncionarioActivityCRUD" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.admin.QueryResultActivity"
@@ -215,13 +210,7 @@
             android:name=".view.admin.PacoteActivityCRUD"
             android:label="PacoteActivityCRUD" >
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".view.admin.PedidoActivityCRUD"

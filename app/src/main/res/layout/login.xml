@@ -3,10 +3,9 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scrollView_login"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#000000"
-    android:gravity="center_vertical"
->
+    android:background="@drawable/background">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -100,6 +99,13 @@
                     android:id="@+id/conzinheiro"
                     android:text="@string/cozinheiro"
                     android:textColor="#FFFFFF" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/empresario"
+                    android:text="Empresário"
+                    android:textColor="#FFFFFF" />
             </RadioGroup>
         </LinearLayout>
 
@@ -109,7 +115,9 @@
             android:layout_gravity="center"
             android:text="@string/entrar"
             android:textSize="30dp"
-            android:id="@+id/btAcessar"/>
+            android:id="@+id/btAcessar"
+            android:onClick="buttonConsultarClick"
+            />
 
         <Button
             android:layout_width="224dp"
@@ -117,12 +125,8 @@
             android:layout_gravity="center"
             android:text="@string/cadastrar"
             android:textSize="30dp"
-            android:id="@+id/btCadastrar"/>
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/activity_rodape"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/btCadastrar"
+            android:onClick="buttonInsertClick"
+            />
     </LinearLayout>
 </ScrollView>

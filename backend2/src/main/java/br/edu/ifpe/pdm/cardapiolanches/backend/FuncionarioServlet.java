@@ -6,10 +6,13 @@
 
 package br.edu.ifpe.pdm.cardapiolanches.backend;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,78 +25,78 @@ public class FuncionarioServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-
         String acao = req.getParameter("acao");
         String login =  req.getParameter("login");
         FuncionarioDAO funcionarioDAO = null;
+        List<Funcionario> funcionarios = null;
         try {
 
             Funcionario funcionario =  new Funcionario(
-           req.getParameter("login"),  Integer.parseInt(req.getParameter("tipo_funcionario")),
-                   req.getParameter("senha")
-
-               );
-
+                    req.getParameter("login"), Integer.parseInt(req.getParameter("tipo_funcionario")),
+                    req.getParameter("senha")
+            );
 
             funcionarioDAO = new FuncionarioDAO();
+            funcionarios = new ArrayList<Funcionario>();
             if(acao.equals("inserir") )
             {
                 funcionarioDAO.salvar(funcionario);
+                funcionarioDAO = new FuncionarioDAO();
+                funcionario=  funcionarioDAO.consultarFuncionarioNome(login);
+                funcionario.setACAO("inserir");
+                funcionarios.add(funcionario);
             }else if(acao.equals("consultarnome")){
                 funcionario = funcionarioDAO.consultarFuncionarioNome(login);
-
+            }else if(acao.equals("consultarnomesenha")){
+                funcionario = funcionarioDAO.consultarFuncionarioNomeSenha(funcionario.getLOGIN(),funcionario.getSENHA());
+                funcionario.setACAO("consultarnomesenha");
+                funcionarios.add(funcionario);
             }else if(acao.equals("atualizar")){
                 funcionarioDAO.atualizar(funcionario);
                 funcionarioDAO = new FuncionarioDAO();
                 funcionario=  funcionarioDAO.consultarFuncionarioNome(login);
+                funcionarios.add(funcionario);
             }else if(acao.equals("atualizartodos")){
 
             }else if(acao.equals("deletar")){
                 funcionarioDAO.excluir(login);
+            }else if(acao.equals("consultartodos")){
+                funcionarios = funcionarioDAO.listarTodosFuncionarios();
+
             }
 
-            //System.out.println(Funcionario );
 
-            resp.getWriter().write(generateJson(funcionario));
+            resp.getWriter().write(generateJson(funcionarios));
 
         }catch (Exception e){
             e.printStackTrace();
 
         }
-
-
-
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter("name");
-        resp.setContentType("text/plain");
-        if (name == null) {
-            resp.getWriter().println("Please enter a name");
-        }
-        resp.getWriter().println("Hello " + name);
+
     }
+    private String generateJson(List<Funcionario> funcionarios){
 
-    private String  generateJson(Funcionario funcionario){
-
-        JSONObject jo = new JSONObject();
-
+        JSONObject joList =new JSONObject();
+        JSONArray ja = new JSONArray();
 
         try{
-            jo.put("_id",funcionario.get_ID());
-            jo.put("login",funcionario.getLOGIN());
-            jo.put("senha",funcionario.getSENHA());
-            jo.put("tipo_funcionario",funcionario.getTIPO_FUNCIONARIO());
-
-
-
+            for(Funcionario funcionario:funcionarios) {
+                JSONObject  jo = new JSONObject();
+                jo.put("_id", funcionario.get_ID());
+                jo.put("login", funcionario.getLOGIN());
+                jo.put("senha", funcionario.getSENHA());
+                jo.put("tipo_funcionario", funcionario.getTIPO_FUNCIONARIO());
+                jo.put("acao", funcionario.getACAO());
+                ja.put(jo);
+            }
+            joList.put("funcionarios",ja);
         }
         catch(JSONException e){ e.printStackTrace(); }
-
-        return(jo.toString());
-
-
+        return(joList.toString());
     }
 }

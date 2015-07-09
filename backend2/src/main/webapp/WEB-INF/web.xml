@@ -10,6 +10,15 @@
         <servlet-name>MyServletFuncionario</servlet-name>
         <servlet-class>br.edu.ifpe.pdm.cardapiolanches.backend.FuncionarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyServletPacote</servlet-name>
+        <servlet-class>br.edu.ifpe.pdm.cardapiolanches.backend.PacoteServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>MyServletPedido</servlet-name>
+        <servlet-class>br.edu.ifpe.pdm.cardapiolanches.backend.PedidoServlet</servlet-class>
+    </servlet>
 
 
 
@@ -24,6 +33,14 @@
         <url-pattern>/funcionario</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>MyServletPacote</servlet-name>
+        <url-pattern>/pacote</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyServletPedido</servlet-name>
+        <url-pattern>/pedido</url-pattern>
+    </servlet-mapping>
 
 
     <welcome-file-list>

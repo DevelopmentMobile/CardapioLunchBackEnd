@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import br.edu.ifpe.pdm.cardapiolanches.R;
 import br.edu.ifpe.pdm.cardapiolanches.bean.Funcionario;
 import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioListener;
@@ -114,7 +116,7 @@ public class FuncionarioActivityCRUD extends Activity implements FuncionarioList
 
 
     @Override
-    public void showFuncionario(Funcionario Funcionario) {
+    public void showFuncionario(List<Funcionario> Funcionario) {
         if(Funcionario != null) {
             Toast.makeText(this, Funcionario.toString(), Toast.LENGTH_LONG).show();
         }else{

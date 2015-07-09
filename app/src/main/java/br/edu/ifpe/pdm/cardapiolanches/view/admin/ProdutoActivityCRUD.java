@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import br.edu.ifpe.pdm.cardapiolanches.R;
 import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
 import br.edu.ifpe.pdm.cardapiolanches.dao.ProdutoListener;
@@ -200,10 +202,12 @@ public class ProdutoActivityCRUD extends Activity implements ProdutoListener {
     }
 
 
+
+
     @Override
-    public void showProduto(Produto produto) {
-        if(produto != null) {
-            Toast.makeText(this, produto.toString(), Toast.LENGTH_LONG).show();
+    public void showProduto(List<Produto> produtos) {
+        if(produtos.get(0) != null) {
+            Toast.makeText(this, produtos.get(0).toString(), Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(this, "Produto Não Cadastrado!!", Toast.LENGTH_SHORT).show();
         }

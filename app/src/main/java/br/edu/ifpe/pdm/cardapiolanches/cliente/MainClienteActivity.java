@@ -1,11 +1,14 @@
 package br.edu.ifpe.pdm.cardapiolanches.cliente;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import br.edu.ifpe.pdm.cardapiolanches.R;
+import br.edu.ifpe.pdm.cardapiolanches.view.cliente.OfertasProdutosListActivity;
 
 public class MainClienteActivity extends ActionBarActivity {
 
@@ -15,6 +18,11 @@ public class MainClienteActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main_cliente);
     }
 
+    public void encaminhaListaProdutos(View view){
+
+        startActivity(new Intent(this, OfertasProdutosListActivity.class
+        ));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

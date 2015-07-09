@@ -58,11 +58,11 @@ public class FuncionarioServlet extends HttpServlet {
                 funcionarios.add(funcionario);
             }else if(acao.equals("atualizartodos")){
 
+            }else if(acao.equals("consultar")) {
+                funcionarios = funcionarioDAO.listarTodosFuncionarios();
+                funcionarios.get(0).setACAO("consultar");
             }else if(acao.equals("deletar")){
                 funcionarioDAO.excluir(login);
-            }else if(acao.equals("consultartodos")){
-                funcionarios = funcionarioDAO.listarTodosFuncionarios();
-
             }
 
 
@@ -91,7 +91,7 @@ public class FuncionarioServlet extends HttpServlet {
                 jo.put("login", funcionario.getLOGIN());
                 jo.put("senha", funcionario.getSENHA());
                 jo.put("tipo_funcionario", funcionario.getTIPO_FUNCIONARIO());
-                jo.put("acao", funcionario.getACAO());
+                jo.put("acao", funcionarios.get(0).getACAO());
                 ja.put(jo);
             }
             joList.put("funcionarios",ja);

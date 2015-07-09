@@ -163,7 +163,7 @@ public class FuncionarioDAO {
             ps = conn.prepareStatement("SELECT * FROM funcionario");
 
 
-            ps.executeUpdate();
+
             rs= ps.executeQuery();
             List<Funcionario> list = new ArrayList<Funcionario>();
             while (rs.next()) {

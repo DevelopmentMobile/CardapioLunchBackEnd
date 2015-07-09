@@ -30,7 +30,7 @@ public class PacoteDAO {
         }
         int saida = -1;
         try {
-            String SQL = "INSERT INTO pacote(nome,descricao,preco,tipo_pacote,unidade, nome_imagem)"
+            String SQL = "INSERT INTO pacote(nome,descricao,preco,tipo_pacote,unidade, nome_imagemm)"
                     + "values(?,?,?,?,?,?)";
             conn = this.conn;
 
@@ -85,7 +85,7 @@ public class PacoteDAO {
         try {
 
             String SQL = "UPDATE pacote SET nome=?," + "descricao=?," + "preco=?,"+ "tipo_pacote=?,"
-                    + "unidade=?,"+ "nome_imagem=? "   + " WHERE nome=? ";
+                    + "unidade=?,"+ "nome_imagemm=? "   + " WHERE nome=? ";
             conn = this.conn;
             ps = conn.prepareStatement(SQL);
 
@@ -118,7 +118,7 @@ public class PacoteDAO {
 
 
                 String SQL = "UPDATE pacote SET nome=?," + "descricao=?," + "preco=?,"+ "tipo_pacote=?,"
-                        + "unidade=?,"+ "nome_imagem=? "   + " WHERE nome=? ";
+                        + "unidade=?,"+ "nome_imagemm=? "   + " WHERE nome=? ";
                 conn = this.conn;
                 ps = conn.prepareStatement(SQL);
 
@@ -165,7 +165,7 @@ public class PacoteDAO {
                         rs.getString("descricao"),
                         rs.getFloat("preco"),
                         rs.getInt("unidade"),
-                        rs.getString("nome_image")
+                        rs.getString("nome_imagem")
                 ));
             }
             return list;
@@ -187,7 +187,7 @@ public class PacoteDAO {
             ps = conn.prepareStatement("SELECT * FROM pacote");
 
 
-            ps.executeUpdate();
+
             rs= ps.executeQuery();
             List<Pacote> list = new ArrayList<Pacote>();
             while (rs.next()) {
@@ -198,7 +198,7 @@ public class PacoteDAO {
                         rs.getString("descricao"),
                         rs.getFloat("preco"),
                         rs.getInt("unidade"),
-                        rs.getString("nome_image")
+                        rs.getString("nome_imagem")
                        ));
             }
             return list;
@@ -242,6 +242,7 @@ public class PacoteDAO {
     }
 
 
+
     public Pacote procurarPacoteNome(String nome) throws Exception {
         PreparedStatement ps = null;
         Connection conn = null;
@@ -261,7 +262,7 @@ public class PacoteDAO {
                         rs.getString("descricao"),
                         rs.getFloat("preco"),
                         rs.getInt("unidade"),
-                        rs.getString("nome_image")
+                        rs.getString("nome_imagem")
                 );
 
 

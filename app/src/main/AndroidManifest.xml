@@ -23,14 +23,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".MenuCliente"
-            android:label="@string/title_activity_menu_cliente" >
-        </activity>
-        <activity
             android:name=".Ofertas"
             android:label="@string/title_activity_ofertas" >
         </activity>
@@ -64,6 +56,11 @@
             android:name=".Welcome_Activity"
             android:hardwareAccelerated="false"
             android:label="@string/title_activity_welcome" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
 
         </activity>
@@ -94,6 +91,7 @@
             android:name=".view.cliente.OfertasProdutosListActivity"
             android:label="OfertasProdutos"
             android:theme="@style/ThemeOverlay.AppCompat.Dark" >
+
 
         </activity>
         <activity
@@ -128,11 +126,7 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <!--
                  <meta-data
@@ -216,6 +210,7 @@
             android:name=".view.admin.PedidoActivityCRUD"
             android:label="PedidoActivityCRUD"
             android:theme="@style/ThemeOverlay.AppCompat.Dark" >
+
         </activity>
         <activity
             android:name=".view.admin.DashboardAdmin"

@@ -47,31 +47,29 @@ public class ProdutoServlet extends HttpServlet {
     if(acao.equals("inserir") )
     {
         produtoDAO.salvar(produto);
-        resp.getWriter().write(generateJson(produto));
-
+        produto =  produtoDAO.procurarProdutoNome(nome);
+        produtos.add(produto);
     }else if(acao.equals("consultarnome")){
       produto =  produtoDAO.procurarProdutoNome(nome);
-        resp.getWriter().write(generateJson(produto));
+        produtos.add(produto);
 
 
     }else if(acao.equals("atualizar")){
-    produtoDAO.atualizar(produto);
+        produtoDAO.atualizar(produto);
         produtoDAO = new ProdutoDAO();
         produto=  produtoDAO.procurarProdutoNome(nome);
-        resp.getWriter().write(generateJson(produto));
-
+        produtos.add(produto);
     }else if(acao.equals("atualizartodos")){
-        resp.getWriter().write(generateJson(produto));
 
     }else if(acao.equals("deletar")){
-    produtoDAO.excluir(nome);
-        resp.getWriter().write(generateJson(produto));
-
+        produto=  produtoDAO.procurarProdutoNome(nome);
+        produtoDAO.excluir(nome);
+    produtos.add(produto);
     }else if(acao.equals("consultar")){
         produtos =  new ArrayList<Produto>();
         produtos = produtoDAO.todosProduto();
-        resp.getWriter().write(generateArrayJson(produtos));
     }
+            resp.getWriter().write(generateArrayJson(produtos));
 
 
 }catch (Exception e){

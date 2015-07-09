@@ -104,7 +104,7 @@
             />
     </LinearLayout>
 
-    <!--Total-->
+    <!--Total
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -130,6 +130,7 @@
 
             />
     </LinearLayout>
+    -->
 
     <!--Status Pedido-->
     <LinearLayout
@@ -181,7 +182,7 @@
     </LinearLayout>
 
 
-    <!--Pacote -->
+    <!--Pacote
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -201,12 +202,11 @@
             android:id="@+id/pacote_pedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/spinner_header"
-            > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
+            >
         </Spinner>
     </LinearLayout>
 
-
+-->
     <!--Funcionario -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -227,7 +227,7 @@
             android:id="@+id/funcionario_pedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/spinner_header"
+
             > <!-- representa quando o titulo a list quando opcoes da lista tive aberta -->
         </Spinner>
 

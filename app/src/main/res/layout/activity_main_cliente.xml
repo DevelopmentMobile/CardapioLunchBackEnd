@@ -28,7 +28,9 @@
                 android:background="#0000ff95"
                 android:textStyle="bold|italic"
                 android:textColor="#ffffffff"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:onClick="encaminhaListaProdutos"
+                />
         </LinearLayout>
 
         <LinearLayout

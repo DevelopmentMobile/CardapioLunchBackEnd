@@ -27,6 +27,7 @@ public class FuncionarioTask extends AsyncTask<Funcionario, Void, List<Funcionar
     private final String LOG_TAG = FuncionarioTask.class.getSimpleName();
     private String[] forecast = null;
     private  List<Funcionario> funcionarios = null;
+    public static final String MY_TAG = "FuncTask";
 
 //    private List<Map<String,String>> listDetailsEnergyBill =null;
 
@@ -103,9 +104,9 @@ public class FuncionarioTask extends AsyncTask<Funcionario, Void, List<Funcionar
 
     @Override
     protected void onPostExecute(List<Funcionario> funcionarios) {
-       /* for (Object s : resultStrs) {
-            Log.v(LOG_TAG, "Forecast entry: " + s);
-        }*/
+
+            Log.v(LOG_TAG, "Resulto onPost Execute: " + funcionarios);
+
         listener.showFuncionario(funcionarios);
     }
 

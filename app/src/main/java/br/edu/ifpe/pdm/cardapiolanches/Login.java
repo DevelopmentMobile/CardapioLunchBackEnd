@@ -3,6 +3,7 @@ package br.edu.ifpe.pdm.cardapiolanches;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioDAO;
 import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioListener;
 import br.edu.ifpe.pdm.cardapiolanches.dao.FuncionarioTask;
 import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
+import br.edu.ifpe.pdm.cardapiolanches.view.admin.DashboardAdmin;
 import br.edu.ifpe.pdm.cardapiolanches.view.func.PedidoAtendidoProdutoCozinheiroActivity;
 
 
@@ -36,7 +38,7 @@ public class Login extends Activity implements FuncionarioListener {
     private         Funcionario Funcionario = null;
 
 
-    public static final String MY_TAG = "the_custom_message";
+    public static final String MY_TAG = "login";
 
 
     private FuncionarioDAO FuncionarioDAO ;
@@ -78,7 +80,7 @@ public class Login extends Activity implements FuncionarioListener {
 
 
         Funcionario.setACAO("inserir");
-
+        Log.v(MY_TAG, "Consultar Funcionario: " + Funcionario);
         arrayFuncionario[0] = Funcionario;
         new FuncionarioTask(this).execute(arrayFuncionario);
 
@@ -106,7 +108,7 @@ public class Login extends Activity implements FuncionarioListener {
         }
 
         final      Funcionario Funcionario =  new Funcionario(login,senha ,tipoFuncionario);
-
+        Log.v(MY_TAG, "Consultar Funcionario: " + Funcionario);
         Funcionario.setACAO("consultarnomesenha");
 
         arrayFuncionario[0] = Funcionario;
@@ -142,6 +144,8 @@ public class Login extends Activity implements FuncionarioListener {
     public void showFuncionario(List<Funcionario> funcionarios) {
 
         for (Funcionario funcionario : funcionarios) {
+
+            Log.v(MY_TAG, "Funcionario: " + funcionario);
             if (funcionario.getACAO().equals("inserir")) {
 
                 if (funcionario.get_ID() != null) {
@@ -160,7 +164,7 @@ public class Login extends Activity implements FuncionarioListener {
                         startActivity(new Intent(this, PedidoAtendidoProdutoCozinheiroActivity.class));
                     } else if (funcionario.getTIPO_FUNCIONARIO() == Constantes.ADMIN) {
 
-                        startActivity(new Intent(this, Dashboard.class));
+                        startActivity(new Intent(this, DashboardAdmin.class));
                     }
 
 

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import br.edu.ifpe.pdm.cardapiolanches.ProdutosListActivity;
 import br.edu.ifpe.pdm.cardapiolanches.R;
 
 public class DashboardAdmin extends Activity {
@@ -30,12 +29,7 @@ public class DashboardAdmin extends Activity {
 
 
 }
-    public boolean forwardProdutoList() {
 
-        startActivity(new Intent(this, ProdutosListActivity.class));
-
-        return true;
-    }
 
 
     public void selecionarOpcao(View view) {

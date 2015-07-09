@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
@@ -30,7 +31,7 @@ public class PacoteServlet extends HttpServlet {
         String [] ids = req.getParameterValues("ids");
         PacoteDAO pacoteDAO = null;
         PacoteProdutoDAO pacoteProdutoDAO = null;
-
+        List<Pacote> pacotes = null;
         try {
             //Integer produtoId = Integer.parseInt(req.getParameter("produto_id"));
             Pacote pacote =  new Pacote(
@@ -44,6 +45,7 @@ public class PacoteServlet extends HttpServlet {
             PacoteProduto  pacoteProduto = null;
 
             pacoteDAO = new PacoteDAO();
+            pacotes = new ArrayList<Pacote>();
             if(acao.equals("inserir") )
             {
                 pacoteDAO.salvar(pacote);
@@ -54,28 +56,35 @@ public class PacoteServlet extends HttpServlet {
                     Integer produtoId = Integer.parseInt(ids[i]);
                     pacoteProduto = new PacoteProduto(pacoteId, produtoId);
                     pacoteProdutoDAO.salvar(pacoteProduto);
+
                 }
+                pacotes.add(pacote);
             }else if(acao.equals("consultarnome")){
                 pacote =  pacoteDAO.procurarPacoteNome(nome);
-
+                pacotes.add(pacote);
             }else if(acao.equals("atualizar")){
                 pacoteDAO.atualizar(pacote);
                 pacoteDAO = new PacoteDAO();
                 pacote=  pacoteDAO.procurarPacoteNome(nome);
+                pacotes.add(pacote);
+            }else if(acao.equals("consultar")){
+                pacotes = pacoteDAO.todosPacote();
+
             }else if(acao.equals("atualizartodos")){
 
             }else if(acao.equals("deletar")){
+                pacote=  pacoteDAO.procurarPacoteNome(nome);
                 pacoteDAO.excluir(nome);
-
                 pacoteProdutoDAO = new PacoteProdutoDAO();
                 Integer produtoId = Integer.parseInt(ids[0]);
                 pacoteProduto =  new PacoteProduto(pacote.get_ID(),produtoId);
                 pacoteProdutoDAO.excluir(pacote.get_ID());
+                pacotes.add(pacote);
             }
 
             //System.out.println(pacote );
 
-            resp.getWriter().write(generateJson(pacote));
+            resp.getWriter().write(generateArrayJson(pacotes));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -137,7 +146,7 @@ public class PacoteServlet extends HttpServlet {
                 aux.put("tipo_pacote",pacote.getTIPO_PACOTE());
                 ja.put(aux);
             }
-            jo.put("produtos", ja);
+            jo.put("pacotes", ja);
 
         }
         catch(JSONException e){ e.printStackTrace(); }

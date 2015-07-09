@@ -7,7 +7,7 @@ import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
 /**
  * Created by Richardson on 05/07/2015.
  */
-public interface ProdutoListener {
+public interface PedidoListenerProdutos {
 
-    public void showProduto(List<Produto> produtos);
+    public void  loadProdutos(List<Produto> produto);
 }

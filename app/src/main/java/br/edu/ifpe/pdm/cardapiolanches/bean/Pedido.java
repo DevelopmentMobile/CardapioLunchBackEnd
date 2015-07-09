@@ -16,6 +16,42 @@ public class Pedido {
    private Integer STATUS_PEDIDO;
 
     private String ACAO ;
+    private String NUM_PEDIDO;
+
+    public Pedido() {
+
+    }
+
+    public String getNUM_PEDIDO() {
+        return NUM_PEDIDO;
+    }
+
+    public Pedido(Integer TEMPO_TOTAL_PEDIDO, Integer QUANTIDADE, Integer NUM_MESA, Integer FUNCIONARIO_ID, Integer PRODUTO_ID, Integer PACOTE_ID, Integer STATUS_PEDIDO, String NUM_PEDIDO, Integer _ID) {
+        this.TEMPO_TOTAL_PEDIDO = TEMPO_TOTAL_PEDIDO;
+        this.QUANTIDADE = QUANTIDADE;
+        this.NUM_MESA = NUM_MESA;
+        this.FUNCIONARIO_ID = FUNCIONARIO_ID;
+        this.PRODUTO_ID = PRODUTO_ID;
+        this.PACOTE_ID = PACOTE_ID;
+        this.STATUS_PEDIDO = STATUS_PEDIDO;
+        this.NUM_PEDIDO = NUM_PEDIDO;
+        this._ID = _ID;
+    }
+
+    public Pedido(Integer TEMPO_TOTAL_PEDIDO, Integer QUANTIDADE, Integer NUM_MESA, Integer FUNCIONARIO_ID, Integer PRODUTO_ID, Integer PACOTE_ID, Integer STATUS_PEDIDO, String NUM_PEDIDO) {
+        this.TEMPO_TOTAL_PEDIDO = TEMPO_TOTAL_PEDIDO;
+        this.QUANTIDADE = QUANTIDADE;
+        this.NUM_MESA = NUM_MESA;
+        this.FUNCIONARIO_ID = FUNCIONARIO_ID;
+        this.PRODUTO_ID = PRODUTO_ID;
+        this.PACOTE_ID = PACOTE_ID;
+        this.STATUS_PEDIDO = STATUS_PEDIDO;
+        this.NUM_PEDIDO = NUM_PEDIDO;
+    }
+
+    public void setNUM_PEDIDO(String NUM_PEDIDO) {
+        this.NUM_PEDIDO = NUM_PEDIDO;
+    }
 
     public String getACAO() {
         return ACAO;

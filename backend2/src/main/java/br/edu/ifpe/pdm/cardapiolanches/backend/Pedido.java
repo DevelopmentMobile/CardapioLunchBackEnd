@@ -10,11 +10,38 @@ public class Pedido {
    private Integer TEMPO_TOTAL_PEDIDO ;
    private Integer QUANTIDADE ;
    private Integer NUM_MESA  = 1;
-   private Integer FUNCIONARIO_ID;
+
+    public Pedido(Integer TEMPO_TOTAL_PEDIDO, Integer QUANTIDADE, Integer NUM_MESA, Integer FUNCIONARIO_ID, Integer PRODUTO_ID, Integer PACOTE_ID, Integer STATUS_PEDIDO, Integer NUM_PEDIDO) {
+        this.TEMPO_TOTAL_PEDIDO = TEMPO_TOTAL_PEDIDO;
+        this.QUANTIDADE = QUANTIDADE;
+        this.NUM_MESA = NUM_MESA;
+        this.FUNCIONARIO_ID = FUNCIONARIO_ID;
+        this.PRODUTO_ID = PRODUTO_ID;
+        this.PACOTE_ID = PACOTE_ID;
+        this.STATUS_PEDIDO = STATUS_PEDIDO;
+        this.NUM_PEDIDO = NUM_PEDIDO;
+    }
+
+    private Integer FUNCIONARIO_ID;
    private Integer PRODUTO_ID;
    private Integer PACOTE_ID ;
    private Integer STATUS_PEDIDO;
     private Integer NUM_PEDIDO;
+
+    private String ACAO;
+
+    public Pedido() {
+
+    }
+
+    public String getACAO() {
+
+        return ACAO;
+    }
+
+    public void setACAO(String ACAO) {
+        this.ACAO = ACAO;
+    }
 
     public Integer getNUM_PEDIDO() {
         return NUM_PEDIDO;
@@ -24,8 +51,6 @@ public class Pedido {
         this.NUM_PEDIDO = NUM_PEDIDO;
     }
 
-    public Pedido() {
-    }
 
     public Pedido(Integer _ID, Integer TEMPO_TOTAL_PEDIDO, Integer QUANTIDADE, Integer NUM_MESA, Integer FUNCIONARIO_ID, Integer PRODUTO_ID, Integer PACOTE_ID, Integer STATUS_PEDIDO, Integer NUM_PEDIDO) {
         this._ID = _ID;

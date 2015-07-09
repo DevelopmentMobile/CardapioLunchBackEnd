@@ -6,10 +6,13 @@
 
 package br.edu.ifpe.pdm.cardapiolanches.backend;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,44 +26,90 @@ public class PedidoServlet extends HttpServlet {
             throws IOException {
 
 
-        String acao = req.getParameter("acao");
-        String num_pedido = req.getParameter("num_pedido");
 
+        List<Pedido> pedidos = null;
         PedidoDAO PedidoDAO = null;
         try {
-                
-            Pedido pedido = new Pedido(Integer.parseInt(  req.getParameter("_id")),
-                   Integer.parseInt( req.getParameter("tempo_total_pedido")),
-                    Integer.parseInt (req.getParameter("quantidade")),
-                    Integer.parseInt( req.getParameter("num_mesa")),
-                    Integer.parseInt(req.getParameter("funcionario_id")),
-                            Integer.parseInt(req.getParameter("pedido_id")),
-                                    Integer.parseInt(req.getParameter("pacote_id")),
-                                            Integer.parseInt(req.getParameter("status_pedido")),
-                                                    Integer.parseInt(req.getParameter("num_pedido")
-            ));
 
+            String acao = req.getParameter("acao");
+            int tam = req.getParameterValues("num_pedido").length;
+            String [] tempo_total_pedido =   req.getParameterValues("tempo_total");
+            String [] quantidade =   req.getParameterValues("quantidade");
+            String [] num_mesa =   req.getParameterValues("num_mesa");
+            String [] funcionario_id =   req.getParameterValues("funcionario_id");
+            String [] pacote_id =   req.getParameterValues("pacote_id");
+            String [] produto_id =   req.getParameterValues("produto_id");
+            String [] status_pedido =   req.getParameterValues("status_pedido");
+            String [] num_pedido =   req.getParameterValues("num_pedido");
+
+
+
+           List<Pedido> pedidosReq = new ArrayList<Pedido>();
+           for(int i=0; i<tam; i++) {
+               Pedido pedido = new Pedido(
+                       Integer.parseInt(tempo_total_pedido[i]),
+                       Integer.parseInt(quantidade[i]),
+                       Integer.parseInt(num_mesa[i]),
+                       Integer.parseInt(funcionario_id[i]),
+                       Integer.parseInt(produto_id[i]),
+                       Integer.parseInt(pacote_id[i]),
+                       Integer.parseInt(status_pedido[i]),
+                       Integer.parseInt(num_pedido[i])
+                       );
+               pedidosReq.add(pedido);
+           }
 
             PedidoDAO = new PedidoDAO();
+            pedidos = new ArrayList<Pedido>();
             if(acao.equals("inserir") )
             {
-                PedidoDAO.salvar(pedido);
-            }else if(acao.equals("consultarnome")){
-                pedido =  PedidoDAO.consultarPedidoNumPedido(pedido.getNUM_PEDIDO().toString());
-
-            }else if(acao.equals("atualizar")){
-                PedidoDAO.atualizarNumPedido(pedido);
+                PedidoDAO.salvar(pedidosReq.get(0));
                 PedidoDAO = new PedidoDAO();
-                pedido=  PedidoDAO.consultarPedidoNumPedido(num_pedido);
+                int ultimoPedido = PedidoDAO.consultaUltimoPedido();
+                PedidoDAO = new PedidoDAO();
+                System.out.println(ultimoPedido);
+                PedidoDAO.gerarNumPedido(ultimoPedido, pedidosReq.get(0).getNUM_MESA());
+
+                pedidosReq.get(0).set_ID(ultimoPedido);
+                pedidosReq.get(0).setACAO("inserir");
+                pedidos.add(pedidosReq.get(0));
+
+            }else if(acao.equals("consultarnumpedido")){
+                pedidos.set(0, PedidoDAO.consultarPedidoNumPedido(pedidosReq.get(0).getNUM_PEDIDO()));
+                pedidos.get(0).setACAO("consultarnumpedido");
+
+            }else if(acao.equals("consultarpedidostatus")){
+                pedidos  =PedidoDAO.consultarPedidoStatus(pedidosReq.get(0).getSTATUS_PEDIDO());
+                pedidos.get(0).setACAO("consultarpedidostatus");
+            }else if(acao.equals("consultartodospedidos")){
+                pedidos  =PedidoDAO.consultarTodosPedidos();
+                pedidos.get(0).setACAO("consultartodospedidos");
+            }else if(acao.equals("atualizar")){
+                PedidoDAO.atualizarNumPedido( pedidosReq.get(0));
+                PedidoDAO = new PedidoDAO();
+                pedidos.set(0,PedidoDAO.consultarPedidoNumPedido( pedidosReq.get(0).getNUM_PEDIDO()));
+                pedidos.add( pedidos.get(0));
+                pedidos.get(0).setACAO("atualizar");
             }else if(acao.equals("atualizartodos")){
 
+                    PedidoDAO.atualizarTodos(pedidosReq);
+                    PedidoDAO = new PedidoDAO();
+                    pedidos = PedidoDAO.consultarTodosPedidos();
+                pedidos.get(0).setACAO("atualizartodos");
+
+
             }else if(acao.equals("deletar")){
-                PedidoDAO.excluir(num_pedido);
+                PedidoDAO.excluir(pedidosReq.get(0).getNUM_PEDIDO());
+                PedidoDAO = new PedidoDAO();
+                pedidos.set(0,PedidoDAO.consultarPedidoNumPedido( pedidosReq.get(0).getNUM_PEDIDO()));
+                pedidos.add( pedidos.get(0));
+                pedidos.get(0).setACAO("deletar");
+
             }
 
             //System.out.println(pedido );
 
-            resp.getWriter().write(generateJson(pedido));
+            resp.getWriter().write(generateJson(pedidos));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -82,23 +131,28 @@ public class PedidoServlet extends HttpServlet {
         resp.getWriter().println("Hello " + name);
     }
 
-    private String  generateJson(Pedido pedido){
+    private String  generateJson(List<Pedido> pedidos){
 
         JSONObject jo = new JSONObject();
-
-
+        JSONArray ja = new JSONArray();
         try{
-            jo.put("_id",pedido.get_ID());
-            jo.put("funcionario_id",pedido.getFUNCIONARIO_ID());
-            jo.put("pacote_id",pedido.getPACOTE_ID());
-            jo.put("num_mesa",pedido.getNUM_MESA());
-            jo.put("num_pedido",pedido.getNUM_PEDIDO());
-            jo.put("produto_id",pedido.getPRODUTO_ID());
-            jo.put("quantidade",pedido.getQUANTIDADE());
-            jo.put("status_pedido",pedido.getSTATUS_PEDIDO());
-            jo.put("tempo_total",pedido.getTEMPO_TOTAL_PEDIDO());
 
+            for(Pedido pedido : pedidos) {
+                JSONObject aux = new JSONObject();
+                aux.put("_id", pedido.get_ID());
+                aux.put("funcionario_id", pedido.getFUNCIONARIO_ID());
+                aux.put("pacote_id", pedido.getPACOTE_ID());
+                aux.put("num_mesa", pedido.getNUM_MESA());
+                aux.put("num_pedido", pedido.getNUM_PEDIDO());
+                aux.put("produto_id", pedido.getPRODUTO_ID());
+                aux.put("quantidade", pedido.getQUANTIDADE());
+                aux.put("status_pedido", pedido.getSTATUS_PEDIDO());
+                aux.put("tempo_total", pedido.getTEMPO_TOTAL_PEDIDO());
+                aux.put("acao", pedidos.get(0).getACAO());
+                ja.put(aux);
 
+            }
+            jo.put("pedidos", ja);
         }
         catch(JSONException e){ e.printStackTrace(); }
 

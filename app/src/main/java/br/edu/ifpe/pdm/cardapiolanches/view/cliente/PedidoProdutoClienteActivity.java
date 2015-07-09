@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +26,26 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.edu.ifpe.pdm.cardapiolanches.R;
+import br.edu.ifpe.pdm.cardapiolanches.bean.Pedido;
 import br.edu.ifpe.pdm.cardapiolanches.bean.Produto;
 import br.edu.ifpe.pdm.cardapiolanches.dao.DatabaseHelper;
+import br.edu.ifpe.pdm.cardapiolanches.dao.PedidoListener;
 import br.edu.ifpe.pdm.cardapiolanches.utils.Constantes;
 import br.edu.ifpe.pdm.cardapiolanches.utils.NavDrawerItem;
 import br.edu.ifpe.pdm.cardapiolanches.utils.NavDrawerListAdapter;
@@ -38,7 +54,7 @@ import br.edu.ifpe.pdm.cardapiolanches.view.admin.DashboardAdmin;
 /**
  * Created by Richardson on 01/06/2015.
  */
-public class PedidoProdutoClienteActivity extends Activity implements AdapterView.OnItemClickListener{
+public class PedidoProdutoClienteActivity extends Activity implements AdapterView.OnItemClickListener, PedidoListener{
 
 
     private ViewBinderProdutos simpleCursorAdapter;
@@ -57,19 +73,19 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
 
+
+    String[] de = {"nome", "preco","categoria",  "tempo_pronto_produto", "status_pedido"};
+    int[] para = {R.id.nome_pedido_produto, R.id.valor_pedido_produto, R.id.categoria_pedido_produto, R.id.tempo_total_pedido_produto
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.pedidos_cliente_listview);
-        String[] de = {"nome", "preco","categoria",  "tempo_pronto_produto", "status_pedido"};
-        int[] para = {R.id.nome_pedido_produto, R.id.valor_pedido_produto, R.id.categoria_pedido_produto, R.id.tempo_total_pedido_produto
-        };
 
-        listView= (ListView) findViewById(R.id.pedidos_cliente_listview);
-        simpleCursorAdapter = new ViewBinderProdutos (this, R.layout.pedidos_cliente, listPedidoPorProdutos(),
-                de, para );
 
+
+        new PedidoLoadTask(this).execute();
 
         listView.setAdapter(simpleCursorAdapter);
 
@@ -169,6 +185,48 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         return count;
 }
 
+    public void inserirPedidos(Pedido pedido){
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.Pedido.QUANTIDADE, pedido.getQUANTIDADE());
+        values.put(DatabaseHelper.Pedido.TEMPO_TOTAL_PEDIDO, pedido.getTEMPO_TOTAL_PEDIDO());
+        values.put(DatabaseHelper.Pedido.NUM_MESA,pedido.getNUM_MESA() );
+
+
+            values.put(DatabaseHelper.Pedido.FUNCIONARIO_ID, pedido.getFUNCIONARIO_ID());
+
+
+            values.put(DatabaseHelper.Pedido.PRODUTO_ID, pedido.getPRODUTO_ID());
+
+            values.put(DatabaseHelper.Pedido.PACOTE_ID, pedido.getPACOTE_ID());
+
+        values.put(DatabaseHelper.Pedido.STATUS_PEDIDO, pedido.getSTATUS_PEDIDO() );
+
+        long newId = db.insert(DatabaseHelper.Pedido.TABELA, null, values);
+
+
+    }
+
+
+    @Override
+    public void showPedido(List<Pedido> Pedidos) {
+
+
+        if (Pedidos.size() > 0) {
+
+            for (Pedido produto : Pedidos) {
+                inserirPedidos(produto);
+
+            }
+
+            listView = (ListView) findViewById(R.id.pedidos_cliente_listview);
+            simpleCursorAdapter = new ViewBinderProdutos(this, R.layout.pedidos_cliente, listPedidoPorProdutos(),
+                    de, para);
+
+        }
+    }
 
 
     private class ViewBinderProdutos  extends SimpleCursorAdapter {
@@ -406,4 +464,148 @@ public class PedidoProdutoClienteActivity extends Activity implements AdapterVie
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-}
+
+    public class PedidoLoadTask extends AsyncTask<Pedido, Void, List<Pedido>> {
+        private final String LOG_TAG = PedidoLoadTask.class.getSimpleName();
+        private String[] forecast = null;
+        private List<Pedido> Pedido = null;
+
+//    private List<Map<String,String>> listDetailsEnergyBill =null;
+
+
+        private PedidoListener listener = null;
+
+        public PedidoLoadTask(PedidoListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected List<Pedido> doInBackground(Pedido... params) {
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+            String forecastJson = null;
+
+            try {
+                //Uri.Builder builder = new Uri.Builder();
+
+                Uri.Builder builder = Uri.parse("http://10.1.1.44:8080").buildUpon();
+                //builder.scheme("http");
+                //  builder.authority("10.1.1.44");
+
+                builder.appendPath("pedido");
+
+                builder.appendQueryParameter("acao","consultar");
+                //  builder.appendQueryParameter("_id", Pedido.get_ID().toString());
+
+                    builder.appendQueryParameter("produto_id", "-1");
+                    builder.appendQueryParameter("funcionario_id","-1" );
+                    builder.appendQueryParameter("pacote_id", "-1");
+                    builder.appendQueryParameter("status_pedido", "-1");
+                    builder.appendQueryParameter("num_mesa", "-1");
+                    builder.appendQueryParameter("quantidade","-1");
+                    builder.appendQueryParameter("num_pedido", "-1");
+                    builder.appendQueryParameter("tempo_total", "-1");
+
+
+
+                URL url = new URL(builder.build().toString());
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+                InputStream inputStream = urlConnection.getInputStream();
+
+                StringBuffer buffer = new StringBuffer();
+                if (inputStream == null) {
+                    forecastJson = null;
+                }
+
+
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+//                buffer.append(line.replaceAll("\\n",  "").replaceAll("\\t","") );
+                    buffer.append(line);
+                }
+
+                if (buffer.length() == 0) {
+                    forecastJson = null;
+                } else {
+                    forecastJson = buffer.toString();
+                }
+                //     listEnergyBill = EnergyBillParser.printValuesCellTable(forecastJson);
+                Pedido = getPedidoFromJson(forecastJson);
+
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+            } finally {
+                if (urlConnection != null) urlConnection.disconnect();
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+            return Pedido;
+        }
+
+
+        @Override
+        protected void onPostExecute(List<Pedido> pedidos) {
+
+            Log.v(LOG_TAG, "Retorno de Pedidos: " + pedidos);
+
+            listener.showPedido(pedidos);
+
+        }
+
+
+        private List<Pedido> getPedidoFromJson(String forecastJsonStr) {
+
+
+            List<Pedido> Pedidos = null;
+
+
+            try {
+                if (forecastJsonStr != null) {
+
+                    JSONObject forecastJson = new JSONObject(forecastJsonStr);
+                    JSONArray ja = new JSONArray();
+                    ja = forecastJson.getJSONArray("pedidos");
+
+                    Pedidos = new ArrayList<Pedido>();
+                    for (int i = 0; i < ja.length(); i++) {
+
+
+                        Pedido Pedido = new Pedido();
+
+                        Pedido.set_ID(ja.getJSONObject(i).getInt("_id"));
+                        Pedido.setPRODUTO_ID(ja.getJSONObject(i).getInt("produto_id"));
+                        Pedido.setFUNCIONARIO_ID(ja.getJSONObject(i).getInt("funcionario_id"));
+                        Pedido.setPACOTE_ID(ja.getJSONObject(i).getInt("pacote_id"));
+                        Pedido.setPACOTE_ID(ja.getJSONObject(i).getInt("num_mesa"));
+                        Pedido.setSTATUS_PEDIDO(ja.getJSONObject(i).getInt("status_pedido"));
+                        Pedido.setQUANTIDADE(ja.getJSONObject(i).getInt("quantidade"));
+                        Pedido.setNUM_PEDIDO(ja.getJSONObject(i).getString("num_pedido"));
+                        Pedido.setTEMPO_TOTAL_PEDIDO(ja.getJSONObject(i).getInt("tempo_total"));
+                        Pedido.setACAO(ja.getJSONObject(i).getString("acao"));
+                        Pedidos.add(Pedido);
+                    }
+                }
+            } catch (
+                    JSONException e
+                    )
+
+            {
+                e.printStackTrace();
+            }
+
+            return Pedidos;
+
+        }
+
+    }
+    }
